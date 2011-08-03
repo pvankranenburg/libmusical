@@ -1,0 +1,1568 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman ae
+\font_sans default
+\font_typewriter courier
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+libmusical 0.8
+\end_layout
+
+\begin_layout Author
+P.
+ van Kranenburg
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+libmusical is a c++-software library that provides classes and functions
+ for alignment of sequences of symbols.
+ The intended field of application is the alignment of musical sequences.
+ However, the alignment algorithms are provided in their abstract forms.
+ Thus, it is easy to apply the algorithms in other contexts as well.
+\end_layout
+
+\begin_layout Standard
+This library is a deliverable of the NWO WITCHCRAFTPLUS software-project.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.catchplus.nl/diensten/deelprojecten/witchcraftplus/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ One of the aims of this project is to provide robust implementations of
+ software that was developed within the WITCHCRAFT research-project 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Wiering:2009uq"
+
+\end_inset
+
+.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.cs.uu.nl/research/projects/witchcraft/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Section
+Alignment
+\end_layout
+
+\begin_layout Standard
+Cconsider two sequences of symbols 
+\begin_inset Formula ${\mathbf{x}}:x_{1},\dots,x_{i},\dots,x_{n}$
+\end_inset
+
+, and 
+\begin_inset Formula ${\mathbf{y}}:y_{1},\dots,y_{j},\dots,y_{m}$
+\end_inset
+
+.
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename image/sequences-crop.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+A large number of alignments is possible.
+ E.g., for 
+\begin_inset Formula $n=7$
+\end_inset
+
+ and 
+\begin_inset Formula $m=6$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename image/alignment1-crop.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+or
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename image/alignment2-crop.pdf
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+etc.
+\end_layout
+
+\begin_layout Standard
+In constructing an alignment of 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+, symbol 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ can either be aligned with a symbol from sequence 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ or with a gap.
+ Each alignment of two sequences gets a score, which is the sum of the scores
+ of the alignments of the individual sybols.
+ Alignment algorithms find the (or one of the) alignemnt with the highest
+ score.
+ Since the solution space is quite large, a dynamic programming approach
+ is taken to find the optimal alignment efficiently.
+ In the simplest form, the optimal alignment and its score are found by
+ filling a matrix 
+\begin_inset Formula $D$
+\end_inset
+
+ recursively according to: 
+\begin_inset Formula 
+\begin{equation}
+D(i,j)=\max\left\{ \begin{array}{ll}
+D(i-1,j-1)+S(x_{i},y_{j})\\
+D(i-1,j)-\gamma\\
+D(i,j-1)-\gamma
+\end{array}\right.,
+\end{equation}
+
+\end_inset
+
+ in which 
+\begin_inset Formula $S(x_{i},y_{j})$
+\end_inset
+
+ is a similarity measure for symbols, 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ is the (fixed) gap penalty, 
+\begin_inset Formula $D(0,0)=0$
+\end_inset
+
+, 
+\begin_inset Formula $D(i,0)=-i\gamma$
+\end_inset
+
+, and 
+\begin_inset Formula $D(0,j)=-j\gamma$
+\end_inset
+
+.
+ 
+\begin_inset Formula $D(i,j)$
+\end_inset
+
+ contains the score of the optimal alignment up to 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{j}$
+\end_inset
+
+ and therefore, 
+\begin_inset Formula $D(m,n)$
+\end_inset
+
+ contains the score of the optimal alignment of the complete sequences.
+ We can obtain the alignment itself by tracing back from 
+\begin_inset Formula $D(m,n)$
+\end_inset
+
+ to 
+\begin_inset Formula $D(0,0)$
+\end_inset
+
+; the algorithm has both time and space complexity 
+\begin_inset Formula $O(nm)$
+\end_inset
+
+.
+ This algorithm is known as the Needleman-Wunsch algorithm 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Needleman:1990cs"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Basic Architecture
+\end_layout
+
+\begin_layout Subsection
+Alignment
+\end_layout
+
+\begin_layout Standard
+For an alignment, we need:
+\end_layout
+
+\begin_layout Itemize
+two sequences of symbols;
+\end_layout
+
+\begin_layout Itemize
+a similarity measure for symbols;
+\end_layout
+
+\begin_layout Itemize
+a penalty function for insertion of gaps;
+\end_layout
+
+\begin_layout Itemize
+the alignment algorithm itself.
+\end_layout
+
+\begin_layout Standard
+For all four of these elements, abstract classes are present in the library.
+ To implement an application for the alignment of a specific kind of symbols,
+ specific classes should be derived from the provided abstract classes.
+ The abstract classes are defined in header file 
+\family typewriter
+libmusical.h
+\family default
+.
+ Everything is in namespace 
+\family typewriter
+musical
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+The most important abstract classes are:
+\end_layout
+
+\begin_layout Description
+Algorithm An alignment algorithm.
+\end_layout
+
+\begin_layout Description
+Symbol A symbol.
+\end_layout
+
+\begin_layout Description
+Sequence A sequence of symbols.
+\end_layout
+
+\begin_layout Description
+Sequences Two sequences of symbols that should be aligned.
+ We use a specific class for this because the similarity measure for symbols
+ might need to use the two entire sequences for computation of certain variables.
+\end_layout
+
+\begin_layout Description
+SimilarityRater Returns the similarity of two symbols.
+\end_layout
+
+\begin_layout Description
+GapRater Returns scores for insertions of one or more gaps.
+\end_layout
+
+\begin_layout Standard
+An alignment class has a Sequences-object, a SimilarityRater and a GapRater.
+ The last two should be instances of derived classes and the Sequence-object
+ could be an instance of a derived class.
+ The algorithms handles sequences, symbols and raters at an abstract level.
+ The Similarity Rater is the only class that need to know what kind of Symbols
+ the sequence consists of.
+\end_layout
+
+\begin_layout Subsection
+Data representation and input
+\end_layout
+
+\begin_layout Standard
+In the current implementation the sequences of symbols are supposed to be
+ represented as JSON string with specific layout.
+ As an example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstset{tabsize=2,basicstyle=
+\backslash
+ttfamily
+\backslash
+footnotesize,language=C++}
+\end_layout
+
+\end_inset
+
+
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	"Name of Sequence":
+\end_layout
+
+\begin_layout Plain Layout
+
+		{
+\end_layout
+
+\begin_layout Plain Layout
+
+			"symbols":
+\end_layout
+
+\begin_layout Plain Layout
+
+				[
+\end_layout
+
+\begin_layout Plain Layout
+
+					{"attribute 1":value,"attribute 2":value,"attribute 3":value},
+\end_layout
+
+\begin_layout Plain Layout
+
+					{"attribute 1":value,"attribute 2":value,"attribute 3":value},
+\end_layout
+
+\begin_layout Plain Layout
+
+					{"attribute 1":value,"attribute 2":value,"attribute 3":value},
+\end_layout
+
+\begin_layout Plain Layout
+
+					{"attribute 1":value,"attribute 2":value,"attribute 3":value},
+\end_layout
+
+\begin_layout Plain Layout
+
+					{"attribute 1":value,"attribute 2":value,"attribute 3":value}
+\end_layout
+
+\begin_layout Plain Layout
+
+				]
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The name of the top-level object is the name of the sequence.
+ The symbols consist of attributes.
+\end_layout
+
+\begin_layout Standard
+The following (abstract) classes are involved in reading the data:
+\end_layout
+
+\begin_layout Description
+JSONSource The task for this class is to get a JSON string from somewhere.
+\end_layout
+
+\begin_layout Description
+Reader This class converts the JSON string to an object of class Sequence,
+ containing a sequence of Symbol objects.
+\end_layout
+
+\begin_layout Subsection
+Results
+\end_layout
+
+\begin_layout Standard
+Objects of the class 
+\family typewriter
+AlignmentVisualizer
+\family default
+ are able to produce textual or graphical representations of the resulting
+ alignemnt.
+\end_layout
+
+\begin_layout Subsection
+Currently Available Alignment Algorithms
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Currently-Available-Alignment"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Currently, the following variants of the alignment algorithm are implemented:
+\end_layout
+
+\begin_layout Itemize
+Needleman-Wunsch 
+\begin_inset CommandInset citation
+LatexCommand citeyearpar
+key "Needleman:1990cs"
+
+\end_inset
+
+.
+ Global alignment.
+ One symbol from 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ is aligned with at most one symbol from 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+, and vice versa.
+ Only gaps of length 1 are taken into account.
+\end_layout
+
+\begin_layout Itemize
+Smith-Waterman 
+\begin_inset CommandInset citation
+LatexCommand citeyearpar
+key "Smith:1981jt"
+
+\end_inset
+
+.
+ Local alignment.
+ This algorithm finds one or more local alignments, i.e., parts of the sequences
+ that approximately match.
+ One symbol from 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ is aligned with at most one symbol from 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+, and vice versa.
+ Only gaps of length 1 are taken into account.
+\end_layout
+
+\begin_layout Itemize
+Needleman-Wunsch-Gotoh 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Gotoh:1982zr"
+
+\end_inset
+
+.
+ Global alignment with optimization for affine gap cost function.
+ One symbol from 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ is aligned with at most one symbol from 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+, and vice versa.
+\end_layout
+
+\begin_layout Subsection
+Future Available Alignment Algorithms
+\end_layout
+
+\begin_layout Standard
+Planned for future implementation:
+\end_layout
+
+\begin_layout Itemize
+General Alignment.
+ One or more symbols from 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ can be aligned with zero or more symbols from 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+, and vice versa.
+ A continuous gap score function is employed.
+\end_layout
+
+\begin_layout Itemize
+Smith-Waterman-Gotoh.
+ Local alignment with affine gap cost.
+\end_layout
+
+\begin_layout Itemize
+Mongeau-Sankoff variant 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Mongeau:1990db"
+
+\end_inset
+
+.
+ One symbol from 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ can be aligned with zero or more symbols from 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+, and vice versa.
+ Only gaps of length 1 are taken into account.
+\end_layout
+
+\begin_layout Subsection
+Currently Available Gap Raters
+\end_layout
+
+\begin_layout Standard
+The following gap raters are currently available:
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+ConstantLinearGapRater
+\family default
+.
+ This returns a fixed score for a gap of lenght 1.
+ To be used with 
+\family typewriter
+NeedlemanWunsch
+\family default
+ and 
+\family typewriter
+SmithWaterman
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+ConstantAffineGapRater
+\family default
+.
+ This returns a fixed score for a gap opening and a fixed score for a gap
+ extension.
+ To be used with 
+\family typewriter
+NeedlemanWunschGotoh
+\family default
+.
+\end_layout
+
+\begin_layout Section
+Application: Opti
+\end_layout
+
+\begin_layout Standard
+One application is provided under the name 
+\begin_inset Quotes eld
+\end_inset
+
+Opti
+\begin_inset Quotes erd
+\end_inset
+
+, defined in header file 
+\family typewriter
+OptiAlignment.h
+\family default
+.
+ This implements the configuration that proved best in 
+\begin_inset CommandInset citation
+LatexCommand citet
+after "Ch.6"
+key "Kranenburg:2010fk"
+
+\end_inset
+
+.
+ Each symbol consists of three attributes: pitch in base 40 representation,
+ prhase position and metric weight.
+ These attributes are used by the similarity measure (
+\family typewriter
+OptiSimilarityRater
+\family default
+) to compute the similarity of two symbols.
+\end_layout
+
+\begin_layout Subsection
+Classes
+\end_layout
+
+\begin_layout Standard
+The following classes have been added for this application:
+\end_layout
+
+\begin_layout Description
+OptiSymbol Symbol with three data members: pitch in base 40 representation,
+ prhase position and metric weight.
+\end_layout
+
+\begin_layout Description
+OptiSequence Sequence of OptiSymbols.
+ As an extra data-member, this class has a pitch histogram describing the
+ pitch distribution in the melody.
+\end_layout
+
+\begin_layout Description
+OptiSequences Pair of OptiSequences.
+ This class has a method to compute the shift of the histogram of the second
+ sequence such that the intersection of both histograms is maximal.
+ This is the shift in pitch that is needed to make the alignment transposition
+ invariant.
+\end_layout
+
+\begin_layout Description
+OptiSimilarityRater Implements the similarity measure of OptiSymbols as
+ described in 
+\begin_inset CommandInset citation
+LatexCommand citet
+after "Ch.6"
+key "Kranenburg:2010fk"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Description
+OptiReader Converts a JSON representation of the sequence to an OptiSequence-obj
+ect.
+ The JSON string should provide the pitch histogram.
+\end_layout
+
+\begin_layout Standard
+Example of a JSON representation of a OptiSequence (only the first 5 symbols
+ are shown):
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	"NLB074575_01":
+\end_layout
+
+\begin_layout Plain Layout
+
+		{
+\end_layout
+
+\begin_layout Plain Layout
+
+			"symbols":
+\end_layout
+
+\begin_layout Plain Layout
+
+				[
+\end_layout
+
+\begin_layout Plain Layout
+
+					{"pitch40":129,"phrasepos":0,"ima":0.415755},
+\end_layout
+
+\begin_layout Plain Layout
+
+					{"pitch40":146,"phrasepos":0.1,"ima":0.568928},
+\end_layout
+
+\begin_layout Plain Layout
+
+					{"pitch40":152,"phrasepos":0.25,"ima":0.086433},
+\end_layout
+
+\begin_layout Plain Layout
+
+					{"pitch40":146,"phrasepos":0.3,"ima":0.45186},
+\end_layout
+
+\begin_layout Plain Layout
+
+					{"pitch40":141,"phrasepos":0.35,"ima":0.102845}
+\end_layout
+
+\begin_layout Plain Layout
+
+				],
+\end_layout
+
+\begin_layout Plain Layout
+
+			"pitch40histogram":
+\end_layout
+
+\begin_layout Plain Layout
+
+				{
+\end_layout
+
+\begin_layout Plain Layout
+
+					"":{"pitch40":129,"value":0.148148},
+\end_layout
+
+\begin_layout Plain Layout
+
+					"":{"pitch40":135,"value":0.055556},
+\end_layout
+
+\begin_layout Plain Layout
+
+					"":{"pitch40":141,"value":0.074074},
+\end_layout
+
+\begin_layout Plain Layout
+
+					"":{"pitch40":146,"value":0.277778},
+\end_layout
+
+\begin_layout Plain Layout
+
+					"":{"pitch40":152,"value":0.222222},
+\end_layout
+
+\begin_layout Plain Layout
+
+					"":{"pitch40":158,"value":0.148148},
+\end_layout
+
+\begin_layout Plain Layout
+
+					"":{"pitch40":163,"value":0.037037},
+\end_layout
+
+\begin_layout Plain Layout
+
+					"":{"pitch40":169,"value":0.037037}
+\end_layout
+
+\begin_layout Plain Layout
+
+				}
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Example
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+#include <iostream>
+\end_layout
+
+\begin_layout Plain Layout
+
+using namespace std;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#include "libmusical.h"
+\end_layout
+
+\begin_layout Plain Layout
+
+#include "OptiAlignment.h"
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+int main(int argc, char * argv[]) {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Get a JSON string for sequence 1 from a file
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::JSONFileSource * fs1 = new musical::JSONFileSource("/JSON/sequence1.jso
+n");
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Create a Reader object for the JSON string
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::OptiReader mr1(&fs1);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Ask the Reader to generate the Sequence
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::Sequence * seq1 = mr1.generateSequence();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Do the same for sequence 2
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::JSONFileSource * fs2 = new musical::JSONFileSource("/JSON/sequence2.jso
+n");
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::OptiReader mr2(fs2);
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::Sequence * seq2 = mr1.generateSequence();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Encapsulate the two sequences in a Sequences object
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::OptiSequences seqs = musical::OptiSequences(seq1,seq2);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Create a similarity rater
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::OptiSimilarityRater simr = musical::OptiSimilarityRater();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Create a gap rater
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::ConstantLinearGapRater gapr = musical::ConstantLinearGapRater(-0.8);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Create an alignment algorithm
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Assign the raters
+\end_layout
+
+\begin_layout Plain Layout
+
+	nw.setSRater(&simr);
+\end_layout
+
+\begin_layout Plain Layout
+
+	nw.setGapRater(&gapr);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Do the alignment
+\end_layout
+
+\begin_layout Plain Layout
+
+	nw.doAlign();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Print the score
+\end_layout
+
+\begin_layout Plain Layout
+
+	cout << "Score:" << nw.getScore() << endl;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Implement a specific alignment task
+\end_layout
+
+\begin_layout Standard
+This section contains the steps for adding another application with name
+ 
+\family typewriter
+XX
+\family default
+:
+\end_layout
+
+\begin_layout Enumerate
+Derive 
+\family typewriter
+XXSymbol
+\family default
+ from 
+\family typewriter
+Symbol
+\family default
+.
+ 
+\family typewriter
+XXSymbol
+\family default
+ is supposed to have data memebers that correspond to the attributes of
+ the symbol.
+\end_layout
+
+\begin_layout Enumerate
+Optional: Derive 
+\family typewriter
+XXSequence
+\family default
+ from 
+\family typewriter
+Sequence
+\family default
+.
+ Only do this if you want to add data memebers or functions to the sequence.
+\end_layout
+
+\begin_layout Enumerate
+Optional: Derive 
+\family typewriter
+XXSequences
+\family default
+ from 
+\family typewriter
+Sequences
+\family default
+.
+ Only do this if you want to add data memebers or functions to the pair
+ of sequences.
+\end_layout
+
+\begin_layout Enumerate
+Derive a reader class 
+\family typewriter
+XXReader
+\family default
+ from 
+\family typewriter
+Reader
+\family default
+.
+ Override the member function getSequence().
+ It should convert the JSON string to a 
+\family typewriter
+XXSequence
+\family default
+ object.
+\end_layout
+
+\begin_layout Enumerate
+Derive 
+\family typewriter
+XXSimilarityRater
+\family default
+ from 
+\family typewriter
+SimilarityRater
+\family default
+.
+ Override member function 
+\family typewriter
+getScore(\SpecialChar \ldots{}
+)
+\family default
+.
+ It should return the similarity of a subset of symbols from sequence 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ with a subset of symbols from sequence 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+.
+ For the current alogirhtms only the scores for alignment of one symbol
+ from 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ and one symbol from 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ is required (see section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Currently-Available-Alignment"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Enumerate
+Optional: Derive 
+\family typewriter
+XXGapRater
+\family default
+ from 
+\family typewriter
+GapRater
+\family default
+.
+\end_layout
+
+\begin_layout Enumerate
+Optional: Derive 
+\family typewriter
+XXAlignmentVisualizer
+\family default
+ from 
+\family typewriter
+AlignmentVisualizer
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+After performing all these steps, the Sequences, and the raters can be assigned
+ to an alignment algorithm.
+\end_layout
+
+\begin_layout Section
+Roadmap
+\end_layout
+
+\begin_layout Standard
+The current version, 0.8, implements three alignment algorithms and one applicati
+on for musical sequences.
+ There are, however, remaining issues that have to be sovled.
+ Furthermore, future versions will provide new features and new alignment
+ algorithms.
+ For version 1.0 the following improvements are planned:
+\end_layout
+
+\begin_layout Itemize
+Improvements in exception handling.
+ This will make the software more robust.
+\end_layout
+
+\begin_layout Itemize
+Adding Smith-Waterman-Gotoh algorithm.
+\end_layout
+
+\begin_layout Itemize
+Improvents in class interfaces.
+ Currently, too many data members are public.
+\end_layout
+
+\begin_layout Itemize
+Adding converters for MIDI and krn to JSON.
+\end_layout
+
+\begin_layout Itemize
+If no pitch histogram is present in a JSON representation of OptiSequence,
+ a pitch hisogram is computed on the fly.
+\end_layout
+
+\begin_layout Section
+Misc
+\end_layout
+
+\begin_layout Subsection
+Compilation
+\end_layout
+
+\begin_layout Standard
+To compile, download the latest version from 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+https://sourceforge.net/projects/libmusical/files
+\end_layout
+
+\end_inset
+
+, extract the tar archive, and invoke make in the subdirectory Release.
+ This will build the library.
+ Currently, no installation script is provided.
+ To use the library, include at least 
+\family typewriter
+libmusical.h
+\family default
+, and link against 
+\family typewriter
+libmusical.a
+\family default
+.
+\end_layout
+
+\begin_layout Subsection
+Levenshtein distance
+\end_layout
+
+\begin_layout Standard
+The Levenshtein edit distance 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Levenshtein:1966kx"
+
+\end_inset
+
+ can be obtained by using the Needleman-Wunsch algorithm with fixed gap
+ score of -1 and a similarityrater that returns 0 for a perfect match and
+ -1 otherwhise.
+ The score of the algorithm is the negation of the edit distance because
+ it counts the edits (substitutions and insertions/deletions).
+ Since the 
+\family typewriter
+operator==
+\family default
+ should be overloaded for the specific kind of symbol at hand, such a similarity
+ rater should be implemented for every kind of symbol.
+\end_layout
+
+\begin_layout Standard
+Code example, assuming that the sequences consist of symbols that are accepted
+ by the 
+\family typewriter
+XXLevenshteinSimilarityRater
+\family default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// Assume we already have:
+\end_layout
+
+\begin_layout Plain Layout
+
+// Sequences * seqs, which contains:
+\end_layout
+
+\begin_layout Plain Layout
+
+// Sequence * seq1
+\end_layout
+
+\begin_layout Plain Layout
+
+// Sequence * seq2
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Create the similarity rater
+\end_layout
+
+\begin_layout Plain Layout
+
+musical::XXLevenshteinSimilarityRater * lr = new musical::XXLevenshteinSimilarit
+yRater();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Create the gap rater with gap score -1.0
+\end_layout
+
+\begin_layout Plain Layout
+
+musical::ConstantLinearGapRater * gr = new ConstantLinearGapRater(-1.0);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Create the aligner
+\end_layout
+
+\begin_layout Plain Layout
+
+musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(seqs);
+\end_layout
+
+\begin_layout Plain Layout
+
+nw.setSRater(lr);
+\end_layout
+
+\begin_layout Plain Layout
+
+mw.setGapRater(gr);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Do the alignment
+\end_layout
+
+\begin_layout Plain Layout
+
+nw.doAlign();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Now the edit distance is available as the score of the alignment
+\end_layout
+
+\begin_layout Plain Layout
+
+cout << "Edit distance:" << nw.getScore() << endl;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "/Users/pvk/Documents/Eigenwerk/bibliography/pvkbibliography"
+options "bibtotoc,apalike"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
