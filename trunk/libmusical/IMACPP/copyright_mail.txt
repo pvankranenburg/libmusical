@@ -1,0 +1,59 @@
+Begin forwarded message:
+
+> From: Chris Dyer <cdyer@cs.cmu.edu>
+> Date: June 1, 2011 6:53:32 AM GMT+02:00
+> To: volk@cs.uu.nl
+> Subject: Re: Inner Metric Analysis
+>
+> Hi Anja,
+> it's very nice to hear from you! I have no problems if you want to
+> release the code, under any license you like. I'm glad to hear it
+> turned out to be useful.
+>
+> I'm hoping to do some work on music again soon, language isn't so very
+> far away. :)
+>
+> -Chris
+>
+> On Tue, May 31, 2011 at 4:55 AM, Anja Volk <volk@cs.uu.nl> wrote:
+>> Hi Chris,
+>>
+>> you probably know me under my maiden name "Fleischer", if you can remember
+>> at all - I was in the Mathematical Music Theory-Research group at the
+>> Technical University Berlin, when you visited with your Fulbright
+>> scholarship.
+>>
+>> I am glad to read that you are back to academia - even though you are not in
+>> the music area :-) !
+>>
+>> The reason that I contact you is the following: in my last project (on
+>> melodic similarity of folksongs) we used Inner Metric Analysis within an
+>> alignment-based approach to the similarity of Dutch folksongs (see section 6
+>> in Peter van Kranenburg's thesis:
+>> http://www.lodebar.nl/pvk/wp-content/uploads/pvankranenburg-phd-dissertation.pdf
+>> ). The code to calculate the metric weight stems from your tool that you
+>> developed during your stay in Berlin, and which was further developed by
+>> Mona Brand in the MaMuTh-project (I am not sure whether you met her during
+>> your stay in Berlin). Now Peter van Kranenburg would like to make his
+>> alignment algorithm open source under the GPL license - but since it
+>> contains some code from the Metro Tool that you started with, I wanted to
+>> ask you whether that would be fine with you - or whether you have any
+>> objections.
+>>
+>> I hope you enjoy working in the academia - and I see on your website that
+>> you have also worked with alignment ...
+>>
+>> I would be happy hearing from you,
+>> all the best,
+>> Anja
+>>
+>>
+>>
+>> --
+>> Anja Volk
+>> Assistant Professor
+>> Department of Information and Computing Sciences
+>> Utrecht University
+>> http://people.cs.uu.nl/volk/
+>>
+>>

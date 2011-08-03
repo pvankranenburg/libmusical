@@ -1,0 +1,59 @@
+set(libmusical_lib_src
+	CSUUMidiReader/midi2pod2.cpp
+	CSUUMidiReader/midi_reader.cpp
+	IMACPP/MeterCollection.cpp
+	IMACPP/MetroWeights_Mazzola.cpp
+	IMACPP/Metrum.cpp
+	IMACPP/OnsetGroup_Memory.cpp
+	core/AlignmentAlgorithm.cpp
+	core/AlignmentVisualizer.cpp
+	core/ConstantAffineGapRater.cpp
+	core/ConstantLinearGapRater.cpp
+	core/Converter.cpp
+	core/GapRater.cpp
+	core/JSONFileSource.cpp
+	core/JSONMysqlSource.cpp
+	core/JSONSource.cpp
+	core/miscfunctions.cpp
+	core/NeedlemanWunsch.cpp
+	core/NeedlemanWunschGotoh.cpp
+	core/NWGTrace.cpp
+	core/NWTrace.cpp
+	core/Reader.cpp
+	core/Sequence.cpp
+	core/Sequences.cpp
+	core/SimilarityRater.cpp
+	core/SmithWaterman.cpp
+	core/Symbol.cpp
+	core/SymbolRegistry.cpp
+	core/Trace.cpp
+	libjson/Source/internalJSONNode.cpp
+	libjson/Source/JSON_Base64.cpp
+	libjson/Source/JSONChildren.cpp
+	libjson/Source/JSONDebug.cpp
+	libjson/Source/JSONIterators.cpp
+	libjson/Source/JSONMemory.cpp
+	libjson/Source/JSONNode.cpp
+	libjson/Source/JSONNode_Mutex.cpp
+	libjson/Source/JSONStream.cpp
+	libjson/Source/JSONValidator.cpp
+	libjson/Source/JSONWorker.cpp
+	libjson/Source/JSONWriter.cpp
+	libjson/Source/libjson.cpp
+	specializations/midi/MidiReader.cpp
+	specializations/midi/MidiSymbol.cpp
+	specializations/nlb/ExactPitch40SimilarityRater.cpp
+	specializations/nlb/OptiReader.cpp
+	specializations/nlb/OptiReader_Registry.cpp
+	specializations/nlb/OptiSequence.cpp
+	specializations/nlb/OptiSequences.cpp
+	specializations/nlb/OptiSimilarityRater.cpp
+	specializations/nlb/OptiSimilarityRater_Registry.cpp
+	specializations/nlb/OptiSymbol.cpp
+)
+
+include_directories(core libjson IMACPP)
+
+add_definitions(-DNDEBUG)
+
+add_library(libmusical SHARED ${libmusical_lib_src})
