@@ -51,7 +51,7 @@ double OptiSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, i
 	result = 0.0;
 
 	diff = abs (s1->pitch40 - (s2->pitch40+pitchshift)) % 40 ;
-	if ( diff >= 23 ) result = -1.0; else result = 1.0 - ( (double)diff * 1.0/23.0 );
+	if ( diff > 23 ) result = -1.0; else result = 1.0 - ( (double)diff * 1.0/23.0 );
 
 	result = ( result + 1.0 ) / 2.0;
 

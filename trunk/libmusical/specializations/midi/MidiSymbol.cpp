@@ -21,6 +21,9 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "MidiSymbol.h"
 
+#include <sstream>
+using namespace std;
+
 namespace musical {
 
 MidiSymbol::MidiSymbol() {
@@ -30,6 +33,12 @@ MidiSymbol::MidiSymbol() {
 
 MidiSymbol::~MidiSymbol() {
 	// TODO Auto-generated destructor stub
+}
+
+std::string MidiSymbol::toString() {
+	stringstream ss;
+	ss << "pitch12: " << pitch12 << " onset: " << onset << " duration: " << duration;
+	return ss.str();
 }
 
 }
