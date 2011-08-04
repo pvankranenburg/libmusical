@@ -24,7 +24,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 using namespace std;
 
 #include "MidiReader.h"
-#include "SymbolRegistry.h"
+#include "MidiSymbol.h"
 #include "libjson.h"
 
 namespace musical {
@@ -56,12 +56,12 @@ Sequence* MidiReader::generateSequence() {
 		int onset=i1->at(ix).at("onset").as_int();
 		int pitch=i1->at(ix).at("pitch").as_int();
 		int duration=i1->at(ix).at("duration").as_int();
-		string id = i1->at(ix).at("id").as_string();
-		SymbolRegistry* s = new SymbolRegistry;
-		s->ints["onset"] = onset;
-		s->ints["pitch"] = pitch;
-		s->ints["duration"] = duration;
-		s->strings["id"] = id;
+		MidiSymbol* s = new MidiSymbol;
+		s->onset = onset;
+		s->pitch12 = pitch;
+		s->duration = duration;
+		//string id = i1->at(ix).at("id").as_string();
+		//s->strings["id"] = id;
 		nwseq->symbols.push_back(s);
 	}
 	//set next and previous
