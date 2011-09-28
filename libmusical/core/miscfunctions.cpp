@@ -21,6 +21,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "miscfunctions.h"
 #include <algorithm>
+#include <iostream>
 using namespace std;
 
 namespace musical {
@@ -56,6 +57,30 @@ int histogramShift(double hist1[], int length1, double hist2[], int length2) {
 	return shift;
 
 }
+
+int histogramShift_diffavg(double hist1[], int length1, double hist2[], int length2) {
+
+	/* Doesn't work!
+	 * Tested: full evaluation: mean avg. prec. 0.84 op Annotated dataset
+	 *         this function  : mean avg. prec. 0.7  op Annotated dataset
+	 */
+
+	int shift = 0;
+
+	double avg1 = 0.0;
+	double avg2 = 0.0;
+
+	for(int i=0; i<length1; i++) { avg1 = avg1 + hist1[i]*(double)i; if(hist1[i]>0); }
+	for(int i=0; i<length2; i++) { avg2 = avg2 + hist2[i]*(double)i; if(hist2[i]>0); }
+
+	shift = (int)(avg2-avg1);
+
+	//cout << avg1 << " " << avg2 << " " << shift << endl;
+
+	return shift;
+
+}
+
 
 
 }

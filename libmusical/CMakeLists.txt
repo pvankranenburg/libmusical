@@ -13,6 +13,7 @@ set(libmusical_lib_src
 	core/GapRater.cpp
 	core/JSONFileSource.cpp
 	core/JSONMysqlSource.cpp
+	core/JSONReader.cpp
 	core/JSONSource.cpp
 	core/miscfunctions.cpp
 	core/NeedlemanWunsch.cpp
@@ -40,11 +41,13 @@ set(libmusical_lib_src
 	libjson/Source/JSONWorker.cpp
 	libjson/Source/JSONWriter.cpp
 	libjson/Source/libjson.cpp
-	specializations/midi/MidiReader.cpp
+	specializations/midi/MidiExactPitchIntervalSimilarityRater.cpp
+	specializations/midi/MidiJSONReader.cpp
+	specializations/midi/MidiFileReader.cpp
 	specializations/midi/MidiSymbol.cpp
 	specializations/nlb/ExactPitch40SimilarityRater.cpp
-	specializations/nlb/OptiReader.cpp
-	specializations/nlb/OptiReader_Registry.cpp
+	specializations/nlb/OptiJSONReader.cpp
+	specializations/nlb/OptiJSONReader_Registry.cpp
 	specializations/nlb/OptiSequence.cpp
 	specializations/nlb/OptiSequences.cpp
 	specializations/nlb/OptiSimilarityRater.cpp
@@ -52,7 +55,7 @@ set(libmusical_lib_src
 	specializations/nlb/OptiSymbol.cpp
 )
 
-include_directories(core libjson IMACPP)
+include_directories(core libjson IMACPP CSUUMidiReader)
 
 add_definitions(-DNDEBUG)
 

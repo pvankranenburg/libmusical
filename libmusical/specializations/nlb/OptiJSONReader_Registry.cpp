@@ -23,22 +23,22 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include <iostream>
 using namespace std;
 
-#include "OptiReader_Registry.h"
+#include "OptiJSONReader_Registry.h"
 #include "SymbolRegistry.h"
 #include "libjson.h"
 
 namespace musical {
 
-OptiReader_Registry::OptiReader_Registry() {
+OptiJSONReader_Registry::OptiJSONReader_Registry() {
 	// TODO Auto-generated constructor stub
 
 }
 
-OptiReader_Registry::~OptiReader_Registry() {
+OptiJSONReader_Registry::~OptiJSONReader_Registry() {
 	// TODO Auto-generated destructor stub
 }
 
-Sequence* OptiReader_Registry::generateSequence() {
+Sequence* OptiJSONReader_Registry::generateSequence() {
 	//create a new sequence
 	Sequence * nwseq = new Sequence;
 	string json_string = source->getJSONString();

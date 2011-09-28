@@ -24,7 +24,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef NLBALIGNMENT_H_
 #define NLBALIGNMENT_H_
 
-#include "OptiReader.h"
+#include "OptiJSONReader.h"
 
 //Sequences
 #include "OptiSequence.h"

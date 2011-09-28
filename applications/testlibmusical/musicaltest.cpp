@@ -45,7 +45,7 @@ inline float datemicro() {
 
 int main(int argc, char * argv[]) {
 
-	bool distmat = true; //create distmat file?
+	bool distmat = false; //create distmat file?
 
 	ifstream listfile1, listfile2;
 
@@ -61,18 +61,18 @@ int main(int argc, char * argv[]) {
 	vector<musical::OptiSequence *> seqs2;
 	while (getline(listfile1, seq1name)) {
 		//musical::JSONFileSource * fs1 = new musical::JSONFileSource(seq1name);
-		musical::OptiReader mr1(new musical::JSONFileSource(seq1name));
+		musical::OptiJSONReader mr1(new musical::JSONFileSource(seq1name));
 		seqs1.push_back(static_cast<musical::OptiSequence*>(mr1.generateSequence()));
-		cout << seq1name << endl;
+		if ( seqs1.size() % 1000 == 0 ) cout << seq1name << endl;
 		//delete fs1; //taken care of by Reader
 		//cout << seq1name << ": " << seq1 <<  endl;
 	}
 
 	while (getline(listfile2, seq2name)) {
 		//musical::JSONFileSource * fs2 = new musical::JSONFileSource(seq2name);
-		musical::OptiReader mr2(new musical::JSONFileSource(seq2name));
+		musical::OptiJSONReader mr2(new musical::JSONFileSource(seq2name));
 		seqs2.push_back(static_cast<musical::OptiSequence*>(mr2.generateSequence()));
-		cout << seq2name << endl;
+		if ( seqs2.size()%1000 == 0 ) cout << seq2name << endl;
 		//delete fs2;
 		//cout << seq1name << ": " << seq1 <<  endl;
 	}
@@ -86,6 +86,8 @@ int main(int argc, char * argv[]) {
 	//do this outside the loop:
 	//musical::Sequences seqs = musical::Sequences();
 	//musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs);
+	//nw.simr = new musical::ExactPitch40SimilarityRater();
+	//nw.gapr = new musical::ConstantAffineGapRater(-0.8, -0.2);
 	//nw.simr = new musical::OptiSimilarityRater();
 	//musical::SmithWaterman nw = musical::SmithWaterman(&seqs);
 	//musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs);
@@ -108,8 +110,11 @@ int main(int argc, char * argv[]) {
 		if (distmat) outfile << seqs1[i]->name;
 		//#pragma omp parallel for
 		for(unsigned int j=0; j<seqs2.size(); j++) {
+			if ( j%1000 == 0 ) cout << "." << flush;
 			//cout << "\t start " << j << ": " << seqs2[j]->name << endl;
 			musical::OptiSequences seqs = musical::OptiSequences(seqs1[i],seqs2[j]);
+			//seqs.seq1 = seqs1[i];
+			//seqs.seq2 = seqs2[j];
 			//cout << "Sequences set"<<endl;
 			musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs);
 			//musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(&seqs);
