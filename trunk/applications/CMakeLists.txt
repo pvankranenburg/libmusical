@@ -1,1 +1,2 @@
 add_subdirectory(testlibmusical)
+add_subdirectory(alignmidi)

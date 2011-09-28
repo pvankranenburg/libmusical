@@ -19,10 +19,10 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#ifndef MIDIREADER_H_
-#define MIDIREADER_H_
+#ifndef MIDIJSONREADER_H_
+#define MIDIJSONREADER_H_
 
-#include "Reader.h"
+#include "JSONReader.h"
 
 namespace musical {
 
@@ -35,10 +35,10 @@ namespace musical {
  * - pitch (int)
  * - duration (int)
  */
-class MidiReader: public musical::Reader {
+class MidiJSONReader: public musical::JSONReader {
 public:
-	MidiReader();
-	virtual ~MidiReader();
+	MidiJSONReader();
+	virtual ~MidiJSONReader();
 
 	/**
 	 * Generate the Sequence from the JSON representation
@@ -49,4 +49,4 @@ public:
 
 }
 
-#endif /* MIDIREADER_H_ */
+#endif /* MIDIJSONREADER_H_ */

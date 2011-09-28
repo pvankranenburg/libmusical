@@ -33,7 +33,6 @@ namespace musical {
 class Reader {
 public:
 	Reader();
-	Reader(JSONSource * s ) : source(s) {};
 	virtual ~Reader();
 
 	/**
@@ -41,7 +40,6 @@ public:
 	 */
 	virtual Sequence * generateSequence() = 0;
 
-	JSONSource * source;
 };
 
 }

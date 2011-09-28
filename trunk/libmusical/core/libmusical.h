@@ -44,6 +44,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 //Readers
 #include "Reader.h"
+#include "JSONReader.h"
 
 //Sequences
 #include "Sequence.h"

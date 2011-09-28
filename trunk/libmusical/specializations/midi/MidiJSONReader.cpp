@@ -21,52 +21,49 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <string>
 #include <iostream>
-#include <iomanip>
 using namespace std;
 
-#include "OptiReader.h"
-#include "OptiSymbol.h"
-#include "OptiSequence.h"
+#include "MidiJSONReader.h"
+#include "MidiSymbol.h"
 #include "libjson.h"
-
 
 namespace musical {
 
-OptiReader::OptiReader() {
+MidiJSONReader::MidiJSONReader() {
 	// TODO Auto-generated constructor stub
 
 }
 
-OptiReader::~OptiReader() {
+MidiJSONReader::~MidiJSONReader() {
 	// TODO Auto-generated destructor stub
 }
 
-Sequence* OptiReader::generateSequence() {
+Sequence* MidiJSONReader::generateSequence() {
 	//create a new sequence
-	OptiSequence * nwseq = new OptiSequence; //NB OptiSequence contains a pitch histogram
+	Sequence * nwseq = new Sequence;
 	string json_string = source->getJSONString();
-	nwseq->json_string = json_string;
 	//cout << json_string << endl;
+
 	JSONNode seq = libjson::parse(json_string);
 	//the name should be at 'top-level'
 	JSONNode::const_iterator i1 = seq.begin();
 	nwseq->name = i1->name();
 	//cout << nwseq->name << endl;
 	i1 = seq.begin()->find("symbols");
+
 	int size = i1->size();
-	//cout << "Size: " << size << endl;
 	for( int ix=0; ix<size; ix++) {
-		OptiSymbol* s = new OptiSymbol();
-		s->pitch40 = i1->at(ix).at("pitch40").as_int();
-		s->phrasepos = i1->at(ix).at("phrasepos").as_float();
-		s->IMA = i1->at(ix).at("ima").as_float();
-		//check whether id is present. If not take index as id
+		int onset=i1->at(ix).at("onset").as_int();
+		int pitch=i1->at(ix).at("pitch").as_int();
+		int duration=i1->at(ix).at("duration").as_int();
+		MidiSymbol* s = new MidiSymbol;
+		s->onset = onset;
+		s->pitch12 = pitch;
+		s->duration = duration;
 		//string id = i1->at(ix).at("id").as_string();
 		//s->strings["id"] = id;
 		nwseq->symbols.push_back(s);
-		//cout << "symbol: " << s->pitch40 << " - " << s->phrasepos << " - " << s->IMA << endl;
 	}
-
 	//set next and previous
 	nwseq->symbols[0]->next = nwseq->symbols[1];
 	nwseq->symbols[0]->previous = NULL;
@@ -76,41 +73,6 @@ Sequence* OptiReader::generateSequence() {
 	}
 	nwseq->symbols[nwseq->symbols.size()-1]->previous = nwseq->symbols[nwseq->symbols.size()-2];
 	nwseq->symbols[nwseq->symbols.size()-1]->next = NULL;
-
-
-	//read the normalized pitch40 histogram
-	//or create it if it is not present in JSON
-	for(int i=0; i<200; i++) {
-		nwseq->pitchHistogram[i] = 0.0;
-	}
-	i1 = seq.begin()->find("pitch40histogram");
-	if ( i1 == (seq.begin())->end() ) { //not present
-		// count pitches
-		int count = 0;
-		for (unsigned int ix=0; ix<nwseq->symbols.size(); ix++) {
-			int indx = static_cast<OptiSymbol*>(nwseq->symbols[ix])->pitch40;
-			//cout << "index: " << indx << endl;
-			if ( indx > 40 ) { nwseq->pitchHistogram[indx - 40] += 1; count++; }
-		}
-		// normalize
-		for(int i=0; i<200; i++) {
-			nwseq->pitchHistogram[i] = nwseq->pitchHistogram[i] / (double)count;
-		}
-	} else { //present
-
-		size = i1->size();
-		int pitch = 0;
-		for ( int ix=0; ix<size; ix++) {
-			pitch = i1->at(ix).at("pitch40").as_int() - 40;
-			nwseq->pitchHistogram[pitch] = i1->at(ix).at("value").as_float();
-		}
-	}
-
-	/*
-	for(int i=0; i<200; i++) {
-		cout << setw(4) << i+40 << " : " << nwseq->pitchHistogram[i] << endl;
-	}
-	*/
 
 	return nwseq;
 }

@@ -70,6 +70,7 @@ void NeedlemanWunsch::doAlign() {
 	//cout << mn << " x " << mm << endl;
 
 	//s = new NWTrace[(mm)*(mn)];
+
 	s = (NWTrace *)malloc(mm*mn*sizeof(NWTrace));
 
 	if (feedback) cout << endl << "size: " << (mm)*(mn)*sizeof(NWTrace) << endl;
@@ -194,6 +195,7 @@ void NeedlemanWunsch::doAlign() {
 			cout << alignment[i].this_ix1 << " , " << alignment[i].this_ix2 << " : " << alignment[i].accumulatedscore << " , " << alignment[i].thisscore << endl;
 		}
 	}
+
 
 	//delete [] s;
 	free(s);

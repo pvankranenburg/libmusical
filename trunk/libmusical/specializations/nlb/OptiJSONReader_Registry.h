@@ -19,29 +19,28 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#ifndef OPTIREADER_H_
-#define OPTIREADER_H_
+#ifndef OPTIJSONREADER_REGISTRY_H_
+#define OPTIJSONREADER_REGISTRY_H_
 
-#include "Reader.h"
-#include "Sequence.h"
+#include "JSONReader.h"
 
 namespace musical {
 
 /**
- * Generates a sequence of OptiSymbol symbols from a JSON string
+ * This reads OptiSymbols, but stores the individual attributes of the symbols in a registry of key-value pairs instead of class attributes.
+ * This results in considerable slowing down of the computation of the alignment because of all the value lookups.
  */
-class OptiReader: public musical::Reader {
+class OptiJSONReader_Registry: public musical::JSONReader {
 public:
-	OptiReader();
-	OptiReader(JSONSource * s) : Reader(s) {};
-	virtual ~OptiReader();
+	OptiJSONReader_Registry();
+	virtual ~OptiJSONReader_Registry();
 
 	/**
-	 * Generate the sequence.
+	 * Generates the sequence of SymbolRegistry symbols.
 	 */
-	virtual Sequence* generateSequence();
+	Sequence * generateSequence();
 };
 
 }
 
-#endif /* OPTIREADER_H_ */
+#endif /* OPTIJSONREADER_REGISTRY_H_ */

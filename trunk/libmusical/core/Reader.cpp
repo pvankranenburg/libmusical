@@ -23,13 +23,13 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace musical {
 
-Reader::Reader() : source(NULL) {
+Reader::Reader() {
 	// TODO Auto-generated constructor stub
 
 }
 
 Reader::~Reader() {
-	delete source;
+
 }
 
 }
