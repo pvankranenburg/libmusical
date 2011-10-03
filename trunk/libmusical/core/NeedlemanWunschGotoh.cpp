@@ -379,6 +379,7 @@ void NeedlemanWunschGotoh::doAlign() {
 	if ( s[(n*mm)+mm-1].accumulatedscore >= g1[(n*mm)+mm-1].accumulatedscore && s[(n*mm)+mm-1].accumulatedscore >= g2[(n*mm)+mm-1].accumulatedscore  ) {
 		if (feedback) cout << "in S (" << i << "," << j << "), to : ";
 		score = s[(n*mm)+mm-1].accumulatedscore;
+		scores.push_back(score);
 		s[(n*mm)+mm-1].this_ix1 = i;
 		s[(n*mm)+mm-1].this_ix2 = j;
 		alignments[0].push_front(new NWGTrace(s[(n*mm)+mm-1])); //last alignment
@@ -390,6 +391,7 @@ void NeedlemanWunschGotoh::doAlign() {
 	if ( g1[(n*mm)+mm-1].accumulatedscore >= s[(n*mm)+mm-1].accumulatedscore && g1[(n*mm)+mm-1].accumulatedscore >= g2[(n*mm)+mm-1].accumulatedscore  ) {
 		if (feedback) cout << "in G1 (" << i << "," << j << "), to : ";
 		score = g1[(n*mm)+mm-1].accumulatedscore;
+		scores.push_back(score);
 		g1[(n*mm)+mm-1].this_ix1 = i;
 		g1[(n*mm)+mm-1].this_ix2 = j;
 		alignments[0].push_front(new NWGTrace(g1[(n*mm)+mm-1])); //last alignment
@@ -402,6 +404,7 @@ void NeedlemanWunschGotoh::doAlign() {
 	if ( g2[(n*mm)+mm-1].accumulatedscore >= s[(n*mm)+mm-1].accumulatedscore && g2[(n*mm)+mm-1].accumulatedscore >= g1[(n*mm)+mm-1].accumulatedscore  ) {
 		if (feedback) cout << "in G2 (" << i << "," << j << "), to : ";
 		score = g2[(n*mm)+mm-1].accumulatedscore;
+		scores.push_back(score);
 		g2[(n*mm)+mm-1].this_ix1 = i;
 		g2[(n*mm)+mm-1].this_ix2 = j;
 		alignments[0].push_front(new NWGTrace(g2[(n*mm)+mm-1])); //last alignment
