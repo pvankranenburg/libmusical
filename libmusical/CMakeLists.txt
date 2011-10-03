@@ -59,4 +59,75 @@ include_directories(core libjson IMACPP CSUUMidiReader)
 
 add_definitions(-DNDEBUG)
 
-add_library(libmusical SHARED ${libmusical_lib_src})
+add_library(musical SHARED ${libmusical_lib_src})
+
+install(
+	FILES CSUUMidiReader/csuu_midi.h
+		CSUUMidiReader/csuu_pod.h
+		CSUUMidiReader/file_holder.h
+		CSUUMidiReader/pod_rep.h
+		IMACPP/MeterCollection.h
+		IMACPP/MetroMath.h
+		IMACPP/MetroWeights_Mazzola.h
+		IMACPP/Metrum.h
+		IMACPP/OnsetGroup_Memory.h
+		IMACPP/WeightSet.h
+		core/AlignmentAlgorithm.cpp
+		core/AlignmentAlgorithm.h
+		core/AlignmentVisualizer.h
+		core/ConstantAffineGapRater.h
+		core/ConstantLinearGapRater.h
+		core/Converter.h
+		core/GapRater.h
+		core/JSONFileSource.h
+		core/JSONMysqlSource.h
+		core/JSONReader.h
+		core/JSONSource.h
+		core/libmusical.h
+		core/miscfunctions.h
+		core/NeedlemanWunsch.h
+		core/NeedlemanWunschGotoh.h
+		core/NWGTrace.h
+		core/NWTrace.h
+		core/Reader.h
+		core/Sequence.h
+		core/Sequences.h
+		core/SimilarityRater.h
+		core/SmithWaterman.h
+		core/Symbol.h
+		core/SymbolRegistry.h
+		core/Trace.h
+		libjson/JSONOptions.h
+		libjson/libjson.h
+		libjson/Source/internalJSONNode.h
+		libjson/Source/JSON_Base64.h
+		libjson/Source/JSONChildren.h
+		libjson/Source/JSONDebug.h
+		libjson/Source/JSONDefs/GNU_C.h
+		libjson/Source/JSONDefs/Strings_Defs.h
+		libjson/Source/JSONDefs/Unknown_C.h
+		libjson/Source/JSONDefs/Visual_C.h
+		libjson/Source/JSONDefs.h
+		libjson/Source/JSONMemory.h
+		libjson/Source/JSONNode.h
+		libjson/Source/JSONStream.h
+		libjson/Source/JSONValidator.h
+		libjson/Source/JSONWorker.h
+		libjson/Source/NumberToString.h
+		specializations/midi/MidiAlignment.h
+		specializations/midi/MidiExactPitchIntervalSimilarityRater.h
+		specializations/midi/MidiFileReader.h
+		specializations/midi/MidiJSONReader.h
+		specializations/midi/MidiSymbol.h
+		specializations/nlb/ExactPitch40SimilarityRater.h
+		specializations/nlb/OptiAlignment.h
+		specializations/nlb/OptiJSONReader.h
+		specializations/nlb/OptiJSONReader_Registry.h
+		specializations/nlb/OptiSequence.h
+		specializations/nlb/OptiSequences.h
+		specializations/nlb/OptiSimilarityRater.h
+		specializations/nlb/OptiSimilarityRater_Registry.h
+		specializations/nlb/OptiSymbol.h
+	DESTINATION include/libmusical)
+
+install(TARGETS musical LIBRARY DESTINATION lib)

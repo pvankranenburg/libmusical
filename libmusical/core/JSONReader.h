@@ -18,43 +18,23 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef JSONREADER_H_
+#define JSONREADER_H_
 
-#ifndef SYMBOL_H_
-#define SYMBOL_H_
-
-#include <string>
+#include <Reader.h>
 
 namespace musical {
 
-/**
- * Abstract symbol
- */
-class Symbol {
+class JSONReader: public musical::Reader {
 public:
-	Symbol();
-	virtual ~Symbol();
-
-	Symbol * getNext() { return next; }
-	Symbol * getPrevious() { return previous; }
-
-	void setNext(Symbol * n) { next = n; }
-	void setPrevious(Symbol * p) { previous = p; }
-
-	void setId(std::string i) { id = i; }
-	std::string getId() { return id; }
-
-	/**
-	 * Returns a string representation of the symbol.
-	 */
-	virtual std::string toString() = 0;
+	JSONReader();
+	JSONReader(JSONSource * s ) : source(s) {};
+	virtual ~JSONReader();
 
 protected:
-	std::string id;
-	Symbol * next;
-	Symbol * previous;
-
+	JSONSource * source;
 };
 
 }
 
-#endif /* SYMBOL_H_ */
+#endif /* JSONREADER_H_ */

@@ -46,8 +46,8 @@ void SmithWaterman::doAlign() {
 	//make sure n and m are sizes of sequences.
 
 	//for convenience
-	Sequence * seq1 = seqs->seq1;
-	Sequence * seq2 = seqs->seq2;
+	Sequence * seq1 = seqs->getSeq1();
+	Sequence * seq2 = seqs->getSeq2();
 
 	if (seq1==NULL || seq2==NULL) {
 		std::cerr << "No sequences to align" << std::endl;
@@ -204,7 +204,7 @@ void SmithWaterman::doAlign() {
 
 		//trace back
 		//add new alignment to alignments
-		alignments.push_back(std::deque<NWTrace>());
+		alignments.push_back(std::deque<Trace *>());
 		alignments.back().clear();
 
 		int i = max_k; //point to final cell
@@ -213,7 +213,7 @@ void SmithWaterman::doAlign() {
 		do {
 			s[i*mm+j].this_ix1 = i;
 			s[i*mm+j].this_ix2 = j;
-			alignments.back().push_front(s[i*mm+j]);
+			alignments.back().push_front(new NWTrace(s[i*mm+j]));
 			i_new = s[i*mm+j].ix1;
 			j = s[i*mm+j].ix2;
 			i = i_new;
@@ -224,16 +224,15 @@ void SmithWaterman::doAlign() {
 
 		if (feedback) { //print trace
 			for(unsigned int i = 0; i < alignments.back().size(); i++) {
-				cout << alignments.back()[i].ix1 << " , " << alignments.back()[i].ix2 << " -> "
-						<< alignments.back()[i].this_ix1 << " , " << alignments.back()[i].this_ix2 << " : "
-						<< alignments.back()[i].accumulatedscore << " : " << alignments.back()[i].thisscore << endl;
+				cout << alignments.back()[i]->getIx1() << " , " << alignments.back()[i]->getIx2() << " : "
+					 << alignments.back()[i]->getAccumulatedscore() << " : " << alignments.back()[i]->getThisscore() << endl;
 			}
 		}
 
 		//clear trace
 		for(unsigned int i = 0; i < alignments.back().size(); i++) {
-			int ix1 = alignments.back()[i].ix1;
-			int ix2 = alignments.back()[i].ix2;
+			int ix1 = alignments.back()[i]->getMatrixThisIx1();
+			int ix2 = alignments.back()[i]->getMatrixThisIx2();
 			s[ix1*mm+ix2].ix1 = Trace::DONTUSE;
 			s[ix1*mm+ix2].ix2 = Trace::DONTUSE;
 		}
@@ -243,10 +242,10 @@ void SmithWaterman::doAlign() {
 
 		//disable symbols belonging to the local alignment (if desired).
 		if ( !allowOverlappingMatches ) {
-			int ix1_start = alignments.back().front().this_ix1;
-			int ix2_start = alignments.back().front().this_ix2;
-			int ix1_end   = alignments.back().back().this_ix1;
-			int ix2_end   = alignments.back().back().this_ix2;
+			int ix1_start = alignments.back().front()->getMatrixThisIx1();
+			int ix2_start = alignments.back().front()->getMatrixThisIx2();
+			int ix1_end   = alignments.back().back()->getMatrixThisIx1();
+			int ix2_end   = alignments.back().back()->getMatrixThisIx1();
 
 			for(int k=ix1_start; k<=ix1_end; k++)
 				for(int l=ix2_start; l<=ix2_end; l++) {
@@ -264,18 +263,6 @@ void SmithWaterman::doAlign() {
 	//get rid of matrix
 	free(s);
 	if (feedback) cout << "s freed" << endl;
-
-	//take the score of the first aligment as the score:
-	score = 0.0;
-	if ( alignments.size() > 0 ) {
-		score = alignments.back().back().accumulatedscore;
-		if (feedback) cout << seq1->name << " - " << seq2->name << " : score : " << score << endl;
-	} else {
-		score = -std::numeric_limits<double>::infinity();
-		if (feedback) cout << seq1->name << " - " << seq2->name << "No alignments" << endl;
-	}
-
-	if (feedback) cout << "score set" << endl;
 
 }
 

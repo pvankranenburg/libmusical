@@ -37,8 +37,19 @@ public:
 	Sequence();
 	virtual ~Sequence();
 
-	std::vector<Symbol*> symbols;
+	/**
+	 * Get symbol at index ix
+	 */
+	Symbol* getSymbolAt(int ix) { return symbols[ix]; }
 
+	/**
+	 * Add a symbol
+	 */
+	void addSymbol(Symbol * s) { symbols.push_back(s); }
+
+	/**
+	 * Get number of symbols
+	 */
 	unsigned int size() const { return symbols.size(); }
 
 	/**
@@ -49,7 +60,17 @@ public:
 	/**
 	 * Returns the name of the sequence.
 	 */
-	std::string getName();
+	std::string getName() { return name; }
+
+	/**
+	 * set the name
+	 */
+	void setName(std::string n) { name = n; }
+
+
+
+protected:
+	std::vector<Symbol*> symbols;
 
 	std::string name;
 

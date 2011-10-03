@@ -42,6 +42,7 @@ public:
 	virtual double getScore(Sequences * seqs, int x1, int y1, int x2, int y2);
 
 	//declare these here, instead of in the definition of getScore().
+private:
 	OptiSymbol * s1;
 	OptiSymbol * s2;
 	double result;

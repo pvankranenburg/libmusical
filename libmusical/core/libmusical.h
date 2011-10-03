@@ -61,5 +61,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include "NeedlemanWunschGotoh.h"
 #include "SmithWaterman.h"
 
+//Visualizers
+#include "AlignmentVisualizer.h"
 
 #endif /* LIBMUSICAL_H_ */

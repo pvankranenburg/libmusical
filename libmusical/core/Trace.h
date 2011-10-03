@@ -33,6 +33,49 @@ public:
 	Trace(double as, double ts) : accumulatedscore(as), thisscore(ts) {} ;
 	virtual ~Trace();
 
+	/**
+	 * Returns the index _in_ sequence 1.
+	 * Or -1 for a gap
+	 */
+	virtual int getIx1() = 0;
+
+	/**
+	 * Returns the index _in_ sequence 2.
+	 * Or -1 for a gap
+	 */
+	virtual int getIx2() = 0;
+
+	/**
+	 * Returns index in matrix of the cell the trace is pointing to.
+	 */
+	virtual int getMatrixPreviousIx1() = 0;
+
+	/**
+	 * Returns index in matrix of the cell the trace is pointing to.
+	 */
+	virtual int getMatrixPreviousIx2() = 0;
+
+	/**
+	 * Returns index in matrix of the cell the trace element is in
+	 */
+	virtual int getMatrixThisIx1() = 0;
+
+	/**
+	 * Returns index in matrix of the cell the trace element is in
+	 */
+	virtual int getMatrixThisIx2() = 0;
+
+	/**
+	 * Returns the accumulatedscore
+	 */
+	virtual double getAccumulatedscore() { return accumulatedscore; }
+
+	/**
+	 * Returns the score for this particular trace element
+	 */
+	virtual double getThisscore() { return thisscore; }
+
+public:
 	double accumulatedscore;
 	double thisscore;
 	static const int NOWHERE = -1;

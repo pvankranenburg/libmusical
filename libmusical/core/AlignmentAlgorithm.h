@@ -25,6 +25,9 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include "Sequences.h"
 #include "GapRater.h"
 #include "SimilarityRater.h"
+#include "Trace.h"
+
+#include <deque>
 
 namespace musical {
 
@@ -44,38 +47,84 @@ public:
 	virtual void doAlign() = 0;
 
 	/**
-	 * Do the trace-back
-	 */
-	virtual void doTraceBack() = 0;
-
-	/**
 	 * Assign a sequences object to the alignment algorithm
 	 */
 	void setSequences(Sequences * sequences) { seqs = sequences; }
 
 	/**
-	 * Assign a gap rater to the alignment algorithm
+	 * Returns pointer to sequence 1
 	 */
-	void setGapRater(GapRater * gr ) { gapr = gr; }
+	Sequence * getSeq1() {
+		return seqs->getSeq1();
+	}
 
 	/**
-	 * Assign a similarity rater for symbols to the alignment algorithm.
+	 * Returns pointer to sequence 2
 	 */
-	void setSRater(SimilarityRater * sr ) { simr = sr; }
+	Sequence * getSeq2() {
+		return seqs->getSeq2();
+	}
+
+	/**
+	 * returns a pointer to the similarity rater
+	 */
+	SimilarityRater * getSimilarityRater() { return simr; }
+
+	/**
+	 * Set the similarity rater
+	 */
+	void setSimilarityRater(SimilarityRater * sr ) { simr = sr; }
+
+	/**
+	 * returns a pointer to the gap rater
+	 */
+	GapRater * getGapRater() { return gapr; }
+
+	/**
+	 * set the gap rater
+	 */
+	void setGapRater(GapRater * gr) { gapr = gr; }
 
 	/**
 	 * remove all results / score etc.
 	 */
-	virtual void clear() = 0;
+	void clear();
 
 	/**
-	 * Returns the score of the alignment
+	 * In this function derived classes (algorithms) should put specific cleaning.
+	 * Invoked from clear (make protected?)
+	 */
+	virtual void specificClear() = 0;
+
+	/**
+	 * Returns the score of alignment c
+	 * Default c=0
 	 * Do invoke doAlign() first.
 	 */
-	double getScore() const { return score; };
+	double getScore(int c=0) const { return scores[c]; };
 
+	/**
+	 * Get the length of alignment c
+	 * Default c=0
+	 */
+	int getAlignmentSize(int c=0) { return alignments[c].size(); }
 
-	double score;
+	/**
+	 * Returns pointer to nth trace element of alignment c
+	 * Default c = 0
+	 */
+	Trace * getTraceElement(int n, int c=0) {
+		return alignments[c][n];
+	}
+
+protected:
+	/**
+	 * This will contain one or more alignments
+	 */
+	std::vector<std::deque<Trace *> > alignments;
+
+	vector<double> scores;
+
 	Sequences * seqs;
 	GapRater * gapr;
 	SimilarityRater * simr;

@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "AlignmentAlgorithm.h"
 
 #ifndef ALIGNMENTVISUALIZER_H_
 #define ALIGNMENTVISUALIZER_H_
@@ -31,8 +32,18 @@ namespace musical {
 class AlignmentVisualizer {
 public:
 	AlignmentVisualizer();
+	AlignmentVisualizer(AlignmentAlgorithm * alg): al(alg) { };
 	virtual ~AlignmentVisualizer();
 
+	/**
+	 * Print a textual representation of alignment c to stdout
+	 * Default c=0
+	 */
+	void basicStdoutReport(int c=0);
+
+private:
+
+	AlignmentAlgorithm * al;
 
 };
 

@@ -44,6 +44,7 @@ public:
 	Sequence * getSeq1() {return seq1;};
 	Sequence * getSeq2() {return seq2;};
 
+protected:
 	Sequence * seq1;
 	Sequence * seq2;
 };

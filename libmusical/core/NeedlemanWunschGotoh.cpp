@@ -63,8 +63,8 @@ void NeedlemanWunschGotoh::doAlign() {
 	if (feedback) cout << "start alignment" << endl;
 
 	//for convenience
-	Sequence * seq1 = seqs->seq1;
-	Sequence * seq2 = seqs->seq2;
+	Sequence * seq1 = seqs->getSeq1();
+	Sequence * seq2 = seqs->getSeq2();
 
 	if (seq1==NULL || seq2==NULL) {
 		std::cerr << "No sequences to align" << std::endl;
@@ -359,6 +359,10 @@ void NeedlemanWunschGotoh::doAlign() {
 
 
 	//find score and do the trace back:
+	//add one alignment to alignments
+	alignments.push_back(std::deque<Trace *>());
+	alignments.back().clear();
+
 	//find out whether to start with s, g1 or g2
 	int i = mn - 1; //point to final cell
 	int j = mm - 1;
@@ -370,14 +374,14 @@ void NeedlemanWunschGotoh::doAlign() {
 
 	//NB order of this matters
 	//if e.g. max score in s equals max score in g1, last one is chosen
-	score = -std::numeric_limits<double>::infinity();
+	double score = -std::numeric_limits<double>::infinity();
 	//start with s?
 	if ( s[(n*mm)+mm-1].accumulatedscore >= g1[(n*mm)+mm-1].accumulatedscore && s[(n*mm)+mm-1].accumulatedscore >= g2[(n*mm)+mm-1].accumulatedscore  ) {
 		if (feedback) cout << "in S (" << i << "," << j << "), to : ";
 		score = s[(n*mm)+mm-1].accumulatedscore;
 		s[(n*mm)+mm-1].this_ix1 = i;
 		s[(n*mm)+mm-1].this_ix2 = j;
-		alignment.push_front(s[(n*mm)+mm-1]); //last alignment
+		alignments[0].push_front(new NWGTrace(s[(n*mm)+mm-1])); //last alignment
 		//point to (i,j) in matrix state.
 		i = s[(n*mm)+mm-1].ix1;
 		j = s[(n*mm)+mm-1].ix2;
@@ -388,7 +392,7 @@ void NeedlemanWunschGotoh::doAlign() {
 		score = g1[(n*mm)+mm-1].accumulatedscore;
 		g1[(n*mm)+mm-1].this_ix1 = i;
 		g1[(n*mm)+mm-1].this_ix2 = j;
-		alignment.push_front(g1[(n*mm)+mm-1]); //last alignment
+		alignments[0].push_front(new NWGTrace(g1[(n*mm)+mm-1])); //last alignment
 		//point to (i,j) in matrix state.
 		i = g1[(n*mm)+mm-1].ix1;
 		j = g1[(n*mm)+mm-1].ix2;
@@ -400,7 +404,7 @@ void NeedlemanWunschGotoh::doAlign() {
 		score = g2[(n*mm)+mm-1].accumulatedscore;
 		g2[(n*mm)+mm-1].this_ix1 = i;
 		g2[(n*mm)+mm-1].this_ix2 = j;
-		alignment.push_front(g2[(n*mm)+mm-1]); //last alignment
+		alignments[0].push_front(new NWGTrace(g2[(n*mm)+mm-1])); //last alignment
 		//point to (i,j) in matrix state.
 		i = g2[(n*mm)+mm-1].ix1;
 		j = g2[(n*mm)+mm-1].ix2;
@@ -416,7 +420,7 @@ void NeedlemanWunschGotoh::doAlign() {
 			if (feedback) cout << "in S (" << i << "," << j << "), to : ";
 			s[i*mm+j].this_ix1 = i;
 			s[i*mm+j].this_ix2 = j;
-			alignment.push_front(s[i*mm+j]);
+			alignments[0].push_front(new NWGTrace(s[i*mm+j]));
 			state = s[i*mm+j].state;
 			i_new = s[i*mm+j].ix1;
 			j = s[i*mm+j].ix2;
@@ -426,7 +430,7 @@ void NeedlemanWunschGotoh::doAlign() {
 			if (feedback) cout << "in G1 (" << i << "," << j << "), to : ";
 			g1[i*mm+j].this_ix1 = i;
 			g1[i*mm+j].this_ix2 = j;
-			alignment.push_front(g1[i*mm+j]);
+			alignments[0].push_front(new NWGTrace(g1[i*mm+j]));
 			state = g1[i*mm+j].state;
 			i_new = g1[i*mm+j].ix1;
 			j = g1[i*mm+j].ix2;
@@ -436,7 +440,7 @@ void NeedlemanWunschGotoh::doAlign() {
 			if (feedback) cout << "in G2 (" << i << "," << j << "), to : ";
 			g2[i*mm+j].this_ix1 = i;
 			g2[i*mm+j].this_ix2 = j;
-			alignment.push_front(g2[i*mm+j]);
+			alignments[0].push_front(new NWGTrace(g2[i*mm+j]));
 			state = g2[i*mm+j].state;
 			i_new = g2[i*mm+j].ix1;
 			j = g2[i*mm+j].ix2;
@@ -457,10 +461,9 @@ void NeedlemanWunschGotoh::doAlign() {
 	//delete [] g2;
 
 	if (feedback) { //print trace
-		for(unsigned int i = 0; i < alignment.size(); i++) {
-			cout << alignment[i].ix1 << " , " << alignment[i].ix2 << " -> "
-					<< alignment[i].this_ix1 << " , " << alignment[i].this_ix2 << " : "
-					<< alignment[i].accumulatedscore << " : " << alignment[i].thisscore << endl;
+		for(unsigned int i = 0; i < alignments[0].size(); i++) {
+			cout << alignments[0][i]->getMatrixThisIx1() << " , " << alignments[0][i]->getMatrixThisIx2() << " : "
+				 << alignments[0][i]->getAccumulatedscore() << " : " << alignments[0][i]->getThisscore() << endl;
 		}
 	}
 

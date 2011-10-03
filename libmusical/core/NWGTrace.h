@@ -40,10 +40,21 @@ public:
 	NWGTrace(int i1, int i2, State st, double ac, double ts ) : Trace(ac, ts), ix1(i1), ix2(i2), state(st) { } ;
 	virtual ~NWGTrace();
 
+	int getIx1() { if (this_ix1 != ix1) return this_ix1 - 1; else return -1; };
+	int getIx2() { if (this_ix2 != ix2) return this_ix2 - 1; else return -1; };
+	int getMatrixPreviousIx1() { return ix1; };
+	int getMatrixPreviousIx2() { return ix2; };
+	int getMatrixThisIx1() { return this_ix1; };
+	int getMatrixThisIx2() { return this_ix2; };
+
+
+public:
+	//the indices of the previous matrix cell in the alignment
 	int ix1;
 	int ix2;
 	State state; //ix1, ix2 points either to S, G1 or G2
 
+	//the indices of the current matrix cell in the alignment
 	int this_ix1;
 	int this_ix2;
 

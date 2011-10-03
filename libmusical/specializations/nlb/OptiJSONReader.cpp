@@ -45,12 +45,12 @@ Sequence* OptiJSONReader::generateSequence() {
 	//create a new sequence
 	OptiSequence * nwseq = new OptiSequence; //NB OptiSequence contains a pitch histogram
 	string json_string = source->getJSONString();
-	nwseq->json_string = json_string;
+	//nwseq->json_string = json_string;
 	//cout << json_string << endl;
 	JSONNode seq = libjson::parse(json_string);
 	//the name should be at 'top-level'
 	JSONNode::const_iterator i1 = seq.begin();
-	nwseq->name = i1->name();
+	nwseq->setName(i1->name());
 	//cout << nwseq->name << endl;
 	i1 = seq.begin()->find("symbols");
 	int size = i1->size();
@@ -63,19 +63,19 @@ Sequence* OptiJSONReader::generateSequence() {
 		//check whether id is present. If not take index as id
 		//string id = i1->at(ix).at("id").as_string();
 		//s->strings["id"] = id;
-		nwseq->symbols.push_back(s);
+		nwseq->addSymbol(s);
 		//cout << "symbol: " << s->pitch40 << " - " << s->phrasepos << " - " << s->IMA << endl;
 	}
 
 	//set next and previous
-	nwseq->symbols[0]->next = nwseq->symbols[1];
-	nwseq->symbols[0]->previous = NULL;
-	for( unsigned int i = 1; i<nwseq->symbols.size()-1; i++) {
-		nwseq->symbols[i]->previous = nwseq->symbols[i-1];
-		nwseq->symbols[i]->next = nwseq->symbols[i+1];
+	nwseq->getSymbolAt(0)->setNext(nwseq->getSymbolAt(1));
+	nwseq->getSymbolAt(0)->setPrevious(NULL);
+	for( unsigned int i = 1; i<nwseq->size()-1; i++) {
+		nwseq->getSymbolAt(i)->setPrevious(nwseq->getSymbolAt(i-1));
+		nwseq->getSymbolAt(i)->setNext(nwseq->getSymbolAt(i+1));
 	}
-	nwseq->symbols[nwseq->symbols.size()-1]->previous = nwseq->symbols[nwseq->symbols.size()-2];
-	nwseq->symbols[nwseq->symbols.size()-1]->next = NULL;
+	nwseq->getSymbolAt(nwseq->size()-1)->setPrevious( nwseq->getSymbolAt(nwseq->size()-2) );
+	nwseq->getSymbolAt(nwseq->size()-1)->setNext(NULL);
 
 
 	//read the normalized pitch40 histogram
@@ -88,8 +88,8 @@ Sequence* OptiJSONReader::generateSequence() {
 	if ( i1 == (seq.begin())->end() ) { //not present
 		// count pitches
 		int count = 0;
-		for (unsigned int ix=0; ix<nwseq->symbols.size(); ix++) {
-			int indx = static_cast<OptiSymbol*>(nwseq->symbols[ix])->pitch40;
+		for (unsigned int ix=0; ix<nwseq->size(); ix++) {
+			int indx = static_cast<OptiSymbol*>(nwseq->getSymbolAt(ix))->pitch40;
 			//cout << "index: " << indx << endl;
 			if ( indx > 40 ) { nwseq->pitchHistogram[indx - 40] += 1; count++; }
 		}
