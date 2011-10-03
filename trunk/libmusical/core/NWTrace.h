@@ -36,6 +36,14 @@ public:
 	NWTrace(int i1, int i2, double ac, double ts ) : Trace(ac, ts), ix1(i1), ix2(i2) { } ;
 	virtual ~NWTrace();
 
+	int getIx1() { if ( this_ix1 == 0 ) return -1; if ( this_ix1 != ix1 ) return this_ix1 - 1; else return -1; }
+	int getIx2() { if ( this_ix2 == 0 ) return -1; if ( this_ix2 != ix2 ) return this_ix2 - 1; else return -1; }
+	int getMatrixPreviousIx1() { return ix1; };
+	int getMatrixPreviousIx2() { return ix2; };
+	int getMatrixThisIx1() { return this_ix1; };
+	int getMatrixThisIx2() { return this_ix2; };
+
+public:
 	int ix1; //the indices of the previous matrix cell in the alignment
 	int ix2;
 

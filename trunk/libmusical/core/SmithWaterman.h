@@ -45,17 +45,27 @@ public:
 	void doAlign();
 
 	/**
-	 * Do the trace back.
+	 * set max number of alignments
 	 */
-	virtual void doTraceBack() { };
+	void setMaxAlignments(int m) { maxAlignments = m; }
+
+	/**
+	 * Allow for overlapping matches
+	 */
+	void doAllowOverlappingMatches() { allowOverlappingMatches = true; }
+
+	/**
+	 * Do not allow for overlapping matches
+	 */
+	void disallowOverlappingMatches() { allowOverlappingMatches = false; }
 
 	/**
 	 * Remove the results.
 	 */
-	virtual void clear() { alignments.clear(); maxAlignments = 1; allowOverlappingMatches = false; } ;
+	virtual void specificClear() { maxAlignments = 1; allowOverlappingMatches = false; } ;
 
-	NWTrace * s; //this will be the d.p. matrix
-	std::vector<std::deque<NWTrace> > alignments;
+private:
+	NWTrace * s; //this will be the d.p. matrix. created and deleted in doAlign().
 
 	int maxAlignments; //number of local alignments that is returned. -1 is all. default is 1.
 	bool allowOverlappingMatches; // if true: symbols can occur in more than one local alignment. Default: false

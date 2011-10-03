@@ -18,39 +18,16 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef ALIGNMENTALGORITHM_H_
-#define ALIGNMENTALGORITHM_H_
-
-#include "Sequences.h"
-#include "GapRater.h"
-#include "SimilarityRater.h"
+#include <JSONReader.h>
 
 namespace musical {
 
-class AlignmentAlgorithm {
-private:
-	AlignmentAlgorithm();
-public:
-	AlignmentAlgorithm(Sequences * s, SimilarityRater * sr, GapRater * gr) : seqs(s), simr(sr), gapr(gr) { };
-	virtual ~AlignmentAlgorithm();
-
-	virtual void doAlign() = 0;
-
-	virtual void clear() = 0;
-
-	double getScore(int ix=0) const { return scores[ix]; };
-
-	
-protected:
-	Sequences * seqs;
-	GapRater * gapr;
-	SimilarityRater * simr;
-
-	std::vector<std::deque<NWTrace> > alignments;
-	vector<double> scores;
-
-};
+JSONReader::JSONReader() : source(NULL)  {
 
 }
 
-#endif /* ALIGNMENTALGORITHM_H_ */
+JSONReader::~JSONReader() {
+	delete source;
+}
+
+}

@@ -38,11 +38,6 @@ public:
 	SymbolRegistry();
 	virtual ~SymbolRegistry();
 
-	std::map<std::string,float> floats;
-	std::map<std::string,int> ints;
-	std::map<std::string,std::string> strings;
-	std::map<std::string,bool> bools;
-
 	/**
 	 * Returns a string representation of the symbol.
 	 */
@@ -54,9 +49,19 @@ public:
 	float getFloat(std::string key) { return floats[key]; }
 
 	/**
+	 * Add a floating point value with key "key"
+	 */
+	void addFloat(std::string key, float v ) { floats[key] = v; }
+
+	/**
 	 * Returns the integer value of an int attribute with key "key"
 	 */
 	int   getInt  (std::string key) { return ints[key]; }
+
+	/**
+	 * Add an int
+	 */
+	void addInt(std::string key, int i) { ints[key] = i; }
 
 	/**
 	 * Returns the bool value of a bool attribute with key "key"
@@ -64,9 +69,25 @@ public:
 	bool  getBool (std::string key) { return bools[key]; }
 
 	/**
+	 * Adds a bool
+	 */
+	void addBool(std::string key, bool b) { bools[key] = b; }
+
+	/**
 	 * Returns the string value of a string attribute with key "key"
 	 */
 	std::string getString(std::string key) { return strings[key]; }
+
+	/**
+	 * Adds a string
+	 */
+	void addString(std::string key, std::string s) { strings[key] = s; }
+
+public:
+	std::map<std::string,float> floats;
+	std::map<std::string,int> ints;
+	std::map<std::string,std::string> strings;
+	std::map<std::string,bool> bools;
 };
 
 }

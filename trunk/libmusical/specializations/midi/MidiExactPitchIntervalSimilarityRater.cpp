@@ -18,46 +18,42 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-#include <cmath>
-
-#include "OptiSimilarityRater.h"
-#include "OptiSymbol.h"
-#include "OptiSequences.h"
+#include "MidiExactPitchIntervalSimilarityRater.h"
+#include "MidiSymbol.h"
 
 namespace musical {
 
-OptiSimilarityRater::OptiSimilarityRater() {
+MidiExactPitchIntervalSimilarityRater::MidiExactPitchIntervalSimilarityRater() {
 	// TODO Auto-generated constructor stub
 
 }
 
-OptiSimilarityRater::~OptiSimilarityRater() {
+MidiExactPitchIntervalSimilarityRater::~MidiExactPitchIntervalSimilarityRater() {
 	// TODO Auto-generated destructor stub
 }
 
-double OptiSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
-
+double MidiExactPitchIntervalSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
 	//for now ignore x1 and y1. Only return the similarity of the symbols associated with the destination cell
 
-	//dynamic_cast would be better, but much, much slower
-	s1 = static_cast<OptiSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
-	s2 = static_cast<OptiSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
+	//first pitch
+	if (x2 == 0 || y2 == 0) return 0.0; //'neutral' score
 
-	int pitchshift = static_cast<OptiSequences *>(seqs)->getPitch40Shift();
+	MidiSymbol * s1 = static_cast<MidiSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
+	MidiSymbol * s2 = static_cast<MidiSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
+	MidiSymbol * s1prev = static_cast<MidiSymbol *>(s1->getPrevious());
+	MidiSymbol * s2prev = static_cast<MidiSymbol *>(s2->getPrevious());
 
 	//cout << x2 << " : " << pitch1 << " - " << y2 << " : " << pitch2 << endl;
 
-	result = 0.0;
+	if ( s1->pitch12 - s1prev->pitch12 == s2->pitch12 - s2prev->pitch12 )
+		return 1.0;
+	else
+		return -1.0;
 
-	diff = abs (s1->pitch40 - (s2->pitch40+pitchshift)) % 40 ;
-	if ( diff > 23 ) result = -1.0; else result = 1.0 - ( (double)diff * 1.0/23.0 );
+	return -1.0;
 
-	result = ( result + 1.0 ) / 2.0;
 
-	result = result * (1.0 - fabs(s2->phrasepos-s1->phrasepos)) * (1.0 - fabs(s2->IMA-s1->IMA));
-
-	return -1.0 + 2.0*result;
+	return 0.0;
 }
 
 }

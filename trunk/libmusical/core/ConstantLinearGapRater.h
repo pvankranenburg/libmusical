@@ -54,6 +54,7 @@ public:
 	 */
 	void setGapScore(double gs) { gapScore = gs; };
 
+private:
 	double gapScore;
 };
 

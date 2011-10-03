@@ -44,27 +44,18 @@ public:
 	void doAlign();
 
 	/**
-	 * Do the traceback
-	 */
-	virtual void doTraceBack() { };
-
-	/**
 	 * Remove the results
 	 */
-	virtual void clear() { alignment.clear(); } ;
+	virtual void specificClear() { } ;
 
+private:
 	/**
 	 * This algorithm needs three matrices
 	 */
-	NWGTrace * s; //this will be the d.p. matrix.
+	NWGTrace * s;  //this will be the d.p. matrix.
 	NWGTrace * g1; //this will be the d.p. matrix for state 'gap with seq1'.
 	NWGTrace * g2; //this will be the d.p. matrix for state 'gap with seq2'
 	int size_s;
-
-	/**
-	 * This attribute contains the alignemnt as sequence of trace-elements.
-	 */
-	std::deque<NWGTrace> alignment;
 
 };
 

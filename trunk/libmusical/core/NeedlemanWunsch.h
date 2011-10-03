@@ -46,22 +46,13 @@ public:
 	void doAlign();
 
 	/**
-	 * Do the trace back.
-	 */
-	virtual void doTraceBack() { };
-
-	/**
 	 * Get rid of results.
 	 */
-	virtual void clear() { alignment.clear(); } ;
+	virtual void specificClear() { } ;
 
+private:
 	NWTrace * s; //this will be the d.p. matrix
 	int size_s;
-
-	/**
-	 * This contains the alignment represented by the trace.
-	 */
-	std::deque<NWTrace> alignment;
 
 };
 

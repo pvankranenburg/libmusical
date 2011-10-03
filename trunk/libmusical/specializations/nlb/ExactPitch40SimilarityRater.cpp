@@ -38,8 +38,8 @@ double ExactPitch40SimilarityRater::getScore(Sequences * seqs, int x1, int y1, i
 
 	//for now ignore x1 and y1. Only return the similarity of the symbols associated with the destination cell
 
-	OptiSymbol * s1 = static_cast<OptiSymbol *>(seqs->seq1->symbols[x2]);
-	OptiSymbol * s2 = static_cast<OptiSymbol *>(seqs->seq2->symbols[y2]);
+	OptiSymbol * s1 = static_cast<OptiSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
+	OptiSymbol * s2 = static_cast<OptiSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
 
 	//cout << x2 << " : " << pitch1 << " - " << y2 << " : " << pitch2 << endl;
 

@@ -39,8 +39,8 @@ double OptiSimilarityRater_Registry::getScore(Sequences * seqs, int x1, int y1, 
 
 	//for now ignore x1 and y1. Only return the similarity of the symbols associated with the destination cell
 
-	SymbolRegistry * s1 = static_cast<SymbolRegistry *>(seqs->getSeq1()->symbols[x2]);
-	SymbolRegistry * s2 = static_cast<SymbolRegistry *>(seqs->getSeq2()->symbols[y2]);
+	SymbolRegistry * s1 = static_cast<SymbolRegistry *>(seqs->getSeq1()->getSymbolAt(x2));
+	SymbolRegistry * s2 = static_cast<SymbolRegistry *>(seqs->getSeq2()->getSymbolAt(y2));
 
 	int pitch1 = s1->getInt("pitch40");
 	int pitch2 = s2->getInt("pitch40");

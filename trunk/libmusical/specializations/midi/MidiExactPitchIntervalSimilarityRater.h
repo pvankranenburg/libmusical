@@ -18,43 +18,26 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef MIDIEXACTPITCHINTERVALSIMILARITYRATER_H_
+#define MIDIEXACTPITCHINTERVALSIMILARITYRATER_H_
 
-#ifndef SYMBOL_H_
-#define SYMBOL_H_
-
-#include <string>
+#include <SimilarityRater.h>
 
 namespace musical {
 
-/**
- * Abstract symbol
- */
-class Symbol {
+class MidiExactPitchIntervalSimilarityRater: public musical::SimilarityRater {
 public:
-	Symbol();
-	virtual ~Symbol();
-
-	Symbol * getNext() { return next; }
-	Symbol * getPrevious() { return previous; }
-
-	void setNext(Symbol * n) { next = n; }
-	void setPrevious(Symbol * p) { previous = p; }
-
-	void setId(std::string i) { id = i; }
-	std::string getId() { return id; }
+	MidiExactPitchIntervalSimilarityRater();
+	virtual ~MidiExactPitchIntervalSimilarityRater();
 
 	/**
-	 * Returns a string representation of the symbol.
+	 * Computes the similarity of seq1[x1] and seq2[y2].
+	 * x1 and y1 are ignored for now.
 	 */
-	virtual std::string toString() = 0;
-
-protected:
-	std::string id;
-	Symbol * next;
-	Symbol * previous;
+	virtual double getScore(Sequences * seqs, int x1, int y1, int x2, int y2);
 
 };
 
 }
 
-#endif /* SYMBOL_H_ */
+#endif /* MIDIEXACTPITCHINTERVALSIMILARITYRATER_H_ */
