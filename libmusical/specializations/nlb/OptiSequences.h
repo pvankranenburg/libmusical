@@ -48,6 +48,7 @@ public:
 
 private:
 	int pitch40HistogramShift;
+
 	void computePitch40HistogramShift();
 
 };

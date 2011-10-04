@@ -43,6 +43,8 @@ double OptiSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, i
 	//dynamic_cast would be better, but much, much slower
 	s1 = static_cast<OptiSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
 	s2 = static_cast<OptiSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
+	//s1 = static_cast<OptiSymbol *>(seqs->seq1->symbols[x2]);
+	//s2 = static_cast<OptiSymbol *>(seqs->seq2->symbols[y2]);
 
 	int pitchshift = static_cast<OptiSequences *>(seqs)->getPitch40Shift();
 
@@ -58,6 +60,7 @@ double OptiSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, i
 	result = result * (1.0 - fabs(s2->phrasepos-s1->phrasepos)) * (1.0 - fabs(s2->IMA-s1->IMA));
 
 	return -1.0 + 2.0*result;
+
 }
 
 }
