@@ -37,9 +37,9 @@ OptiSequences::~OptiSequences() {
 }
 
 void OptiSequences::computePitch40HistogramShift() {
-	//pitch40HistogramShift = histogramShift( static_cast<OptiSequence*>(getSeq1())->pitchHistogram, 200, static_cast<OptiSequence*>(getSeq2())->pitchHistogram, 200);
+	pitch40HistogramShift = histogramShift( static_cast<OptiSequence*>(getSeq1())->pitchHistogram, 200, static_cast<OptiSequence*>(getSeq2())->pitchHistogram, 200);
 	//pitch40HistogramShift = histogramShift_diffavg(static_cast<OptiSequence*>(getSeq1())->pitchHistogram, 200, static_cast<OptiSequence*>(getSeq2())->pitchHistogram, 200);
-	pitch40HistogramShift = 10;
+	//pitch40HistogramShift = 10;
 	//cout << getSeq1()->name << " - " << getSeq2()->name << " : " << pitch40HistogramShiftA << endl;
 }
 

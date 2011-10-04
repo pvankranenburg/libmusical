@@ -23,16 +23,10 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #define OPTISEQUENCE_H_
 
 #include "Sequence.h"
-#include <vector>
+#include <map>
 #include <iostream>
 
 namespace musical {
-
-struct histPair {
-	histPair(int p, double d) : pitch(p), frequency(d) { };
-	int pitch;
-	double frequency;
-};
 
 /**
  * A sequence of OptiSymbols.
@@ -49,6 +43,7 @@ public:
 	//highest pitch: bx''' (239)
 	double pitchHistogram[200];
 
+	std::map<int, double> sparsePitchHistogram;
 
 };
 

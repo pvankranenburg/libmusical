@@ -4,4 +4,6 @@ include_directories( ${CMAKE_SOURCE_DIR}/libmusical/core ${CMAKE_SOURCE_DIR}/lib
 
 add_executable(musicaltest ${musicaltest_src})
 
-target_link_libraries(musicaltest libmusical)
+target_link_libraries(musicaltest musical)
+
+install(TARGETS musicaltest RUNTIME DESTINATION bin)
