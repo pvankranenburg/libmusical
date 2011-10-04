@@ -37,10 +37,60 @@ OptiSequences::~OptiSequences() {
 }
 
 void OptiSequences::computePitch40HistogramShift() {
-	pitch40HistogramShift = histogramShift( static_cast<OptiSequence*>(getSeq1())->pitchHistogram, 200, static_cast<OptiSequence*>(getSeq2())->pitchHistogram, 200);
-	//pitch40HistogramShift = histogramShift_diffavg(static_cast<OptiSequence*>(getSeq1())->pitchHistogram, 200, static_cast<OptiSequence*>(getSeq2())->pitchHistogram, 200);
+	//pitch40HistogramShift = histogramShift( static_cast<OptiSequence*>(getSeq1())->pitchHistogram, 200, static_cast<OptiSequence*>(getSeq2())->pitchHistogram, 200);
+	//pitch40HistogramShift = histogramShift_bound(static_cast<OptiSequence*>(getSeq1())->pitchHistogram, 200, static_cast<OptiSequence*>(getSeq2())->pitchHistogram, 200);
 	//pitch40HistogramShift = 10;
 	//cout << getSeq1()->name << " - " << getSeq2()->name << " : " << pitch40HistogramShiftA << endl;
+
+	double * hist1 = static_cast<OptiSequence*>(getSeq1())->pitchHistogram;
+	double * hist2 = static_cast<OptiSequence*>(getSeq2())->pitchHistogram;
+	int length1 = 200;
+	int length2 = 200;
+
+	double avg1 = 0.0;
+	double avg2 = 0.0;
+
+	int highest1 = length1-1;
+	int lowest1 = 0;
+	int highest2 = length2-1;
+	int lowest2 = 0;
+
+	for(int i=0; i<length1; i++) { avg1 = avg1 + hist1[i]*(double)i; }
+	for(int i=0; i<length2; i++) { avg2 = avg2 + hist2[i]*(double)i; }
+
+	while ( hist1[lowest1] == 0 ) { lowest1++; }
+	while ( hist2[lowest2] == 0 ) { lowest2++; }
+	while ( hist1[highest1] == 0 ) { highest1--; }
+	while ( hist2[highest2] == 0 ) { highest2--; }
+
+	double maxIntersection = 0.0;
+	double intersection = 0.0;
+
+	pitch40HistogramShift = 0;
+
+	//cout << "-------------------------" << endl;
+
+	int minshift = lowest1 - highest2;
+	int maxshift = highest1 - lowest2;
+
+	for ( int sh=minshift; sh<=maxshift; sh++ ) { //shift of hist2
+		intersection = 0.0;
+		for ( int j=lowest2; j<highest2; j++) { //index in s2
+			int i = j + sh; //index in s1
+			if ( i < 0 || i >= length1 ) continue;
+			intersection += min(hist1[i], hist2[j]);
+		}
+		//cout << sh << "\t" << intersection;
+		if ( intersection > maxIntersection ) {
+			maxIntersection = intersection;
+			//cout << " new max";
+			pitch40HistogramShift = sh;
+		}
+		//cout << endl;
+	}
+	//cout << "-------------------------" << endl;
+
 }
+
 
 }

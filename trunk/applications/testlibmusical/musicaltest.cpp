@@ -21,6 +21,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cstdlib>
 using namespace std;
 
 #include <sys/time.h>
@@ -46,6 +47,7 @@ inline float datemicro() {
 int main(int argc, char * argv[]) {
 
 	bool distmat = true; //create distmat file?
+	double * thedistmat;
 
 	ifstream listfile1, listfile2;
 
@@ -93,8 +95,6 @@ int main(int argc, char * argv[]) {
 	//musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs);
 	//nw.simr = new musical::OptiSimilarityRater();
 
-	float begin = datemicro();
-
 	if (distmat) {
 		outfile.open("distmat.txt");
 		outfile << "recnr";
@@ -103,46 +103,32 @@ int main(int argc, char * argv[]) {
 			outfile << "\t" << seqs2[i]->getName();
 		}
 		outfile << endl;
+
+		//prepare memory for the distmat
+		thedistmat = (double *)malloc(seqs1.size()*seqs2.size()*sizeof(double));
+
+
 	}
 
-	for(unsigned int i = 0; i<seqs1.size(); i++) {
+	int size1 = seqs1.size();
+	int size2 = seqs2.size();
+
+	float begin = datemicro();
+
+	for(int i = 0; i<size1; i++) {
 		cout << i << ": " << seqs1[i]->getName() << endl;
-		if (distmat) outfile << seqs1[i]->getName();
-		//#pragma omp parallel for
-		for(unsigned int j=0; j<seqs2.size(); j++) {
+		#pragma omp parallel for
+		for(int j=0; j<size2; j++) {
 			if ( j%1000 == 0 ) cout << "." << flush;
-			//cout << "\t start " << j << ": " << seqs2[j]->name << endl;
 			musical::OptiSequences seqs = musical::OptiSequences(seqs1[i],seqs2[j]);
-			//seqs.seq1 = seqs1[i];
-			//seqs.seq2 = seqs2[j];
-			//cout << "Sequences set"<<endl;
 			musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs);
-			//musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(&seqs);
-			//musical::SmithWaterman nw = musical::SmithWaterman(&seqs);
-			//nw.maxAlignments = -1;
-			//cout << "Aligner initialized" << endl;
 			nw.setSimilarityRater(new musical::OptiSimilarityRater());
-			//nw.simr = new musical::ExactPitch40SimilarityRater();
-			//cout << "Similarity Rater set" << endl;
-			//nw.gapr = new musical::ConstantLinearGapRater(-0.8);
 			nw.setGapRater(new musical::ConstantAffineGapRater(-0.8, -0.2));
-			//cout << "Gap Rater set" << endl;
 			nw.doAlign();
 			double normalizedscore = nw.getScore() / min(seqs1[i]->size(),seqs2[j]->size());
-			if (distmat) outfile << "\t" << 1.0 - normalizedscore;
-			//cout << seqs1[i]->name << " -> "<< seqs2[j]->name << " " << "Score: " << nw.score << endl;
-			//cout << seqs1[i]->name << " -> "<< seqs2[j]->name << " " << "Normalization factor: " << min(seqs1[i]->symbols.size(),seqs2[j]->symbols.size()) << endl;
-			//cout << seqs1[i]->name << " -> "<< seqs2[j]->name << " " << "Normalized score: " << normalizedscore << endl;
-			//cout << seqs1[i]->name << " -> "<< seqs2[j]->name << " " << "Distance: " << 1.0 - normalizedscore << endl;
-			//cout << "Aligned" << endl;
-			//delete nw;
-			//cout << "Aligner deleted" << endl;
-			//nw.clear();
-			//if (j%50 == 0) cout << "." << flush;
-			//cout << "\t ready " << j << ": " << seqs2[j]->name << endl;
-			//delete nw.smir;
+			if (distmat) thedistmat[i*size2+j] = 1.0 - normalizedscore;
+
 		}
-		if (distmat) outfile << endl;
 		cout << endl;
 	}
 
@@ -151,6 +137,17 @@ int main(int argc, char * argv[]) {
 	cout << "   total time : " << end - begin << endl;
 	cout << "time per query: " << (end - begin)/(float)seqs1.size() << endl;
 
+	if (distmat) {
+		cout << "Writing distmat.txt" << endl;
+		for ( int i = 0; i < size1; i++ ) {
+			outfile << seqs1[i]->getName();
+			for ( int j = 0; j < size2; j++ ) {
+				outfile << "\t" << thedistmat[i*size2+j];
+			}
+			outfile << endl;
+		}
+		free(thedistmat);
+	}
 
 	return 0;
 }

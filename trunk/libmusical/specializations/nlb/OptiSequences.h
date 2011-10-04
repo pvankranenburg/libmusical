@@ -24,6 +24,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "OptiSequence.h"
 #include "Sequences.h"
+#include <map>
 
 namespace musical {
 
