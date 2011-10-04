@@ -43,8 +43,6 @@ public:
 	//highest pitch: bx''' (239)
 	double pitchHistogram[200];
 
-	std::map<int, double> sparsePitchHistogram;
-
 };
 
 }

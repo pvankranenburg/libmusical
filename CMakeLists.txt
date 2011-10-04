@@ -2,7 +2,7 @@ project(libmusical CXX)
 
 cmake_minimum_required(VERSION 2.6)
 
-add_definitions(-Wall )
+add_definitions(-Wall -g -O3)
 
 add_subdirectory(libmusical)
 add_subdirectory(applications)
