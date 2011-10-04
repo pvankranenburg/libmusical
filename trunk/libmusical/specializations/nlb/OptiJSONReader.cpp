@@ -107,7 +107,6 @@ Sequence* OptiJSONReader::generateSequence() {
 		}
 	}
 
-
 	/*
 	for(int i=0; i<200; i++) {
 		cout << setw(4) << i+40 << " : " << nwseq->pitchHistogram[i] << endl;

@@ -23,8 +23,16 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #define OPTISEQUENCE_H_
 
 #include "Sequence.h"
+#include <vector>
+#include <iostream>
 
 namespace musical {
+
+struct histPair {
+	histPair(int p, double d) : pitch(p), frequency(d) { };
+	int pitch;
+	double frequency;
+};
 
 /**
  * A sequence of OptiSymbols.
@@ -34,11 +42,13 @@ public:
 	OptiSequence();
 	virtual ~OptiSequence();
 
+public:
 	//(normalized) histogram for pitches in base-40 encoding.
 	//pitch offset: 40 (pitchHistogram[0] is frequency of pitch 40
 	//lowest pitch: BBbb (40)
 	//highest pitch: bx''' (239)
 	double pitchHistogram[200];
+
 
 };
 
