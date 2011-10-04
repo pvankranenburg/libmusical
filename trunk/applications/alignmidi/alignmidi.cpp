@@ -46,42 +46,26 @@ int main(int argc, char * argv[]) {
 	//seq1->dump_stdout();
 	//seq2->dump_stdout();
 
-	clog << argv[1] << " : " << seq1->symbols.size() << " symbols" << endl;
-	clog << argv[2] << " : " << seq2->symbols.size() << " symbols" << endl;
+	clog << argv[1] << " : " << seq1->size() << " symbols" << endl;
+	clog << argv[2] << " : " << seq2->size() << " symbols" << endl;
 
 	clog << "Creating aligner" << endl;
 	musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(&seqs);
 
 	clog << "Creating similarity rater" << endl;
-	nw.simr = new musical::MidiExactPitchIntervalSimilarityRater();
+	nw.setSimilarityRater( new musical::MidiExactPitchIntervalSimilarityRater() );
 
 	clog << "Creating gap rater" << endl;
-	nw.gapr = new musical::ConstantLinearGapRater(-0.8);
+	nw.setGapRater( new musical::ConstantLinearGapRater(-0.8) );
 
 	clog << "Doing the alignment" << endl;
 	nw.doAlign();
 
-	double normalizedscore = nw.score / min(seq1->symbols.size(),seq2->symbols.size());
+	double normalizedscore = nw.getScore() / min(seq1->size(),seq2->size());
 	clog << "Score: " << 1.0 - normalizedscore << endl;
 
-	clog << "Alignment: " << endl;
-	for ( unsigned int i = 0; i < nw.alignment.size(); i++ ) {
-		clog << setw(3) << nw.alignment[i].this_ix1 << " - " << setw(3) << nw.alignment[i].this_ix2 << setw(7) << nw.alignment[i].thisscore << endl;
-	}
-
-	clog << "\nAlignment: " << endl;
-	for ( unsigned int i = 0; i < nw.alignment.size(); i++ ) {
-		std::string symbol1 = "s1";
-		std::string symbol2 = "s2";
-		if (nw.alignment[i].this_ix1 == 0 ) symbol1 = "x";
-			else if ( i != 0 && nw.alignment[i].this_ix1 == nw.alignment[i-1].this_ix1 ) symbol1 = "x";
-				else symbol1 = seq1->symbols[nw.alignment[i].this_ix1-1]->toString();
-		if (nw.alignment[i].this_ix2 == 0 ) symbol2 = "x";
-			else if ( i != 0 && nw.alignment[i].this_ix2 == nw.alignment[i-1].this_ix2 ) symbol2 = "x";
-				else symbol2 = seq2->symbols[nw.alignment[i].this_ix2-1]->toString();
-		clog << "[" << symbol1 << "] - [" << symbol2 << "]" << endl;
-	}
-
+	musical::AlignmentVisualizer av(&nw);
+	av.basicStdoutReport();
 
 	return 0;
 }

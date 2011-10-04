@@ -108,6 +108,18 @@ Sequence* OptiJSONReader::generateSequence() {
 	}
 
 	/*
+	//fill sparsePitchHisogram
+	cout << "New sparsePitchHistogram for " << nwseq->getName() << endl;
+	for( int i=0; i<200; i++ ) {
+		if ( nwseq->pitchHistogram[i] > 0.0 ) {
+			cout << "Adding " << nwseq->pitchHistogram[i] << " to bin " << i << flush;
+			nwseq->sparsePitchHistogram[i] = nwseq->pitchHistogram[i];
+			cout << " done" << endl;
+		}
+	}
+	*/
+
+	/*
 	for(int i=0; i<200; i++) {
 		cout << setw(4) << i+40 << " : " << nwseq->pitchHistogram[i] << endl;
 	}

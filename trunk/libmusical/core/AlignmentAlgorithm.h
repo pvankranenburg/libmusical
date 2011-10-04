@@ -88,14 +88,16 @@ public:
 	/**
 	 * remove all results / score etc.
 	 */
-	void clear();
+	void clearResults();
 
+protected:
 	/**
 	 * In this function derived classes (algorithms) should put specific cleaning.
 	 * Invoked from clear (make protected?)
 	 */
 	virtual void specificClear() = 0;
 
+public:
 	/**
 	 * Returns the score of alignment c
 	 * Default c=0

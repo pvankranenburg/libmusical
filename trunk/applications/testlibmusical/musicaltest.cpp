@@ -45,7 +45,7 @@ inline float datemicro() {
 
 int main(int argc, char * argv[]) {
 
-	bool distmat = false; //create distmat file?
+	bool distmat = true; //create distmat file?
 
 	ifstream listfile1, listfile2;
 
@@ -100,14 +100,14 @@ int main(int argc, char * argv[]) {
 		outfile << "recnr";
 
 		for ( unsigned int i = 0; i < seqs2.size(); i++ ) {
-			outfile << "\t" << seqs2[i]->name;
+			outfile << "\t" << seqs2[i]->getName();
 		}
 		outfile << endl;
 	}
 
 	for(unsigned int i = 0; i<seqs1.size(); i++) {
-		cout << i << ": " << seqs1[i]->name << endl;
-		if (distmat) outfile << seqs1[i]->name;
+		cout << i << ": " << seqs1[i]->getName() << endl;
+		if (distmat) outfile << seqs1[i]->getName();
 		//#pragma omp parallel for
 		for(unsigned int j=0; j<seqs2.size(); j++) {
 			if ( j%1000 == 0 ) cout << "." << flush;
@@ -121,14 +121,14 @@ int main(int argc, char * argv[]) {
 			//musical::SmithWaterman nw = musical::SmithWaterman(&seqs);
 			//nw.maxAlignments = -1;
 			//cout << "Aligner initialized" << endl;
-			nw.simr = new musical::OptiSimilarityRater();
+			nw.setSimilarityRater(new musical::OptiSimilarityRater());
 			//nw.simr = new musical::ExactPitch40SimilarityRater();
 			//cout << "Similarity Rater set" << endl;
 			//nw.gapr = new musical::ConstantLinearGapRater(-0.8);
-			nw.gapr = new musical::ConstantAffineGapRater(-0.8, -0.2);
+			nw.setGapRater(new musical::ConstantAffineGapRater(-0.8, -0.2));
 			//cout << "Gap Rater set" << endl;
 			nw.doAlign();
-			double normalizedscore = nw.score / min(seqs1[i]->symbols.size(),seqs2[j]->symbols.size());
+			double normalizedscore = nw.getScore() / min(seqs1[i]->size(),seqs2[j]->size());
 			if (distmat) outfile << "\t" << 1.0 - normalizedscore;
 			//cout << seqs1[i]->name << " -> "<< seqs2[j]->name << " " << "Score: " << nw.score << endl;
 			//cout << seqs1[i]->name << " -> "<< seqs2[j]->name << " " << "Normalization factor: " << min(seqs1[i]->symbols.size(),seqs2[j]->symbols.size()) << endl;

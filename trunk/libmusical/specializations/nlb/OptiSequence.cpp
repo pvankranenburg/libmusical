@@ -24,7 +24,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 namespace musical {
 
 OptiSequence::OptiSequence() {
-
+	//sparsePitchHistogram[0] = 0.2;
 }
 
 OptiSequence::~OptiSequence() {
