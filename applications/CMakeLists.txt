@@ -1,2 +1,2 @@
-add_subdirectory(testlibmusical)
+add_subdirectory(nlbdistmat)
 add_subdirectory(alignmidi)
