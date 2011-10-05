@@ -97,23 +97,6 @@ install(
 		core/Symbol.h
 		core/SymbolRegistry.h
 		core/Trace.h
-		libjson/JSONOptions.h
-		libjson/libjson.h
-		libjson/Source/internalJSONNode.h
-		libjson/Source/JSON_Base64.h
-		libjson/Source/JSONChildren.h
-		libjson/Source/JSONDebug.h
-		libjson/Source/JSONDefs/GNU_C.h
-		libjson/Source/JSONDefs/Strings_Defs.h
-		libjson/Source/JSONDefs/Unknown_C.h
-		libjson/Source/JSONDefs/Visual_C.h
-		libjson/Source/JSONDefs.h
-		libjson/Source/JSONMemory.h
-		libjson/Source/JSONNode.h
-		libjson/Source/JSONStream.h
-		libjson/Source/JSONValidator.h
-		libjson/Source/JSONWorker.h
-		libjson/Source/NumberToString.h
 		specializations/midi/MidiAlignment.h
 		specializations/midi/MidiExactPitchIntervalSimilarityRater.h
 		specializations/midi/MidiFileReader.h
@@ -129,5 +112,7 @@ install(
 		specializations/nlb/OptiSimilarityRater_Registry.h
 		specializations/nlb/OptiSymbol.h
 	DESTINATION include/libmusical)
+
+install(DIRECTORY libjson/ DESTINATION include/libmusical FILES_MATCHING PATTERN "*.h" PATTERN ".svn" EXCLUDE)
 
 install(TARGETS musical LIBRARY DESTINATION lib)
