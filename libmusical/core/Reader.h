@@ -28,7 +28,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 namespace musical {
 
 /**
- * Abstract Reader. Reads the JSON representation into internal representation.
+ * Abstract Reader. Reads the data from somewhere and convert it into internal representation (Sequence object).
  */
 class Reader {
 public:
