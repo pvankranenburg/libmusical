@@ -32,12 +32,6 @@ namespace musical {
  */
 inline double fmax(double a,double b) { return (a>b)?a:b; }
 
-/**
- * Computes how much to shift histogram 2 in order to get maximal intersection with histogram 1
- */
-int histogramShift(double hist1[], int length1, double hist2[], int length2);
-int histogramShift_bound(double hist1[], int length1, double hist2[], int length2);
-
 }
 
 #endif /* MISCFUNCTIONS_H_ */

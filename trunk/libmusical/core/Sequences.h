@@ -38,10 +38,24 @@ public:
 	Sequences(Sequence * s1, Sequence * s2) : seq1(s1), seq2(s2) { };
 	virtual ~Sequences();
 
+	/**
+	 * Assign a sequence to seq1.
+	 */
 	void setSeq1(Sequence * s) {seq1 = s; };
+
+	/**
+	 * Assign a sequence to seq2.
+	 */
 	void setSeq2(Sequence * s) {seq2 = s; };
 
+	/**
+	 * Get sequence 1
+	 */
 	Sequence * getSeq1() {return seq1;};
+
+	/**
+	 * Get sequence 2
+	 */
 	Sequence * getSeq2() {return seq2;};
 
 protected:

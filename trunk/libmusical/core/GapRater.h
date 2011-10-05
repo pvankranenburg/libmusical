@@ -40,6 +40,10 @@ public:
 	 */
 	virtual double getInitializationScore(Sequences * seqs, int x1, int y1, int x2, int y2) = 0;
 
+	/**
+	 * Returns the score for gap of arbitrary length.
+	 * conditions: x1 == x2 or y1 == y2
+	 */
 	virtual double getGapScore(Sequences * seqs, int x1, int y1, int x2, int y2) = 0;
 };
 

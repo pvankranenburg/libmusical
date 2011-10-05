@@ -35,6 +35,9 @@ public:
 	OptiSymbol();
 	virtual ~OptiSymbol();
 
+	/**
+	 * Returns a string representation of the symbol
+	 */
 	std::string toString() ;
 
 	int pitch40;

@@ -18,17 +18,12 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/*! \mainpage My Personal Index Page
+/*! \mainpage Introduction
  *
  * \section intro_sec Introduction
  *
- * This is the introduction.
+ * This document describes the source of libmusical
  *
- * \section install_sec Installation
- *
- * \subsection step1 Step 1: Opening the box
- *
- * etc...
  */
 
 
