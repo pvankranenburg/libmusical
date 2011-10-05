@@ -9,3 +9,9 @@ endif()
 add_subdirectory(libmusical)
 add_subdirectory(applications)
 #add_subdirectory(Documentation)
+
+SET(CPACK_GENERATOR "TGZ")
+set(CPACK_SOURCE_GENERATOR "TGZ") 
+INCLUDE(CPack)
+
+
