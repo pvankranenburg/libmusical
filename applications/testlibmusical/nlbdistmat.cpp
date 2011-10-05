@@ -41,7 +41,6 @@ inline float datemicro() {
      gettimeofday(&tv, &tz);
      tm=localtime(&tv.tv_sec);
      return tm->tm_sec + 60*tm->tm_min + 60*60*tm->tm_hour + (float)tv.tv_usec/1000000.0;
-     //printf(" %d:%02d:%02d %d \n", tm->tm_hour, tm->tm_min, tm->tm_sec, tv.tv_usec);
 }
 
 int main(int argc, char * argv[]) {
@@ -62,21 +61,15 @@ int main(int argc, char * argv[]) {
 	vector<musical::OptiSequence *> seqs1;
 	vector<musical::OptiSequence *> seqs2;
 	while (getline(listfile1, seq1name)) {
-		//musical::JSONFileSource * fs1 = new musical::JSONFileSource(seq1name);
 		musical::OptiJSONReader mr1(new musical::JSONFileSource(seq1name));
 		seqs1.push_back(static_cast<musical::OptiSequence*>(mr1.generateSequence()));
 		if ( seqs1.size() % 1000 == 0 ) cout << seq1name << endl;
-		//delete fs1; //taken care of by Reader
-		//cout << seq1name << ": " << seq1 <<  endl;
 	}
 
 	while (getline(listfile2, seq2name)) {
-		//musical::JSONFileSource * fs2 = new musical::JSONFileSource(seq2name);
 		musical::OptiJSONReader mr2(new musical::JSONFileSource(seq2name));
 		seqs2.push_back(static_cast<musical::OptiSequence*>(mr2.generateSequence()));
 		if ( seqs2.size()%1000 == 0 ) cout << seq2name << endl;
-		//delete fs2;
-		//cout << seq1name << ": " << seq1 <<  endl;
 	}
 	listfile1.close();
 	listfile2.close();
@@ -84,16 +77,6 @@ int main(int argc, char * argv[]) {
 	//dump sequence;
 	//cout << "sequence: " << endl;
 	//seq->dump_stdout();
-
-	//do this outside the loop:
-	//musical::Sequences seqs = musical::Sequences();
-	//musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs);
-	//nw.simr = new musical::ExactPitch40SimilarityRater();
-	//nw.gapr = new musical::ConstantAffineGapRater(-0.8, -0.2);
-	//nw.simr = new musical::OptiSimilarityRater();
-	//musical::SmithWaterman nw = musical::SmithWaterman(&seqs);
-	//musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs);
-	//nw.simr = new musical::OptiSimilarityRater();
 
 	if (distmat) {
 		outfile.open("distmat.txt");
@@ -106,7 +89,6 @@ int main(int argc, char * argv[]) {
 
 		//prepare memory for the distmat
 		thedistmat = (double *)malloc(seqs1.size()*seqs2.size()*sizeof(double));
-
 
 	}
 

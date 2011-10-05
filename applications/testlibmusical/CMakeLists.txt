@@ -1,4 +1,4 @@
-set(musicaltest_src musicaltest.cpp)
+set(nlbdistmat_src nlbdistmat.cpp)
 
 INCLUDE(CheckCXXCompilerFlag)
 check_cxx_compiler_flag(-fopenmp HAVE_OPENMP)
@@ -10,8 +10,9 @@ endif()
 
 include_directories( ${CMAKE_SOURCE_DIR}/libmusical/core ${CMAKE_SOURCE_DIR}/libmusical/specializations/nlb )
 
-add_executable(musicaltest ${musicaltest_src})
+add_executable(nlbdistmat ${nlbdistmat_src})
 
-target_link_libraries(musicaltest musical)
+target_link_libraries(nlbdistmat musical)
 
-install(TARGETS musicaltest RUNTIME DESTINATION bin)
+install(TARGETS nlbdistmat RUNTIME DESTINATION bin)
+
