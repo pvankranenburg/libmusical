@@ -61,7 +61,7 @@
 \begin_body
 
 \begin_layout Title
-libmusical 0.8
+libmusical 0.9
 \end_layout
 
 \begin_layout Author
@@ -87,7 +87,7 @@ libmusical is a c++-software library that provides classes and functions
  for alignment of sequences of symbols.
  The intended field of application is the alignment of musical sequences.
  However, the alignment algorithms are provided in their abstract forms.
- Thus, it is easy to apply the algorithms in other contexts as well.
+ It is easy to apply the algorithms in other contexts as well.
 \end_layout
 
 \begin_layout Standard
@@ -345,8 +345,8 @@ D(i,j-1)-\gamma
 .
  This algorithm is known as the Needleman-Wunsch algorithm 
 \begin_inset CommandInset citation
-LatexCommand citep
-key "Needleman:1990cs"
+LatexCommand citet
+key "Needleman:1970cs"
 
 \end_inset
 
@@ -383,7 +383,7 @@ the alignment algorithm itself.
 
 \begin_layout Standard
 For all four of these elements, abstract classes are present in the library.
- To implement an application for the alignment of a specific kind of symbols,
+ To implement a specialization for the alignment of a specific kind of symbols,
  specific classes should be derived from the provided abstract classes.
  The abstract classes are defined in header file 
 \family typewriter
@@ -427,12 +427,17 @@ SimilarityRater Returns the similarity of two symbols.
 GapRater Returns scores for insertions of one or more gaps.
 \end_layout
 
+\begin_layout Description
+Reader This class creates an object of class Sequence, containing a sequence
+ of Symbol objects.
+\end_layout
+
 \begin_layout Standard
 An alignment class has a Sequences-object, a SimilarityRater and a GapRater.
  The last two should be instances of derived classes and the Sequence-object
  could be an instance of a derived class.
- The algorithms handles sequences, symbols and raters at an abstract level.
- The Similarity Rater is the only class that need to know what kind of Symbols
+ The algorithms handle sequences, symbols and raters at an abstract level.
+ The SimilarityRater is the only class that need to know what kind of Symbols
  the sequence consists of.
 \end_layout
 
@@ -441,8 +446,8 @@ Data representation and input
 \end_layout
 
 \begin_layout Standard
-In the current implementation the sequences of symbols are supposed to be
- represented as JSON string with specific layout.
+In the current implementation classes are provided to read a sequence from
+ a JSON string with specific layout.
  As an example:
 \end_layout
 
@@ -552,8 +557,8 @@ JSONSource The task for this class is to get a JSON string from somewhere.
 \end_layout
 
 \begin_layout Description
-Reader This class converts the JSON string to an object of class Sequence,
- containing a sequence of Symbol objects.
+JSONReader Derived from Reader.
+ This creates a Sequence from a JSON source.
 \end_layout
 
 \begin_layout Subsection
@@ -567,6 +572,8 @@ AlignmentVisualizer
 \family default
  are able to produce textual or graphical representations of the resulting
  alignemnt.
+ Currently, one method is provided that outputs a textual description of
+ the alignment to the standard output stream.
 \end_layout
 
 \begin_layout Subsection
@@ -587,8 +594,8 @@ Currently, the following variants of the alignment algorithm are implemented:
 \begin_layout Itemize
 Needleman-Wunsch 
 \begin_inset CommandInset citation
-LatexCommand citeyearpar
-key "Needleman:1990cs"
+LatexCommand citep
+key "Needleman:1970cs"
 
 \end_inset
 
@@ -741,19 +748,31 @@ NeedlemanWunschGotoh
 \end_layout
 
 \begin_layout Section
-Application: Opti
+Specializations
+\end_layout
+
+\begin_layout Subsection
+NLB
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:NLB"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-One application is provided under the name 
+A specialization is provided under the name 
 \begin_inset Quotes eld
 \end_inset
 
-Opti
+nlb
 \begin_inset Quotes erd
 \end_inset
 
-, defined in header file 
+ (Nederlandse Liederenbank, i.e.
+ Database of Dutch Songs), defined in header file 
 \family typewriter
 OptiAlignment.h
 \family default
@@ -776,12 +795,12 @@ OptiSimilarityRater
 ) to compute the similarity of two symbols.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Classes
 \end_layout
 
 \begin_layout Standard
-The following classes have been added for this application:
+The following classes have been added for this specialization:
 \end_layout
 
 \begin_layout Description
@@ -817,9 +836,11 @@ key "Kranenburg:2010fk"
 \end_layout
 
 \begin_layout Description
-OptiReader Converts a JSON representation of the sequence to an OptiSequence-obj
-ect.
- The JSON string should provide the pitch histogram.
+OptiJSONReader Converts a JSON representation of the sequence to an OptiSequence
+-object.
+ The JSON string can provide a pitch histogram, as shown below.
+ If it does not, then the histogram is generated on the fly.
+ This histogram will be used to make the alignment transposition invariant.
 \end_layout
 
 \begin_layout Standard
@@ -957,7 +978,7 @@ status open
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Example
 \end_layout
 
@@ -1010,36 +1031,33 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	musical::JSONFileSource * fs1 = new musical::JSONFileSource("/JSON/sequence1.jso
-n");
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
 	// Create a Reader object for the JSON string
 \end_layout
 
 \begin_layout Plain Layout
 
-	musical::OptiReader mr1(&fs1);
+	musical::OptiJSONReader mr1(new musical::JSONFileSource("/path/to/melody1.json")
+);
 \end_layout
 
 \begin_layout Plain Layout
 
+	
 \end_layout
 
 \begin_layout Plain Layout
 
-	// Ask the Reader to generate the Sequence
+	// Ask the Reader to generate the Sequence 	
 \end_layout
 
 \begin_layout Plain Layout
 
-	musical::Sequence * seq1 = mr1.generateSequence();
+	musical::OptiSequence * seq1 =
+\end_layout
+
+\begin_layout Plain Layout
+
+		static_cast<musical::OptiSequence*>(mr1.generateSequence());
 \end_layout
 
 \begin_layout Plain Layout
@@ -1053,18 +1071,18 @@ n");
 
 \begin_layout Plain Layout
 
-	musical::JSONFileSource * fs2 = new musical::JSONFileSource("/JSON/sequence2.jso
-n");
+	musical::OptiJSONReader mr2(new musical::JSONFileSource("/path/to/melody2.json")
+);
 \end_layout
 
 \begin_layout Plain Layout
 
-	musical::OptiReader mr2(fs2);
+	musical::OptiSequence * seq2 =
 \end_layout
 
 \begin_layout Plain Layout
 
-	musical::Sequence * seq2 = mr1.generateSequence();
+		static_cast<musical::OptiSequence*>(mr2.generateSequence());
 \end_layout
 
 \begin_layout Plain Layout
@@ -1087,34 +1105,6 @@ n");
 
 \begin_layout Plain Layout
 
-	// Create a similarity rater
-\end_layout
-
-\begin_layout Plain Layout
-
-	musical::OptiSimilarityRater simr = musical::OptiSimilarityRater();
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	// Create a gap rater
-\end_layout
-
-\begin_layout Plain Layout
-
-	musical::ConstantLinearGapRater gapr = musical::ConstantLinearGapRater(-0.8);
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
 	// Create an alignment algorithm
 \end_layout
 
@@ -1129,17 +1119,26 @@ n");
 
 \begin_layout Plain Layout
 
-	// Assign the raters
+	// Assign a similarity rater
 \end_layout
 
 \begin_layout Plain Layout
 
-	nw.setSRater(&simr);
+	nw.setSimilarityRater( new musical::OptiSimilarityRater() );
 \end_layout
 
 \begin_layout Plain Layout
 
-	nw.setGapRater(&gapr);
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Assign a gap rater 
+\end_layout
+
+\begin_layout Plain Layout
+
+	nw.setGapRater( new musical::ConstantLinearGapRater(-0.8) );
 \end_layout
 
 \begin_layout Plain Layout
@@ -1176,6 +1175,25 @@ n");
 
 \begin_layout Plain Layout
 
+	// Print the alignment to stdout
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::AlignmentVisualizer av(&nw);
+\end_layout
+
+\begin_layout Plain Layout
+
+	av.basicStdoutReport();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
 	return 0;
 \end_layout
 
@@ -1189,12 +1207,145 @@ n");
 
 \end_layout
 
+\begin_layout Standard
+In a Unix environment this can be compiled with the following command:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+g++ tst.cpp -I/usr/local/include/libmusical -lmusical
+\end_layout
+
+\end_inset
+
+assuming that libmusical was installed in 
+\family typewriter
+/usr/local
+\family default
+.
+\end_layout
+
+\begin_layout Subsection
+Midi
+\end_layout
+
+\begin_layout Standard
+Another specialization is provided for midi files.
+ Classes are defined in 
+\family typewriter
+MidiAlignment.h
+\family default
+.
+\end_layout
+
+\begin_layout Subsubsection
+Classes
+\end_layout
+
+\begin_layout Standard
+The following classes have been added for this specialization:
+\end_layout
+
+\begin_layout Description
+MidiSymbol Symbol with three data members: pitch in base 12 representation,
+ onset and duration.
+\end_layout
+
+\begin_layout Description
+MidiExactPitchIntervalSimilarityRater Returns score 1.0 if the interval of
+ the note from sequence 1 with its previous note is exactly the same as
+ the interval of the note from sequence 2 with its previous note.
+ Returns -1.0 otherwise.
+\end_layout
+
+\begin_layout Description
+MidiFileReader Converts a midi file into a Sequence-object, containing MidiSymbo
+ls.
+\end_layout
+
+\begin_layout Section
+Applications
+\end_layout
+
+\begin_layout Subsection
+nlbdistmat
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+nlbdistmat
+\family default
+ creates a distance matrix for melodies in NLB JSON-encoding, as shown in
+ section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:NLB"
+
+\end_inset
+
+.
+ It accepts two files as input.
+ These files should list the filenames of the melodies, one filename on
+ each line.
+ The first file contains the rows, the second the columns.
+ Example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+nlbdistmat fullcollection.flist queries.flist
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+alignmidi
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+alignmidi
+\family default
+ aligns two monophonic midi files and writes the alignment to the standard
+ output stream.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+alignmidi file1.mid file2.mid
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Implement a specific alignment task
 \end_layout
 
 \begin_layout Standard
-This section contains the steps for adding another application with name
+This section contains the steps for adding another specialization with name
  
 \family typewriter
 XX
@@ -1221,7 +1372,11 @@ XXSymbol
 \end_layout
 
 \begin_layout Enumerate
-Optional: Derive 
+
+\shape italic
+Optional:
+\shape default
+ Derive 
 \family typewriter
 XXSequence
 \family default
@@ -1234,7 +1389,11 @@ Sequence
 \end_layout
 
 \begin_layout Enumerate
-Optional: Derive 
+
+\shape italic
+Optional:
+\shape default
+ Derive 
 \family typewriter
 XXSequences
 \family default
@@ -1258,7 +1417,7 @@ Reader
 \family default
 .
  Override the member function getSequence().
- It should convert the JSON string to a 
+ It should convert an input encoding to a 
 \family typewriter
 XXSequence
 \family default
@@ -1310,7 +1469,11 @@ reference "sub:Currently-Available-Alignment"
 \end_layout
 
 \begin_layout Enumerate
-Optional: Derive 
+
+\shape italic
+Optional:
+\shape default
+ Derive 
 \family typewriter
 XXGapRater
 \family default
@@ -1322,7 +1485,11 @@ GapRater
 \end_layout
 
 \begin_layout Enumerate
-Optional: Derive 
+
+\shape italic
+Optional: 
+\shape default
+Derive 
 \family typewriter
 XXAlignmentVisualizer
 \family default
@@ -1343,8 +1510,8 @@ Roadmap
 \end_layout
 
 \begin_layout Standard
-The current version, 0.8, implements three alignment algorithms and one applicati
-on for musical sequences.
+The current version, 0.9, implements three alignment algorithms and two applicati
+ons for musical sequences.
  There are, however, remaining issues that have to be sovled.
  Furthermore, future versions will provide new features and new alignment
  algorithms.
@@ -1360,20 +1527,6 @@ Improvements in exception handling.
 Adding Smith-Waterman-Gotoh algorithm.
 \end_layout
 
-\begin_layout Itemize
-Improvents in class interfaces.
- Currently, too many data members are public.
-\end_layout
-
-\begin_layout Itemize
-Adding converters for MIDI and krn to JSON.
-\end_layout
-
-\begin_layout Itemize
-If no pitch histogram is present in a JSON representation of OptiSequence,
- a pitch hisogram is computed on the fly.
-\end_layout
-
 \begin_layout Section
 Misc
 \end_layout
@@ -1383,29 +1536,92 @@ Compilation
 \end_layout
 
 \begin_layout Standard
-To compile, download the latest version from 
+The latest version is available at: 
 \begin_inset Flex URL
 status collapsed
 
 \begin_layout Plain Layout
 
-https://sourceforge.net/projects/libmusical/files
+http://sourceforge.net/projects/libmusical/
 \end_layout
 
 \end_inset
 
-, extract the tar archive, and invoke make in the subdirectory Release.
- This will build the library.
- Currently, no installation script is provided.
- To use the library, include at least 
+
+\end_layout
+
+\begin_layout Standard
+To install, issue the following commands in a unix shell:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+tar xfvz libmusical-0.9-Source.tar.gz
+\end_layout
+
+\begin_layout Plain Layout
+
+cd libmusical-0.9-Source/build
+\end_layout
+
+\begin_layout Plain Layout
+
+cmake ..
+\end_layout
+
+\begin_layout Plain Layout
+
+make
+\end_layout
+
+\begin_layout Plain Layout
+
+sudo make install
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This will install the headers, library and two applications (
 \family typewriter
-libmusical.h
+nlbdistmat
 \family default
-, and link against 
+ and 
 \family typewriter
-libmusical.a
+alignmidi
+\family default
+) into 
+\family typewriter
+/usr/local
 \family default
 .
+\end_layout
+
+\begin_layout Standard
+The example application alignmidi aligns two midi files:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+alignmidi file1.mid file2.mid
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1435,7 +1651,7 @@ operator==
 
 \begin_layout Standard
 Code example, assuming that the sequences consist of symbols that are accepted
- by the 
+ by a 
 \family typewriter
 XXLevenshteinSimilarityRater
 \family default
@@ -1478,8 +1694,12 @@ status open
 
 \begin_layout Plain Layout
 
-musical::XXLevenshteinSimilarityRater * lr = new musical::XXLevenshteinSimilarit
-yRater();
+musical::XXLevenshteinSimilarityRater * lr =
+\end_layout
+
+\begin_layout Plain Layout
+
+	new musical::XXLevenshteinSimilarityRater();
 \end_layout
 
 \begin_layout Plain Layout
@@ -1493,7 +1713,12 @@ yRater();
 
 \begin_layout Plain Layout
 
-musical::ConstantLinearGapRater * gr = new ConstantLinearGapRater(-1.0);
+musical::ConstantLinearGapRater * gr =
+\end_layout
+
+\begin_layout Plain Layout
+
+	new ConstantLinearGapRater(-1.0);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1512,7 +1737,7 @@ musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(seqs);
 
 \begin_layout Plain Layout
 
-nw.setSRater(lr);
+nw.setSimilarityRater(lr);
 \end_layout
 
 \begin_layout Plain Layout
