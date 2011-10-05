@@ -125,6 +125,9 @@ protected:
 	 */
 	std::vector<std::deque<Trace *> > alignments;
 
+	/**
+	 * contains the scores for the alignments
+	 */
 	vector<double> scores;
 
 	Sequences * seqs;

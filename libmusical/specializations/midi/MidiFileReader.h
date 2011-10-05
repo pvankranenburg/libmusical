@@ -14,6 +14,9 @@
 
 namespace musical {
 
+/**
+ * Convert a midi file into a Sequence of MidiSymbols
+ */
 class MidiFileReader: public musical::Reader {
 public:
 	MidiFileReader();

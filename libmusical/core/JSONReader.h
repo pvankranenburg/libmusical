@@ -25,6 +25,9 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace musical {
 
+/**
+ * Converts JSON string to Sequence.
+ */
 class JSONReader: public musical::Reader {
 public:
 	JSONReader();

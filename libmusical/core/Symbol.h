@@ -34,13 +34,34 @@ public:
 	Symbol();
 	virtual ~Symbol();
 
+	/**
+	 * Get the next symbol
+	 */
 	Symbol * getNext() { return next; }
+
+	/**
+	 * Get the previous symbol
+	 */
 	Symbol * getPrevious() { return previous; }
 
+	/**
+	 * Set the next symbol
+	 */
 	void setNext(Symbol * n) { next = n; }
+
+	/**
+	 * Set the previous symbol
+	 */
 	void setPrevious(Symbol * p) { previous = p; }
 
+	/**
+	 * Set the id
+	 */
 	void setId(std::string i) { id = i; }
+
+	/**
+	 * Get the id
+	 */
 	std::string getId() { return id; }
 
 	/**
