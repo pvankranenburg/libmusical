@@ -1566,7 +1566,17 @@ tar xfvz libmusical-0.9-Source.tar.gz
 
 \begin_layout Plain Layout
 
-cd libmusical-0.9-Source/build
+cd libmusical-0.9-Source
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir build
+\end_layout
+
+\begin_layout Plain Layout
+
+cd build
 \end_layout
 
 \begin_layout Plain Layout
