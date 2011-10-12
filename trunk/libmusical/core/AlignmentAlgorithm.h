@@ -27,7 +27,9 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include "SimilarityRater.h"
 #include "Trace.h"
 
+#include <iostream>
 #include <deque>
+#include <limits>
 
 namespace musical {
 
@@ -99,11 +101,22 @@ protected:
 
 public:
 	/**
+	 * Get the number of (local) alignments
+	 */
+	int getNoOfAlignments() { return alignments.size(); }
+
+	/**
 	 * Returns the score of alignment c
 	 * Default c=0
 	 * Do invoke doAlign() first.
 	 */
-	double getScore(int c=0) const { return scores[c]; };
+	double getScore(int c=0) const {
+		if ( c >= scores.size()) {
+			std::cerr << c << "th score not available" << std::endl;
+			return -std::numeric_limits<double>::infinity();
+		}
+		return scores[c];
+	};
 
 	/**
 	 * Get the length of alignment c
