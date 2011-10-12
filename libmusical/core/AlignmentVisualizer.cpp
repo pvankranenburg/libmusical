@@ -36,6 +36,11 @@ AlignmentVisualizer::~AlignmentVisualizer() {
 
 void AlignmentVisualizer::basicStdoutReport(int c) {
 
+	if ( c >= al->getNoOfAlignments() ) {
+		cerr << "No alignment available at index " << c << endl;
+		return;
+	}
+
 	for ( int i = 0; i < al->getAlignmentSize(c); i++ ) {
 		std::string symbol1 = "s1";
 		std::string symbol2 = "s2";
@@ -48,7 +53,7 @@ void AlignmentVisualizer::basicStdoutReport(int c) {
 			symbol2 = "x";
 		else symbol2 = al->getSeq2()->getSymbolAt(al->getTraceElement(i,c)->getIx2())->toString();
 
-		cout << "(" << al->getTraceElement(i,c)->getIx1() << ")[" << symbol1 << "] - (" << al->getTraceElement(i,c)->getIx2() <<  ")[" << symbol2 << "]" << endl;
+		cout << "(" << al->getTraceElement(i,c)->getIx1() << ")[" << symbol1 << "] - (" << al->getTraceElement(i,c)->getIx2() <<  ")[" << symbol2 << "]" << " With score: " << al->getTraceElement(i,c)->thisscore << endl;
 	}
 
 }

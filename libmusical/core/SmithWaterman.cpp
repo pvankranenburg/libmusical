@@ -57,6 +57,9 @@ void SmithWaterman::doAlign() {
 	int n = seq1->size();
 	int m = seq2->size();
 
+	if (feedback) cout << "Length seq1 " << n << endl;
+	if (feedback) cout << "Length seq2 " << m << endl;
+
 	int mm = m + 1; //size of matrix
 	int mn = n + 1;
 
@@ -64,7 +67,7 @@ void SmithWaterman::doAlign() {
 	//s = new NWTrace[(mm)*(mn)];
 	s = (NWTrace *)malloc(mm*mn*sizeof(NWTrace));
 
-	if (feedback) cout << "s allocated : (" << s << ")" << mm << " x " << mn << " = " << mm*mn << endl;
+	if (feedback) cout << "s allocated : (" << s << ") " << mm << " x " << mn << " = " << mm*mn << endl;
 
 	//initialize initial gaps
 
@@ -120,15 +123,23 @@ void SmithWaterman::doAlign() {
 
 				current_ix = k*mm+l;
 
+				if (printmatrix) cout << "Writing to s[" << current_ix << "]" << endl;
+
 				if (s[current_ix].ix1 == Trace::DONTUSE ) { //potential starting point
 					s[current_ix].accumulatedscore = 0.0;
 					s[current_ix].thisscore = 0.0;
 				} else {
 					substsc = simr->getScore(seqs,k-2,l-2,k-1,l-1);
 
+					if(printmatrix) cout << k << "," << l << " substscore: " << substsc << endl;
+
 					S  = s[(k-1)*mm+(l-1)].accumulatedscore + substsc;
 					G1 = s[(k-1)*mm+l].accumulatedscore     + gapscore;
 					G2 = s[k*mm+(l-1)].accumulatedscore     + gapscore;
+
+					if(printmatrix) cout << "S:  " << S << endl;
+					if(printmatrix) cout << "G1: " << G1 << endl;
+					if(printmatrix) cout << "G2: " << G2 << endl;
 
 					if ( S >= G1 && S >= G2 && S > 0.0) { //substitution
 						s[current_ix].ix1 = k-1;
@@ -150,8 +161,8 @@ void SmithWaterman::doAlign() {
 					} else { //endpoint
 						s[current_ix].ix1 = Trace::NOWHERE;
 						s[current_ix].ix2 = Trace::NOWHERE;
-						s[current_ix].accumulatedscore = -std::numeric_limits<double>::infinity();
-						s[current_ix].thisscore = -std::numeric_limits<double>::infinity();
+						s[current_ix].accumulatedscore = 0.0;
+						s[current_ix].thisscore = 0.0;
 					}
 				}
 
@@ -200,7 +211,10 @@ void SmithWaterman::doAlign() {
 		}
 		if ( max_k == -1 || max_l == -1 ) { break; } //apparently there are no local aligments => break out loop
 
-		if (feedback) cout << "maximum found: " << max_k << " , " << max_l << endl;
+		if (feedback) cout << "maximum found: " << maxscore << " at " << max_k << " , " << max_l << endl;
+
+		//this is the alignment score
+		scores.push_back(maxscore);
 
 		//trace back
 		//add new alignment to alignments
@@ -216,6 +230,7 @@ void SmithWaterman::doAlign() {
 			alignments.back().push_front(new NWTrace(s[i*mm+j]));
 			i_new = s[i*mm+j].ix1;
 			j = s[i*mm+j].ix2;
+			//if (feedback) cout << "wrinting to s[" << i*mm+j << "]" << endl;
 			i = i_new;
 			if (feedback) cout << "to: " << i << " , " << j << endl;
 		} while ( s[i*mm+j].accumulatedscore > 0.0 ); //endpoint of trace should not be in the alignment
@@ -233,6 +248,7 @@ void SmithWaterman::doAlign() {
 		for(unsigned int i = 0; i < alignments.back().size(); i++) {
 			int ix1 = alignments.back()[i]->getMatrixThisIx1();
 			int ix2 = alignments.back()[i]->getMatrixThisIx2();
+			if ( feedback ) cout << "writing to s[" << ix1*mm+ix2 << "]" << endl;
 			s[ix1*mm+ix2].ix1 = Trace::DONTUSE;
 			s[ix1*mm+ix2].ix2 = Trace::DONTUSE;
 		}
@@ -245,10 +261,11 @@ void SmithWaterman::doAlign() {
 			int ix1_start = alignments.back().front()->getMatrixThisIx1();
 			int ix2_start = alignments.back().front()->getMatrixThisIx2();
 			int ix1_end   = alignments.back().back()->getMatrixThisIx1();
-			int ix2_end   = alignments.back().back()->getMatrixThisIx1();
+			int ix2_end   = alignments.back().back()->getMatrixThisIx2();
 
 			for(int k=ix1_start; k<=ix1_end; k++)
 				for(int l=ix2_start; l<=ix2_end; l++) {
+					//if (feedback) cout << "writing to s[" << k*mm+l << "]"<< endl;
 					s[k*mm+l].ix1 = Trace::DONTUSE;
 					s[k*mm+l].ix2 = Trace::DONTUSE;
 				}
@@ -261,6 +278,7 @@ void SmithWaterman::doAlign() {
 	if (feedback) cout << "ready with " << alignments.size() <<  " alignment(s)" << endl;
 
 	//get rid of matrix
+	if (feedback) cout << "freeing s: " << s << endl;
 	free(s);
 	if (feedback) cout << "s freed" << endl;
 
