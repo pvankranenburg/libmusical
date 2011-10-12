@@ -1,3 +1,14 @@
+Release 0.9.1 - 12 October 2011
+Fixed bugs in SmithWaterman
+
+Release 0.9 - 5 October 2011
+Added install scripts
+Added alignmidi
+Added Reader class
+Sparce histogram in nlb
+Many data members are now private
+Fixed several minor bugs
+
 Release 0.8.1 - 3 August 2011
 Added build system: cmake
 
