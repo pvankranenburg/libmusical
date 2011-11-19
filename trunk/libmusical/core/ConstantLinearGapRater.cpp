@@ -37,8 +37,8 @@ ConstantLinearGapRater::~ConstantLinearGapRater() {
 }
 
 double ConstantLinearGapRater::getInitializationScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
-	//either x1=x2=0 (initial gap in x)
-	//or y1=y2=0 (initial gap in y)
+	//either x1=x2=-1 (initial gap in x)
+	//or y1=y2=-1 (initial gap in y)
 
 	if ( x1 == x2 && x1 == -1 ) {
 		return ( gapScore * (double)(y2-y1) );

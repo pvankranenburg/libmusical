@@ -18,37 +18,24 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef AFFINEGAPRATER_H_
+#define AFFINEGAPRATER_H_
 
-#ifndef GAPRATER_H_
-#define GAPRATER_H_
-
-#include "Sequences.h"
+#include <GapRater.h>
 
 namespace musical {
 
-/**
- * Abstract gaprater.
- */
-class GapRater {
+class AffineGapRater: public musical::GapRater {
 public:
-	GapRater();
-	virtual ~GapRater();
+	AffineGapRater();
+	virtual ~AffineGapRater();
 
-	/**
-	 * Returns scores for 'begin-gaps'.
-	 * x1, x2, y1, and y2 are indices in the sequences. First symbol is at position 0.
-	 * Conditions: either x1=x2=-1 or y1=y2=-1.
-	 */
-	virtual double getInitializationScore(Sequences * seqs, int x1, int y1, int x2, int y2) = 0;
+	virtual double getGapOpeningScore(Sequences * seqs, int x1, int y1, int x2, int y2) = 0;
 
-	/**
-	 * Returns the score for gap of arbitrary length.
-	 * x1, x2, y1, and y2 are indices in the sequences. First symbol is at position 0.
-	 * Conditions: either x1 == x2 or y1 == y2
-	 */
-	virtual double getGapScore(Sequences * seqs, int x1, int y1, int x2, int y2) = 0;
+	virtual double getGapExtensionScore(Sequences * seqs, int x1, int y1, int x2, int y2) = 0;
+
 };
 
 }
 
-#endif /* GAPRATER_H_ */
+#endif /* AFFINEGAPRATER_H_ */

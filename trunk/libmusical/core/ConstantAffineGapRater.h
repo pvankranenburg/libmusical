@@ -22,7 +22,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef CONSTANTAFFINEGAPRATER_H_
 #define CONSTANTAFFINEGAPRATER_H_
 
-#include "GapRater.h"
+#include "AffineGapRater.h"
 
 namespace musical {
 
@@ -30,25 +30,35 @@ namespace musical {
  * A gap rater that has fixed scores for gap-opening and gap-extension.
  * To be used with the Gotoh-variants of the alignment algorithm.
  */
-class ConstantAffineGapRater: public GapRater {
+class ConstantAffineGapRater: public AffineGapRater {
 public:
 	ConstantAffineGapRater();
 	ConstantAffineGapRater(double gs, double es);
+	ConstantAffineGapRater(double gs, double es, double igs, double ies);
 	virtual ~ConstantAffineGapRater();
 
 	/**
 	 * Returns initialization score for going from (x1, y1) to (x2, y2).
-	 * The parameters are indices in seq1 and seq1.
+	 * The parameters are indices in seq1 and seq2.
 	 * Condition: x1=x2=-1 or y1=y2=-1
 	 */
 	virtual double getInitializationScore(Sequences * seqs, int x1, int y1, int x2, int y2);
 
 	/**
 	 * Returns gap score for going from (x1,y1) to (x2,y2).
-	 * The parameters are indices in seq1 and seq1.
+	 * The parameters are indices in seq1 and seq2.
 	 * Condition: x1=x2 or y1=y2.
 	 */
 	virtual double getGapScore(Sequences * seqs, int x1, int y1, int x2, int y2);
+
+	virtual double getGapOpeningScore(Sequences * seqs, int x1, int y1, int x2, int y2);
+
+	virtual double getGapExtensionScore(Sequences * seqs, int x1, int y1, int x2, int y2);
+
+	virtual double getInitialGapOpeningScore();
+
+	virtual double getInitialGapExtensionScore();
+
 
 	/**
 	 * Sets the (fixed) gap opening score.
@@ -62,6 +72,8 @@ public:
 private:
 	double gapOpeningScore;
 	double gapExtensionScore;
+	double initialGapOpeningScore;
+	double initialGapExtensionScore;
 };
 
 }
