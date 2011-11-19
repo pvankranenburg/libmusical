@@ -49,14 +49,14 @@ int main(int argc, char * argv[]) {
 	clog << argv[1] << " : " << seq1->size() << " symbols" << endl;
 	clog << argv[2] << " : " << seq2->size() << " symbols" << endl;
 
-	clog << "Creating aligner" << endl;
-	musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(&seqs);
-
 	clog << "Creating similarity rater" << endl;
-	nw.setSimilarityRater( new musical::MidiExactPitchIntervalSimilarityRater() );
+	musical::MidiExactPitchIntervalSimilarityRater * sr = new musical::MidiExactPitchIntervalSimilarityRater();
 
 	clog << "Creating gap rater" << endl;
-	nw.setGapRater( new musical::ConstantLinearGapRater(-0.8) );
+	musical::ConstantLinearGapRater * gr =  new musical::ConstantLinearGapRater(-0.8);
+
+	clog << "Creating aligner" << endl;
+	musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(&seqs, sr, gr);
 
 	clog << "Doing the alignment" << endl;
 	nw.doAlign();
