@@ -11,6 +11,7 @@ set(libmusical_lib_src
 	core/ConstantLinearGapRater.cpp
 	core/Converter.cpp
 	core/GapRater.cpp
+	core/AffineGapRater.cpp
 	core/JSONFileSource.cpp
 	core/JSONMysqlSource.cpp
 	core/JSONReader.cpp
@@ -79,6 +80,7 @@ install(
 		core/ConstantLinearGapRater.h
 		core/Converter.h
 		core/GapRater.h
+		core/AffineGapRater.h
 		core/JSONFileSource.h
 		core/JSONMysqlSource.h
 		core/JSONReader.h
