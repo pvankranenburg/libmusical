@@ -37,7 +37,7 @@ NeedlemanWunschGotoh::NeedlemanWunschGotoh() {
 	*/
 }
 
-NeedlemanWunschGotoh::NeedlemanWunschGotoh(Sequences * sqs) : AlignmentAlgorithm(sqs) {
+NeedlemanWunschGotoh::NeedlemanWunschGotoh(Sequences * sqs, SimilarityRater * sr, AffineGapRater * agr) : AlignmentAlgorithm(sqs,sr,agr) {
 	/*
 	s = (NWGTrace *)malloc(200*200*sizeof(NWGTrace));
 	g1 = (NWGTrace *)malloc(200*200*sizeof(NWGTrace));
@@ -101,11 +101,16 @@ void NeedlemanWunschGotoh::doAlign() {
 	}
 	*/
 
-	//initialize initial gaps
 
+	//TODO THIS SHOULD BE RESOLVED AS SOON AS POSSIBLE!!!!
 	double gapopeningpenalty = 0.8; //TODO
 	double gapextensionpenalty = 0.2; //TODO
 
+	//initialize initial gaps
+
+	//TODO:
+	// Do not use g1 and g2 for initial gaps. Only use s!
+	// Then the standard gapr->getInitializationScore(...) can be used, and the gap score can be made context dependent.
 
 	// (0,0) : origin. endpoint of global alignment
 	s[0*mm+0].ix1 = Trace::NOWHERE;

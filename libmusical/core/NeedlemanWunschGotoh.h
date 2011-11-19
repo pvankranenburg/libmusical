@@ -25,17 +25,18 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include <deque>
 
 #include "AlignmentAlgorithm.h"
+#include "AffineGapRater.h"
 #include "NWGTrace.h"
 
 namespace musical {
 
 /**
- * Implementation of the Needleman-Wunsch-Gotoh algorithm.
+ * Global alignment with affine gap penalty function (Needleman-Wunsch-Gotoh).
  */
 class NeedlemanWunschGotoh: public musical::AlignmentAlgorithm {
 public:
 	NeedlemanWunschGotoh();
-	NeedlemanWunschGotoh(Sequences * sqs);
+	NeedlemanWunschGotoh(Sequences * sqs, SimilarityRater * sr, AffineGapRater * agr);
 	virtual ~NeedlemanWunschGotoh();
 
 	/**

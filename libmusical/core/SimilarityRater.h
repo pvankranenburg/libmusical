@@ -35,7 +35,8 @@ public:
 	virtual ~SimilarityRater();
 
 	/**
-	 * This computes the similarity score for {x1+1, x1+2, ... , x2} from seq1 with {y1+1, y1+2, ... , y2 } from seq2
+	 * This computes the similarity score for {x1, x1+1, ... , x2} from seq1 with {y1, y1+1, ... , y2 } from seq2
+	 * x1, x2, y1, and y2 are indices in the sequences. First symbol is at position 0.
 	 */
 	virtual double getScore(Sequences * seqs, int x1, int y1, int x2, int y2) = 0;
 };

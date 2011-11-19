@@ -26,12 +26,29 @@ using namespace std;
 
 namespace musical {
 
-ConstantAffineGapRater::ConstantAffineGapRater() : gapOpeningScore(-1.0), gapExtensionScore(-0.2) {
+ConstantAffineGapRater::ConstantAffineGapRater() :
+		gapOpeningScore(-0.8), gapExtensionScore(-0.2),
+		initialGapOpeningScore(-0.8), initialGapExtensionScore(-0.2) {
+
+	//empty
+
 }
 
-ConstantAffineGapRater::ConstantAffineGapRater(double gs, double es) : gapOpeningScore(gs), gapExtensionScore(es) {
+ConstantAffineGapRater::ConstantAffineGapRater(double gs, double es) :
+		gapOpeningScore(gs), gapExtensionScore(es),
+		initialGapOpeningScore(gs), initialGapExtensionScore(es) {
+
+	//empty
+
 }
 
+ConstantAffineGapRater::ConstantAffineGapRater(double gs, double es, double igs, double ies) :
+				gapOpeningScore(gs), gapExtensionScore(es),
+				initialGapOpeningScore(igs), initialGapExtensionScore(ies) {
+
+	//empty
+
+}
 
 ConstantAffineGapRater::~ConstantAffineGapRater() {
 	// TODO Auto-generated destructor stub
@@ -64,5 +81,28 @@ double ConstantAffineGapRater::getGapScore(Sequences * seqs, int x1, int y1, int
 	return 0.0;
 }
 
+double ConstantAffineGapRater::getGapOpeningScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
+
+	//just ignore the matrix coefficients
+	//For robustness it could be good to check whether (x1==x2 && y1==y2-1) || (x1==x2-1 && y1==y2)
+
+	return gapOpeningScore;
+}
+
+double ConstantAffineGapRater::getGapExtensionScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
+
+	//just ignore the matrix coefficients
+	//For robustness it could be good to check whether (x1==x2 && y1==y2-1) || (x1==x2-1 && y1==y2)
+
+	return gapExtensionScore;
+}
+
+double ConstantAffineGapRater::getInitialGapOpeningScore() {
+	return initialGapOpeningScore;
+}
+
+double ConstantAffineGapRater::getInitialGapExtensionScore() {
+	return initialGapExtensionScore;
+}
 
 }

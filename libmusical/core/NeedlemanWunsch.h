@@ -37,7 +37,7 @@ namespace musical {
 class NeedlemanWunsch: public musical::AlignmentAlgorithm {
 public:
 	NeedlemanWunsch();
-	NeedlemanWunsch(Sequences * sqs);
+	NeedlemanWunsch(Sequences * sqs, SimilarityRater * sr, GapRater * gr);
 	virtual ~NeedlemanWunsch();
 
 	/**

@@ -18,27 +18,22 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-#include <iostream>
-#include <iomanip>
-#include <cstdlib>
-using namespace std;
-
-#include "SmithWaterman.h"
-#include "miscfunctions.h"
+#include <LocalAffineAligner.h>
 
 namespace musical {
 
-SmithWaterman::SmithWaterman() : AlignmentAlgorithm(), maxAlignments(1), allowOverlappingMatches(true) {
+LocalAffineAligner::LocalAffineAligner()  : AlignmentAlgorithm(), maxAlignments(1), allowOverlappingMatches(true) {
 	// TODO Auto-generated constructor stub
+
 }
 
-SmithWaterman::~SmithWaterman() {
-	// cout << "SOMETHING WRONG HERE?"<< endl;
+LocalAffineAligner::~LocalAffineAligner() {
 	// TODO Auto-generated destructor stub
 }
 
-void SmithWaterman::doAlign() {
+void LocalAffineAligner::doAlign() {
+
+	cerr << "void LocalAffineAligner::doAlign() not yet finished." << endl;
 
 	bool feedback = false;
 	bool printmatrix = false;
@@ -63,11 +58,14 @@ void SmithWaterman::doAlign() {
 	int mm = m + 1; //size of matrix
 	int mn = n + 1;
 
-	//create matrix
-	//s = new NWTrace[(mm)*(mn)];
-	s = (NWTrace *)malloc(mm*mn*sizeof(NWTrace));
+	//create matrices
+	s = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
+	g1 = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
+	g2 = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
 
-	if (feedback) cout << "s allocated : (" << s << ") " << mm << " x " << mn << " = " << mm*mn << endl;
+	if (feedback) cout << " s allocated : (" << s  << ") " << mm << " x " << mn << " = " << mm*mn << endl;
+	if (feedback) cout << "g1 allocated : (" << g1 << ") " << mm << " x " << mn << " = " << mm*mn << endl;
+	if (feedback) cout << "g2 allocated : (" << g2 << ") " << mm << " x " << mn << " = " << mm*mn << endl;
 
 	//initialize initial gaps
 
@@ -265,7 +263,14 @@ void SmithWaterman::doAlign() {
 	if (feedback) cout << "freeing s: " << s << endl;
 	free(s);
 	if (feedback) cout << "s freed" << endl;
+	if (feedback) cout << "freeing g1: " << g1 << endl;
+	free(g1);
+	if (feedback) cout << "g1 freed" << endl;
+	if (feedback) cout << "freeing g2: " << g2 << endl;
+	free(g2);
+	if (feedback) cout << "g2 freed" << endl;
 
 }
+
 
 }

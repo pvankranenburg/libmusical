@@ -40,7 +40,7 @@ namespace musical {
 class AlignmentAlgorithm {
 public:
 	AlignmentAlgorithm();
-	AlignmentAlgorithm(Sequences * s) : seqs(s) {};
+	AlignmentAlgorithm(Sequences * s, SimilarityRater * sr, GapRater * gr) : seqs(s), simr(sr), gapr(gr) {};
 	virtual ~AlignmentAlgorithm();
 
 	/**
@@ -73,19 +73,9 @@ public:
 	SimilarityRater * getSimilarityRater() { return simr; }
 
 	/**
-	 * Set the similarity rater
-	 */
-	void setSimilarityRater(SimilarityRater * sr ) { simr = sr; }
-
-	/**
 	 * returns a pointer to the gap rater
 	 */
 	GapRater * getGapRater() { return gapr; }
-
-	/**
-	 * set the gap rater
-	 */
-	void setGapRater(GapRater * gr) { gapr = gr; }
 
 	/**
 	 * remove all results / score etc.
@@ -95,7 +85,7 @@ public:
 protected:
 	/**
 	 * In this function derived classes (algorithms) should put specific cleaning.
-	 * Invoked from clear (make protected?)
+	 * Invoked from clear
 	 */
 	virtual void specificClear() = 0;
 
@@ -111,7 +101,7 @@ public:
 	 * Do invoke doAlign() first.
 	 */
 	double getScore(int c=0) const {
-		if ( c >= scores.size()) {
+		if ( c >= (int)scores.size()) {
 			std::cerr << c << "th score not available" << std::endl;
 			return -std::numeric_limits<double>::infinity();
 		}
@@ -144,8 +134,8 @@ protected:
 	vector<double> scores;
 
 	Sequences * seqs;
-	GapRater * gapr;
 	SimilarityRater * simr;
+	GapRater * gapr;
 
 };
 

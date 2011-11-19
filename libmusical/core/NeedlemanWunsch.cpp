@@ -36,7 +36,7 @@ NeedlemanWunsch::NeedlemanWunsch() {
 	// TODO Auto-generated constructor stub
 }
 
-NeedlemanWunsch::NeedlemanWunsch(Sequences * sqs) : AlignmentAlgorithm(sqs) {
+NeedlemanWunsch::NeedlemanWunsch(Sequences * sqs, SimilarityRater * sr, GapRater * gr) : AlignmentAlgorithm(sqs,sr,gr) {
 	//s = (NWTrace *)malloc(200*200*sizeof(NWTrace));
 	//size_s = 200*200;
 }

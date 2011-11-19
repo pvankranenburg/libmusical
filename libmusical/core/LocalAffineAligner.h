@@ -18,29 +18,21 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef LOCALAFFINEALIGNER_H_
+#define LOCALAFFINEALIGNER_H_
 
-#ifndef SMITHWATERMAN_H_
-#define SMITHWATERMAN_H_
-
-#include <deque>
-
-#include "AlignmentAlgorithm.h"
-#include "NWTrace.h"
+#include <AlignmentAlgorithm.h>
 
 namespace musical {
 
-/**
- * Implementation of the Smith-Watermann local alignment algorithm.
- */
-class SmithWaterman: public musical::AlignmentAlgorithm {
+class LocalAffineAligner: public musical::AlignmentAlgorithm {
 public:
-
-	SmithWaterman();
-	SmithWaterman(Sequences * sqs, SimilarityRater * sr, GapRater * gr) : AlignmentAlgorithm(sqs,sr,gr), maxAlignments(1), allowOverlappingMatches(false) { };
-	virtual ~SmithWaterman();
+	LocalAffineAligner();
+	LocalAffineAligner(Sequences * sqs) : AlignmentAlgorithm(sqs), maxAlignments(1), allowOverlappingMatches(false) { };
+	virtual ~LocalAffineAligner();
 
 	/**
-	 * Do the alignment.
+	 * Do the alignment
 	 */
 	void doAlign();
 
@@ -65,7 +57,13 @@ public:
 	virtual void specificClear() { maxAlignments = 1; allowOverlappingMatches = false; } ;
 
 private:
-	NWTrace * s; //this will be the d.p. matrix. created and deleted in doAlign().
+	/**
+	 * This algorithm needs three matrices
+	 */
+	NWGTrace * s;  //this will be the d.p. matrix.
+	NWGTrace * g1; //this will be the d.p. matrix for state 'gap with seq1'.
+	NWGTrace * g2; //this will be the d.p. matrix for state 'gap with seq2'
+	int size_s;
 
 	int maxAlignments; //number of local alignments that is returned. -1 is all. default is 1.
 	bool allowOverlappingMatches; // if true: symbols can occur in more than one local alignment. Default: false
@@ -74,4 +72,4 @@ private:
 
 }
 
-#endif /* SMITHWATERMAN_H_ */
+#endif /* LOCALAFFINEALIGNER_H_ */
