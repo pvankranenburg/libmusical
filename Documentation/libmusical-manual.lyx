@@ -61,7 +61,7 @@
 \begin_body
 
 \begin_layout Title
-libmusical 0.9
+libmusical 0.10.0
 \end_layout
 
 \begin_layout Author
@@ -1105,40 +1105,41 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
+	// Create a similarity rater
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::OptiSimilarityRater * sr = musical::OptiSimilarityRater();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// Create a gap rater 
+\end_layout
+
+\begin_layout Plain Layout
+
+	musical::ConstantLinearGapRater * gr = new musical::ConstantLinearGapRater(-0.8)
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
 	// Create an alignment algorithm
 \end_layout
 
 \begin_layout Plain Layout
 
-	musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs);
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	// Assign a similarity rater
-\end_layout
-
-\begin_layout Plain Layout
-
-	nw.setSimilarityRater( new musical::OptiSimilarityRater() );
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	// Assign a gap rater 
-\end_layout
-
-\begin_layout Plain Layout
-
-	nw.setGapRater( new musical::ConstantLinearGapRater(-0.8) );
+	musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(&seqs, sr, gr);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1742,17 +1743,12 @@ musical::ConstantLinearGapRater * gr =
 
 \begin_layout Plain Layout
 
-musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(seqs);
+musical::NeedlemanWunsch nw =
 \end_layout
 
 \begin_layout Plain Layout
 
-nw.setSimilarityRater(lr);
-\end_layout
-
-\begin_layout Plain Layout
-
-mw.setGapRater(gr);
+	musical::NeedlemanWunsch(seqs,lr,gr);
 \end_layout
 
 \begin_layout Plain Layout
