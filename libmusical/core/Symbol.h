@@ -69,6 +69,13 @@ public:
 	 */
 	virtual std::string toString() = 0;
 
+	/**
+	 * Returns a float representation of the symbol.
+	 * Default: return 1.0. Can be overridden by derived classes
+	 * Used by AlignmentVisualizer.
+	 */
+	virtual float toFloat() { return 1.0; }
+
 protected:
 	std::string id;
 	Symbol * next;
