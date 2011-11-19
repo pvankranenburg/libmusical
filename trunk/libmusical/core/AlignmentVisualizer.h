@@ -41,6 +41,22 @@ public:
 	 */
 	void basicStdoutReport(int c=0);
 
+	/**
+	 * Produces a gnuplot inputfile that shows the aligned sequences below each other.
+	 * Values for the symbols are obtained from Symbol::toFloat() (or derived).
+	 * This function creates two files:
+	 * <filebasename>.gnuplot - contains the gnuplot commands
+	 * <filebasename>.data - contains the alignment data
+	 * Gnuplot will produce <filebasename>.ps
+	 */
+	void toGnuPlot(std::string filebasename, int c=0);
+
+	/**
+	 * Same as toGnuPlot, but allows to set the extent of the y-axis of the resulting
+	 * Plot.
+	 */
+	void toGnuPlot(std::string filebasename, float minyvalue, float maxyvalue, int c=0);
+
 private:
 
 	AlignmentAlgorithm * al;
