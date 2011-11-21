@@ -103,8 +103,8 @@ int main(int argc, char * argv[]) {
 		for(int j=0; j<size2; j++) {
 			if ( j%1000 == 0 ) cout << "." << flush;
 			musical::OptiSequences seqs = musical::OptiSequences(seqs1[i],seqs2[j]);
-			//musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs, new musical::OptiSimilarityRater(), new musical::ConstantAffineGapRater(-0.8, -0.2));
-			musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(&seqs, new musical::OptiSimilarityRater(), new musical::ConstantLinearGapRater(-0.6));
+			musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs, new musical::OptiSimilarityRater(), new musical::ConstantAffineGapRater(-0.8, -0.2));
+			//musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(&seqs, new musical::OptiSimilarityRater(), new musical::ConstantLinearGapRater(-0.6));
 			nw.doAlign();
 			double normalizedscore = nw.getScore() / min(seqs1[i]->size(),seqs2[j]->size());
 			if (distmat) thedistmat[i*size2+j] = 1.0 - normalizedscore;
