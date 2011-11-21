@@ -10,7 +10,7 @@ TODO
 * Add GeneralLocalAligner
 * Add AffineLocalAligner
 
-Release 0.10.x - d.d. (in progress)
+Release 0.10.0 - 21 November 2011
 * Now NeedlemanWunschGotoh uses the AffineGapRater.
 * Added gnuplot output to AlignmentVisualizer
 * Removed AlignmentAlgorithm::setGapRater()
