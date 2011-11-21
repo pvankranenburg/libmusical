@@ -38,7 +38,9 @@ OptiSymbol::~OptiSymbol() {
 }
 
 string OptiSymbol::toString() {
-	return "TODO";
+	stringstream ss;
+	ss << pitch40;
+	return ss.str();
 }
 
 }
