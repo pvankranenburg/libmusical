@@ -1110,7 +1110,7 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	musical::OptiSimilarityRater * sr = musical::OptiSimilarityRater();
+	musical::OptiSimilarityRater * sr = new musical::OptiSimilarityRater();
 \end_layout
 
 \begin_layout Plain Layout
