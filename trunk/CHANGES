@@ -1,15 +1,17 @@
 TODO
 * Rename the algorithms
-  NeedlemanWunsch -> GlobalLinearAligner
-  NeedlemanWunschGotoh -> GlobalAffineAligner
-  SmithWaterman -> LocalLinearAligner
-  SmithWatermanGotoh -> LocalAffineAligner
+  NeedlemanWunsch -> LinearGlobalAligner
+  NeedlemanWunschGotoh -> AffineGlobalAligner
+  SmithWaterman -> LinearLocalAligner
+  SmithWatermanGotoh -> AffineLocalAligner
   Reason: the implementations differ from the algorithms in the literature.
 * Add MongeauSankoffAligner (other name?)
 * Add GeneralGlobalAligner
 * Add GeneralLocalAligner
+* Add AffineLocalAligner
 
 Release 0.10.x - d.d. (in progress)
+* Now NeedlemanWunschGotoh uses the AffineGapRater.
 * Added gnuplot output to AlignmentVisualizer
 * Removed AlignmentAlgorithm::setGapRater()
   Removed AlignmentAlgorithm::setSimilarityRater()
@@ -18,7 +20,7 @@ Release 0.10.x - d.d. (in progress)
 * Added class AffineGapRater. To be used with NeedlemanWunschGotoh / Affine local alignment.
 
 Release 0.9.2 - 13 October 2011
-* Update to CMakeLists.txt
+* Update CMakeLists.txt
 
 Release 0.9.1 - 13 October 2011
 * Fixed bugs in SmithWaterman
