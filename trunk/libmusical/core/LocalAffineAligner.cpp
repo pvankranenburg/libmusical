@@ -35,7 +35,6 @@ void LocalAffineAligner::doAlign() {
 
 	cerr << "void LocalAffineAligner::doAlign() not yet finished." << endl;
 
-	bool feedback = false;
 	bool printmatrix = false;
 
 	//make sure n and m are sizes of sequences.

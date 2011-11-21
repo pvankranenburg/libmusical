@@ -25,6 +25,7 @@ using namespace std;
 
 #include "NeedlemanWunschGotoh.h"
 #include "miscfunctions.h"
+#include "AffineGapRater.h"
 
 namespace musical {
 
@@ -57,8 +58,6 @@ NeedlemanWunschGotoh::~NeedlemanWunschGotoh() {
 }
 
 void NeedlemanWunschGotoh::doAlign() {
-
-	bool feedback = false;
 
 	if (feedback) cout << "start alignment" << endl;
 
@@ -102,14 +101,9 @@ void NeedlemanWunschGotoh::doAlign() {
 	*/
 
 
-	//TODO THIS SHOULD BE RESOLVED AS SOON AS POSSIBLE!!!!
-	double gapopeningpenalty = 0.8; //TODO
-	double gapextensionpenalty = 0.2; //TODO
-
 	//initialize initial gaps
 
-	//TODO:
-	// Do not use g1 and g2 for initial gaps. Only use s!
+	// For initial gaps, we only use s, not g1 and g2!
 	// Then the standard gapr->getInitializationScore(...) can be used, and the gap score can be made context dependent.
 
 	// (0,0) : origin. endpoint of global alignment
@@ -134,42 +128,22 @@ void NeedlemanWunschGotoh::doAlign() {
 	g2[0*mm+0].thisscore = 0.0;
 
 
-	//initialize begin-gap *with* seq1
-	// S S S S S S
+	//initialize begin-gap *with* seq2 -- index in seq2 (l) remains same, namely -1
 	// - - - - S S
+	// S S S S S S
 
-	// (1,0): first symbol of seq1 aligned with gap :
-	s[1*mm+0].ix1 = Trace::NOWHERE;
-	s[1*mm+0].ix2 = Trace::NOWHERE;
-	s[1*mm+0].state = NWGTrace::NONE;
-	s[1*mm+0].accumulatedscore = -std::numeric_limits<double>::infinity();
-	s[1*mm+0].thisscore = 0.0;
-
-	g1[1*mm+0].ix1 = 0;
-	g1[1*mm+0].ix2 = 0;
-	g1[1*mm+0].state = NWGTrace::S; //poits to (0,0) in S
- 	g1[1*mm+0].accumulatedscore = - gapopeningpenalty;
-	g1[1*mm+0].thisscore = - gapopeningpenalty;
-
-	g2[1*mm+0].ix1 = Trace::NOWHERE;
-	g2[1*mm+0].ix2 = Trace::NOWHERE;
-	g2[1*mm+0].state = NWGTrace::NONE;
-	g2[1*mm+0].accumulatedscore = -std::numeric_limits<double>::infinity();
-	g2[1*mm+0].thisscore = 0.0;
-
-	//rest:
-	for(int k=2; k<mn; k++) {
-		s[k*mm+0].ix1 = Trace::NOWHERE;
-		s[k*mm+0].ix2 = Trace::NOWHERE;
-		s[k*mm+0].state = NWGTrace::NONE;
-		s[k*mm+0].accumulatedscore = -std::numeric_limits<double>::infinity();
+	for(int k=1; k<mn; k++) {
+		s[k*mm+0].ix1 = k-1;
+		s[k*mm+0].ix2 = 0;
+		s[k*mm+0].state = NWGTrace::S;
+		s[k*mm+0].accumulatedscore = gapr->getInitializationScore(seqs,-1,-1,k-1,-1);
 		s[k*mm+0].thisscore = 0.0;
 
-		g1[k*mm+0].ix1 = k-1;
-		g1[k*mm+0].ix2 = 0;
-		g1[k*mm+0].state = NWGTrace::G1;
-		g1[k*mm+0].accumulatedscore = g1[(k-1)*mm+0].accumulatedscore - gapextensionpenalty;
-		g1[k*mm+0].thisscore = - gapextensionpenalty;
+		g1[k*mm+0].ix1 = Trace::NOWHERE;
+		g1[k*mm+0].ix2 = Trace::NOWHERE;
+		g1[k*mm+0].state = NWGTrace::NONE;
+		g1[k*mm+0].accumulatedscore = -std::numeric_limits<double>::infinity();
+		g1[k*mm+0].thisscore = - 0.0;
 
 		g2[k*mm+0].ix1 = Trace::NOWHERE;
 		g2[k*mm+0].ix2 = Trace::NOWHERE;
@@ -179,35 +153,15 @@ void NeedlemanWunschGotoh::doAlign() {
 	}
 
 
-	//initialize begin-gap *with* seq2
-	// - - - - S S
+	//initialize begin-gap *with* seq1 -- index in seq1 (k) remains same, namely -1
 	// S S S S S S
+	// - - - - S S
 
-	// (0,1): first symbol of seq1 aligned with gap :
-	s[0*mm+1].ix1 = Trace::NOWHERE;
-	s[0*mm+1].ix2 = Trace::NOWHERE;
-	s[0*mm+1].state = NWGTrace::NONE;
-	s[0*mm+1].accumulatedscore = -std::numeric_limits<double>::infinity();
-	s[0*mm+1].thisscore = 0.0;
-
-	g1[0*mm+1].ix1 = Trace::NOWHERE;
-	g1[0*mm+1].ix2 = Trace::NOWHERE;
-	g1[0*mm+1].state = NWGTrace::NONE;
-	g1[0*mm+1].accumulatedscore = -std::numeric_limits<double>::infinity();
-	g1[0*mm+1].thisscore = - 0.0;
-
-	g2[0*mm+1].ix1 = 0;
-	g2[0*mm+1].ix2 = 0;
-	g2[0*mm+1].state = NWGTrace::S;
-	g2[0*mm+1].accumulatedscore = - gapopeningpenalty;
-	g2[0*mm+1].thisscore = - gapopeningpenalty;
-
-	//rest:
-	for(int l=2; l<mm; l++) {
-		s[0*mm+l].ix1 = Trace::NOWHERE;
-		s[0*mm+l].ix2 = Trace::NOWHERE;
-		s[0*mm+l].state = NWGTrace::NONE;
-		s[0*mm+l].accumulatedscore = -std::numeric_limits<double>::infinity();
+	for(int l=1; l<mm; l++) {
+		s[0*mm+l].ix1 = 0;
+		s[0*mm+l].ix2 = l-1;
+		s[0*mm+l].state = NWGTrace::S;
+		s[0*mm+l].accumulatedscore = gapr->getInitializationScore(seqs,-1,-1,-1,l-1);
 		s[0*mm+l].thisscore = 0.0;
 
 		g1[0*mm+l].ix1 = Trace::NOWHERE;
@@ -216,16 +170,20 @@ void NeedlemanWunschGotoh::doAlign() {
 		g1[0*mm+l].accumulatedscore = -std::numeric_limits<double>::infinity();
 		g1[0*mm+l].thisscore = 0.0;
 
-		g2[0*mm+l].ix1 = 0;
-		g2[0*mm+l].ix2 = l-1;
-		g2[0*mm+l].state = NWGTrace::G2;
-		g2[0*mm+l].accumulatedscore = g2[0*mm+l-1].accumulatedscore - gapextensionpenalty;
-		g2[0*mm+l].thisscore = - gapextensionpenalty;
+		g2[0*mm+l].ix1 = Trace::NOWHERE;
+		g2[0*mm+l].ix2 = Trace::NOWHERE;
+		g2[0*mm+l].state = NWGTrace::NONE;
+		g2[0*mm+l].accumulatedscore = -std::numeric_limits<double>::infinity();
+		g2[0*mm+l].thisscore = 0.0;
 	}
 
 	if (feedback) cout << "Initialization done" << endl;
 
 	double substsc = -std::numeric_limits<double>::infinity();
+	double g1openingscore = -std::numeric_limits<double>::infinity();
+	double g2openingscore = -std::numeric_limits<double>::infinity();
+	double g1extensionscore = -std::numeric_limits<double>::infinity();
+	double g2extensionscore = -std::numeric_limits<double>::infinity();
 
 	double S_S, G1_S, G2_S, S_G1, G1_G1, G2_G1, S_G2, G1_G2, G2_G2;
 
@@ -237,22 +195,33 @@ void NeedlemanWunschGotoh::doAlign() {
 
 			current_ix = k*mm+l;
 
+			//substitution score
 			substsc = simr->getScore(seqs,k-2,l-2,k-1,l-1);
+
+			//scores for gap *with* seq1 -- index in seq1 (k) remains same
+			g1openingscore = static_cast<AffineGapRater *>(gapr)->getGapOpeningScore(seqs, k-1 , l-2 , k-1, l-1 );
+			g2openingscore = static_cast<AffineGapRater *>(gapr)->getGapOpeningScore(seqs, k-1 , l-2 , k-1, l-1 );
+
+			//scores for gap *with* seq2 -- index in seq2 (l) remains same
+			g1extensionscore = static_cast<AffineGapRater *>(gapr)->getGapExtensionScore(seqs, k-2 , l-1 , k-1, l-1 );
+			g2extensionscore = static_cast<AffineGapRater *>(gapr)->getGapExtensionScore(seqs, k-2 , l-1 , k-1, l-1 );
+
+			if (feedback) cout << "[" << k << "," << l << "]: " << substsc << " " << g1openingscore << " " << g1extensionscore << " " << g2openingscore << " " << g2extensionscore << endl;
 
 			//substitution
 			S_S   =  s[(k-1)*mm+(l-1)].accumulatedscore + substsc;
 			G1_S  = g1[(k-1)*mm+(l-1)].accumulatedscore + substsc;
 			G2_S  = g2[(k-1)*mm+(l-1)].accumulatedscore + substsc;
 
-			//gap with symbol from A
-			S_G1  =  s[(k-1)*mm+l].accumulatedscore - gapopeningpenalty;
-			G1_G1 = g1[(k-1)*mm+l].accumulatedscore - gapextensionpenalty;
-			G2_G1 = g2[(k-1)*mm+l].accumulatedscore - gapopeningpenalty; //consider this a gap opening
+			//gap *with* symbol from seq1 -- seq2 (l) keeps index
+			S_G1  =  s[(k-1)*mm+l].accumulatedscore + g1openingscore;
+			G1_G1 = g1[(k-1)*mm+l].accumulatedscore + g1extensionscore;
+			G2_G1 = g2[(k-1)*mm+l].accumulatedscore + g1openingscore; //consider this a gap opening
 
-			//gap with symbol from B
-			S_G2  =  s[k*mm+(l-1)].accumulatedscore - gapopeningpenalty;
-			G1_G2 = g1[k*mm+(l-1)].accumulatedscore - gapopeningpenalty; //consider this a gap opening
-			G2_G2 = g2[k*mm+(l-1)].accumulatedscore - gapextensionpenalty;
+			//gap *with* symbol from seq2 -- seq1 keeps index
+			S_G2  =  s[k*mm+(l-1)].accumulatedscore + g2openingscore;
+			G1_G2 = g1[k*mm+(l-1)].accumulatedscore + g2openingscore; //consider this a gap opening
+			G2_G2 = g2[k*mm+(l-1)].accumulatedscore + g2extensionscore;
 
 
 			 s[current_ix].accumulatedscore = fmax ( fmax ( S_S, G1_S ), G2_S );
@@ -292,19 +261,19 @@ void NeedlemanWunschGotoh::doAlign() {
 				g1[current_ix].ix1 = k-1;
 				g1[current_ix].ix2 = l;
 				g1[current_ix].state = NWGTrace::G1;
-				g1[current_ix].thisscore = - gapextensionpenalty;
+				g1[current_ix].thisscore = g1extensionscore;
 			}
 			else if (g1[current_ix].accumulatedscore == G2_G1 ) {
 				g1[current_ix].ix1 = k-1;
 				g1[current_ix].ix2 = l;
 				g1[current_ix].state = NWGTrace::G2;
-				g1[current_ix].thisscore = - gapopeningpenalty;
+				g1[current_ix].thisscore = g1openingscore;
 			}
 			else if (g1[current_ix].accumulatedscore == S_G1 ) {
 				g1[current_ix].ix1 = k-1;
 				g1[current_ix].ix2 = l;
 				g1[current_ix].state = NWGTrace::S;
-				g1[current_ix].thisscore = - gapopeningpenalty;
+				g1[current_ix].thisscore = g1openingscore;
 			}
 			else { cerr << "No max score" << endl; }
 
@@ -313,19 +282,19 @@ void NeedlemanWunschGotoh::doAlign() {
 				g2[current_ix].ix1 = k;
 				g2[current_ix].ix2 = l-1;
 				g2[current_ix].state = NWGTrace::G1;
-				g2[current_ix].thisscore = - gapopeningpenalty;
+				g2[current_ix].thisscore = g2openingscore;
 			}
 			else if (g2[current_ix].accumulatedscore == G2_G2 ) {
 				g2[current_ix].ix1 = k;
 				g2[current_ix].ix2 = l-1;
 				g2[current_ix].state = NWGTrace::G2;
-				g2[current_ix].thisscore = - gapextensionpenalty;
+				g2[current_ix].thisscore = g2extensionscore;
 			}
 			else if (g2[current_ix].accumulatedscore == S_G2 ) {
 				g2[current_ix].ix1 = k;
 				g2[current_ix].ix2 = l-1;
 				g2[current_ix].state = NWGTrace::S;
-				g2[current_ix].thisscore = - gapopeningpenalty;
+				g2[current_ix].thisscore = g2openingscore;
 			}
 			else { cerr << "No max score" << endl; }
 
@@ -337,8 +306,9 @@ void NeedlemanWunschGotoh::doAlign() {
 		cout << endl;
 		for(int k=0; k<mn; k++) {
 			for(int l=0; l<mm; l++) {
-				cout << setw(2)<<s[k*mm+l].ix1<<"-"<<setw(2) << s[k*mm+l].ix2 << ":" << setw(2)<< s[k*mm+l].state << "  ";
+				//cout << setw(2)<<s[k*mm+l].ix1<<"-"<<setw(2) << s[k*mm+l].ix2 << ":" << setw(5) << setprecision(2) << s[k*mm+l].accumulatedscore << "  ";
 				//cout << setw(3)<< s[k*mm+l].state;
+				cout << setw(6) << setprecision(2) << s[k*mm+l].accumulatedscore << " ";
 			}
 			cout << endl;
 		}
@@ -346,8 +316,9 @@ void NeedlemanWunschGotoh::doAlign() {
 		cout << endl;
 		for(int k=0; k<mn; k++) {
 			for(int l=0; l<mm; l++) {
-				cout << setw(2)<<g1[k*mm+l].ix1<<"-"<<setw(2) << g1[k*mm+l].ix2 << ":" << setw(2)<< g1[k*mm+l].state << "  ";
+				//cout << setw(2)<<g1[k*mm+l].ix1<<"-"<<setw(2) << g1[k*mm+l].ix2 << ":" << setw(5) << setprecision(2) << g1[k*mm+l].accumulatedscore << "  ";
 				//cout << setw(3)<< s[k*mm+l].state;
+				cout << setw(6) << setprecision(2) << g1[k*mm+l].accumulatedscore << " ";
 			}
 			cout << endl;
 		}
@@ -355,8 +326,9 @@ void NeedlemanWunschGotoh::doAlign() {
 		cout << endl;
 		for(int k=0; k<mn; k++) {
 			for(int l=0; l<mm; l++) {
-				cout << setw(2)<<g2[k*mm+l].ix1<<"-"<<setw(2) << g2[k*mm+l].ix2 << ":" << setw(2)<< g2[k*mm+l].state << "  ";
+				//cout << setw(2)<<g2[k*mm+l].ix1<<"-"<<setw(2) << g2[k*mm+l].ix2 << ":" << setw(5) << setprecision(2) << g2[k*mm+l].accumulatedscore << "  ";
 				//cout << setw(3)<< s[k*mm+l].state;
+				cout << setw(6) << setprecision(2) << g2[k*mm+l].accumulatedscore << " ";
 			}
 			cout << endl;
 		}

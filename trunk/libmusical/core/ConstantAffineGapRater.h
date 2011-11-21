@@ -39,14 +39,14 @@ public:
 
 	/**
 	 * Returns initialization score for going from (x1, y1) to (x2, y2).
-	 * The parameters are indices in seq1 and seq2.
+	 * The parameters are indices in seq1 and seq2. First symbol has index 0
 	 * Condition: x1=x2=-1 or y1=y2=-1
 	 */
 	virtual double getInitializationScore(Sequences * seqs, int x1, int y1, int x2, int y2);
 
 	/**
 	 * Returns gap score for going from (x1,y1) to (x2,y2).
-	 * The parameters are indices in seq1 and seq2.
+	 * The parameters are indices in seq1 and seq2. First symbol has index 0.
 	 * Condition: x1=x2 or y1=y2.
 	 */
 	virtual double getGapScore(Sequences * seqs, int x1, int y1, int x2, int y2);
@@ -54,11 +54,6 @@ public:
 	virtual double getGapOpeningScore(Sequences * seqs, int x1, int y1, int x2, int y2);
 
 	virtual double getGapExtensionScore(Sequences * seqs, int x1, int y1, int x2, int y2);
-
-	virtual double getInitialGapOpeningScore();
-
-	virtual double getInitialGapExtensionScore();
-
 
 	/**
 	 * Sets the (fixed) gap opening score.
