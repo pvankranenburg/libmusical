@@ -56,7 +56,7 @@ void AlignmentVisualizer::basicStdoutReport(int c) {
 			symbol2 = "x";
 		else symbol2 = al->getSeq2()->getSymbolAt(al->getTraceElement(i,c)->getIx2())->toString();
 
-		cout << "(" << al->getTraceElement(i,c)->getIx1() << ")[" << symbol1 << "] - (" << al->getTraceElement(i,c)->getIx2() <<  ")[" << symbol2 << "]" << " With score: " << al->getTraceElement(i,c)->thisscore << endl;
+		cout << "(" << al->getTraceElement(i,c)->getIx1() << ")[" << symbol1 << "] - (" << al->getTraceElement(i,c)->getIx2() <<  ")[" << symbol2 << "]" << " With score: " << al->getTraceElement(i,c)->thisscore << " Accumulated: " << al->getTraceElement(i,c)->accumulatedscore << endl;
 	}
 
 }
