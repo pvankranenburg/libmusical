@@ -97,12 +97,4 @@ double ConstantAffineGapRater::getGapExtensionScore(Sequences * seqs, int x1, in
 	return gapExtensionScore;
 }
 
-double ConstantAffineGapRater::getInitialGapOpeningScore() {
-	return initialGapOpeningScore;
-}
-
-double ConstantAffineGapRater::getInitialGapExtensionScore() {
-	return initialGapExtensionScore;
-}
-
 }

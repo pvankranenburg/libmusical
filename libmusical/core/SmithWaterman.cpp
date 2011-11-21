@@ -40,7 +40,6 @@ SmithWaterman::~SmithWaterman() {
 
 void SmithWaterman::doAlign() {
 
-	bool feedback = false;
 	bool printmatrix = false;
 
 	//make sure n and m are sizes of sequences.

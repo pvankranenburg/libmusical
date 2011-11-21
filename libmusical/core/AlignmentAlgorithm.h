@@ -40,7 +40,7 @@ namespace musical {
 class AlignmentAlgorithm {
 public:
 	AlignmentAlgorithm();
-	AlignmentAlgorithm(Sequences * s, SimilarityRater * sr, GapRater * gr) : seqs(s), simr(sr), gapr(gr) {};
+	AlignmentAlgorithm(Sequences * s, SimilarityRater * sr, GapRater * gr) : seqs(s), simr(sr), gapr(gr), feedback(false) {};
 	virtual ~AlignmentAlgorithm();
 
 	/**
@@ -81,6 +81,12 @@ public:
 	 * remove all results / score etc.
 	 */
 	void clearResults();
+
+	/**
+	 * Set to true for debugging info to stdout
+	 */
+	void setFeedback(bool f) { feedback = f; };
+
 
 protected:
 	/**
@@ -136,6 +142,11 @@ protected:
 	Sequences * seqs;
 	SimilarityRater * simr;
 	GapRater * gapr;
+
+	/**
+	 * For debuging
+	 */
+	bool feedback;
 
 };
 
