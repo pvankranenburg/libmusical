@@ -31,7 +31,14 @@ namespace musical {
  */
 class JSONSource {
 public:
+	/**
+	 * Constructor
+	 */
 	JSONSource();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~JSONSource();
 
 	/**

@@ -35,9 +35,25 @@ namespace musical {
  * Implementation of the Needleman-Wunsch algorithm
  */
 class NeedlemanWunsch: public musical::AlignmentAlgorithm {
-public:
+protected:
+	/**
+	 * Constructor
+	 */
 	NeedlemanWunsch();
+
+public:
+
+	/**
+	 * Constructor
+	 * sqs: sequences to be aligned
+	 * sr: similarity rater
+	 * gr: gap rater
+	 */
 	NeedlemanWunsch(Sequences * sqs, SimilarityRater * sr, GapRater * gr);
+
+	/**
+	 * Destructor
+	 */
 	virtual ~NeedlemanWunsch();
 
 	/**
@@ -45,13 +61,8 @@ public:
 	 */
 	void doAlign();
 
-	/**
-	 * Get rid of results.
-	 */
-	virtual void specificClear() { } ;
-
 private:
-	NWTrace * s; //this will be the d.p. matrix
+	NWTrace * s; //this is be the d.p. matrix
 	int size_s;
 
 };

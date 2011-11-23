@@ -31,7 +31,14 @@ namespace musical {
  */
 class Symbol {
 public:
+	/**
+	 * Constructor
+	 */
 	Symbol();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~Symbol();
 
 	/**

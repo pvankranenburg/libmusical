@@ -30,7 +30,14 @@ namespace musical {
  */
 class Converter {
 public:
+	/**
+	 * Constructor
+	 */
 	Converter();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~Converter();
 };
 

@@ -34,10 +34,22 @@ namespace musical {
 class OptiSequences: public musical::Sequences {
 
 private:
-	OptiSequences(); //to make sure that only OptiSequences are assigned
+	/**
+	 * Constructor
+	 */
+	OptiSequences(); //private to ensure that only OptiSequences are assigned
 
 public:
+	/**
+	 * Constructor
+	 * seq1 : pointer to first sequence
+	 * seq2 : pointer to second sequence
+	 */
 	OptiSequences(OptiSequence * seq1, OptiSequence * seq2) : Sequences(seq1,seq2) { computePitch40HistogramShift(); };
+
+	/**
+	 * Destructor
+	 */
 	virtual ~OptiSequences();
 
 	/**
@@ -50,6 +62,9 @@ public:
 private:
 	int pitch40HistogramShift;
 
+	/**
+	 * Computes the interval that has to be added to the pitches of seq2 to correspond with seq1
+	 */
 	void computePitch40HistogramShift();
 
 };

@@ -29,7 +29,14 @@ namespace musical {
  */
 class JSONMysqlSource {
 public:
+	/*
+	 * Constructor
+	 */
 	JSONMysqlSource();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~JSONMysqlSource();
 };
 

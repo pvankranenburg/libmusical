@@ -34,20 +34,31 @@ namespace musical {
  * Global alignment with affine gap penalty function (Needleman-Wunsch-Gotoh).
  */
 class NeedlemanWunschGotoh: public musical::AlignmentAlgorithm {
-public:
+protected:
+	/**
+	 * Constructor
+	 */
 	NeedlemanWunschGotoh();
+
+public:
+
+	/**
+	 * Constructor.
+	 * sqs : sequences to be aligned
+	 * sr : similarity rater
+	 * agr : affine gap rater
+	 */
 	NeedlemanWunschGotoh(Sequences * sqs, SimilarityRater * sr, AffineGapRater * agr);
+
+	/**
+	 * Destructor
+	 */
 	virtual ~NeedlemanWunschGotoh();
 
 	/**
 	 * Do the alignment
 	 */
 	void doAlign();
-
-	/**
-	 * Remove the results
-	 */
-	virtual void specificClear() { } ;
 
 private:
 	/**

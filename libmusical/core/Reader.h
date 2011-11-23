@@ -32,7 +32,14 @@ namespace musical {
  */
 class Reader {
 public:
+	/**
+	 * Constructor
+	 */
 	Reader();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~Reader();
 
 	/**

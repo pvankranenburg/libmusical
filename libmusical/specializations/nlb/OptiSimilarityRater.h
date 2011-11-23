@@ -32,7 +32,14 @@ namespace musical {
  */
 class OptiSimilarityRater: public musical::SimilarityRater {
 public:
+	/**
+	 * Constructor
+	 */
 	OptiSimilarityRater();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~OptiSimilarityRater();
 
 	/**
@@ -41,8 +48,8 @@ public:
 	 */
 	virtual double getScore(Sequences * seqs, int x1, int y1, int x2, int y2);
 
-	//declare these here, instead of in the definition of getScore().
 private:
+	//declare these here, instead of in the definition of getScore().
 	OptiSymbol * s1;
 	OptiSymbol * s2;
 	double result;

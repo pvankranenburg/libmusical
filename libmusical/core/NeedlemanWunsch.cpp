@@ -178,20 +178,20 @@ void NeedlemanWunsch::doAlign() {
 
 	double score = s[((mn-1)*mm)+(mm-1)].accumulatedscore;
 	if (feedback) cout << "score: " << score << endl;
-	scores.push_back(score);
+	seqs->scores.push_back(score);
 
 
 	//do the trace back:
 	//only one alignment needed.
-	alignments.push_back(std::deque<Trace *>());
-	alignments.back().clear();
+	seqs->alignments.push_back(std::deque<Trace *>());
+	seqs->alignments.back().clear();
 	int i = mn - 1; //point to final cell
 	int j = mm - 1;
 	int i_new = 0;
 	do {
 		s[i*mm+j].this_ix1 = i;
 		s[i*mm+j].this_ix2 = j;
-		alignments[0].push_front(new NWTrace(s[i*mm+j]));
+		seqs->alignments[0].push_front(new NWTrace(s[i*mm+j]));
 		i_new = s[i*mm+j].ix1;
 		j = s[i*mm+j].ix2;
 		i = i_new;
@@ -199,8 +199,8 @@ void NeedlemanWunsch::doAlign() {
 
 	//debug : print trace
 	if (feedback) {
-		for(unsigned int i=0; i<alignments[0].size(); i++) {
-			cout << alignments[0][i]->getMatrixThisIx1() << " , " << alignments[0][i]->getMatrixThisIx2() << " : " << alignments[0][i]->getAccumulatedscore() << " , " << alignments[0][i]->getThisscore() << endl;
+		for(unsigned int i=0; i<seqs->alignments[0].size(); i++) {
+			cout << seqs->alignments[0][i]->getMatrixThisIx1() << " , " << seqs->alignments[0][i]->getMatrixThisIx2() << " : " << seqs->alignments[0][i]->getAccumulatedscore() << " , " << seqs->alignments[0][i]->getThisscore() << endl;
 		}
 	}
 

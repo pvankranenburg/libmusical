@@ -30,9 +30,24 @@ namespace musical {
  * Derived classes could provide methods for specific kinds of symbols
  */
 class AlignmentVisualizer {
-public:
+protected:
+	/**
+	 * Constructor
+	 */
 	AlignmentVisualizer();
-	AlignmentVisualizer(AlignmentAlgorithm * alg): al(alg) { };
+
+public:
+
+	/**
+	 * Constructor.
+	 * Assigns an alignment algorithm to the AlignmentVisualizer.
+	 * The alignment should have been carried out.
+	 */
+	AlignmentVisualizer(Sequences * sqs): seqs(sqs) { };
+
+	/**
+	 * Destructor
+	 */
 	virtual ~AlignmentVisualizer();
 
 	/**
@@ -59,7 +74,10 @@ public:
 
 private:
 
-	AlignmentAlgorithm * al;
+	/**
+	 * Pointer to the alignment algorithm, containing the aligned sequences.
+	 */
+	Sequences * seqs;
 
 };
 

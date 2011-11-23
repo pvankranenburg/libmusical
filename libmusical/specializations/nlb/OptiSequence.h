@@ -33,7 +33,14 @@ namespace musical {
  */
 class OptiSequence: public musical::Sequence {
 public:
+	/**
+	 * Constructor
+	 */
 	OptiSequence();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~OptiSequence();
 
 public:

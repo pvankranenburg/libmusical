@@ -32,4 +32,20 @@ Sequences::~Sequences() {
 	// TODO Auto-generated destructor stub
 }
 
+void Sequences::clearResults() {
+	for (unsigned int i=0; i<alignments.size(); i++) {
+		for (unsigned int j=0; j<alignments[i].size(); j++) {
+			delete alignments[i][j];
+		}
+		alignments[i].clear();
+	}
+	alignments.clear();
+
+	scores.clear();
+
+	//for derived algorithms:
+	this->specificClear();
+}
+
+
 }

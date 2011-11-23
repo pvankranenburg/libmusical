@@ -66,10 +66,10 @@ int main(int argc, char * argv[]) {
 	nw.doAlign();
 
 	// Print the score
-	cout << "Score:" << nw.getScore() << endl;
+	cout << "Score:" << seqs.getScore() << endl;
 
 	// Print the alignment to stdout
-	musical::AlignmentVisualizer av(&nw);
+	musical::AlignmentVisualizer av(&seqs);
 	av.basicStdoutReport();
 
 	return 0;

@@ -27,7 +27,14 @@ namespace musical {
 
 class MidiExactPitchIntervalSimilarityRater: public musical::SimilarityRater {
 public:
+	/**
+	 * Constructor
+	 */
 	MidiExactPitchIntervalSimilarityRater();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~MidiExactPitchIntervalSimilarityRater();
 
 	/**

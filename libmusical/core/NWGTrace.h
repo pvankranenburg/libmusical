@@ -34,10 +34,28 @@ class NWGTrace: public musical::Trace {
 
 public:
 
+	/**
+	 * The states the element could point to
+	 */
 	enum State {S, G1, G2, NONE};
 
+	/**
+	 * Constructor.
+	 */
 	NWGTrace() : Trace(), ix1(0), ix2(0) { };
+
+	/**
+	 * Constructor
+	 * i1 : x-coordinate in the d.p. matrix
+	 * i2 : y-coordinate in the d.p. matrix
+	 * ac : accumulated score
+	 * ts : score for this particular cell
+	 */
 	NWGTrace(int i1, int i2, State st, double ac, double ts ) : Trace(ac, ts), ix1(i1), ix2(i2), state(st) { } ;
+
+	/**
+	 * Destructor
+	 */
 	virtual ~NWGTrace();
 
 	/**

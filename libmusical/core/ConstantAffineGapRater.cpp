@@ -27,8 +27,8 @@ using namespace std;
 namespace musical {
 
 ConstantAffineGapRater::ConstantAffineGapRater() :
-		gapOpeningScore(-0.8), gapExtensionScore(-0.2),
-		initialGapOpeningScore(-0.8), initialGapExtensionScore(-0.2) {
+		gapOpeningScore(0.0), gapExtensionScore(0.0),
+		initialGapOpeningScore(0.0), initialGapExtensionScore(0.0) {
 
 	//empty
 

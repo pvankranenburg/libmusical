@@ -32,7 +32,14 @@ namespace musical {
  */
 class ExactPitch40SimilarityRater: public musical::SimilarityRater {
 public:
+	/**
+	 * Constructor
+	 */
 	ExactPitch40SimilarityRater();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~ExactPitch40SimilarityRater();
 
 	/**
