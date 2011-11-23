@@ -31,7 +31,14 @@ namespace musical {
  */
 class OptiSimilarityRater_Registry: public musical::SimilarityRater {
 public:
+	/**
+	 * Constructor
+	 */
 	OptiSimilarityRater_Registry();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~OptiSimilarityRater_Registry();
 
 	/**

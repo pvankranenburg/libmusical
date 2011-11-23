@@ -25,12 +25,25 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 namespace musical {
 
 /**
- * Abstract Trace object. This representes the content of a cell in the DP-matrix of an alignment algorithm.
+ * Abstract Trace object. This represents the content of a cell in the DP-matrix of an alignment algorithm.
  */
 class Trace {
 public:
+	/**
+	 * Constructor
+	 */
 	Trace() : accumulatedscore(0.0), thisscore(0.0) { };
+
+	/**
+	 * Constructor
+	 * as : accumulated score
+	 * ts : score for the current cell
+	 */
 	Trace(double as, double ts) : accumulatedscore(as), thisscore(ts) {} ;
+
+	/**
+	 * Destructor
+	 */
 	virtual ~Trace();
 
 	/**

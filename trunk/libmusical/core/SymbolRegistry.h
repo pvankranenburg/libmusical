@@ -30,12 +30,19 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 namespace musical {
 
 /**
- * Symbol with flexible contents.
+ * Symbol which allows for dynamically addition of attributes.
  * The attributes are in a key-value map.
  */
 class SymbolRegistry: public musical::Symbol {
 public:
+	/**
+	 * Constructor
+	 */
 	SymbolRegistry();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~SymbolRegistry();
 
 	/**

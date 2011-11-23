@@ -31,7 +31,14 @@ namespace musical {
  */
 class SimilarityRater {
 public:
+	/**
+	 * Constructor
+	 */
 	SimilarityRater();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~SimilarityRater();
 
 	/**

@@ -32,8 +32,24 @@ namespace musical {
  */
 class NWTrace: public musical::Trace {
 public:
+
+	/**
+	 * Constructor
+	 */
 	NWTrace() : Trace(), ix1(0), ix2(0) { };
+
+	/**
+	 * Constructor
+	 * i1 : x-coordinate in the d.p. matrix
+	 * i2 : y-coordinate in the d.p. matrix
+	 * ac : accumulated score
+	 * ts : score for this particular cell
+	 */
 	NWTrace(int i1, int i2, double ac, double ts ) : Trace(ac, ts), ix1(i1), ix2(i2) { } ;
+
+	/**
+	 * Destructor
+	 */
 	virtual ~NWTrace();
 
 	/**

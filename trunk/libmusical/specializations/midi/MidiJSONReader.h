@@ -37,7 +37,14 @@ namespace musical {
  */
 class MidiJSONReader: public musical::JSONReader {
 public:
+	/**
+	 * Constructor
+	 */
 	MidiJSONReader();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~MidiJSONReader();
 
 	/**

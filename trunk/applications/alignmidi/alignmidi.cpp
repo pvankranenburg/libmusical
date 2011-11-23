@@ -61,10 +61,10 @@ int main(int argc, char * argv[]) {
 	clog << "Doing the alignment" << endl;
 	nw.doAlign();
 
-	double normalizedscore = nw.getScore() / min(seq1->size(),seq2->size());
+	double normalizedscore = seqs.getScore() / min(seq1->size(),seq2->size());
 	clog << "Score: " << 1.0 - normalizedscore << endl;
 
-	musical::AlignmentVisualizer av(&nw);
+	musical::AlignmentVisualizer av(&seqs);
 	av.basicStdoutReport();
 
 	return 0;

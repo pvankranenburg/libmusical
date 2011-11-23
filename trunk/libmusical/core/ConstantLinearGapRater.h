@@ -31,8 +31,20 @@ namespace musical {
  */
 class ConstantLinearGapRater: public musical::GapRater {
 public:
+	/**
+	 * Constructor. Sets score to 0.0
+	 */
 	ConstantLinearGapRater();
+
+	/**
+	 * Constructor
+	 * gs : gap score
+	 */
 	ConstantLinearGapRater(double gs);
+
+	/**
+	 * Destructor
+	 */
 	virtual ~ConstantLinearGapRater();
 
 	/**

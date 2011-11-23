@@ -31,7 +31,14 @@ namespace musical {
  */
 class MidiSymbol: public musical::Symbol {
 public:
+	/**
+	 * Constructor
+	 */
 	MidiSymbol();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~MidiSymbol();
 
 	int pitch12;

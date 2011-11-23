@@ -147,7 +147,7 @@ Alignment
 \end_layout
 
 \begin_layout Standard
-Cconsider two sequences of symbols 
+Consider two sequences of symbols 
 \begin_inset Formula ${\mathbf{x}}:x_{1},\dots,x_{i},\dots,x_{n}$
 \end_inset
 
@@ -417,6 +417,7 @@ Sequence A sequence of symbols.
 Sequences Two sequences of symbols that should be aligned.
  We use a specific class for this because the similarity measure for symbols
  might need to use the two entire sequences for computation of certain variables.
+ This class also contains the resulting alignment.
 \end_layout
 
 \begin_layout Description
@@ -559,6 +560,22 @@ JSONSource The task for this class is to get a JSON string from somewhere.
 \begin_layout Description
 JSONReader Derived from Reader.
  This creates a Sequence from a JSON source.
+\end_layout
+
+\begin_layout Standard
+On the highest level of abstraction, the virtual class Reader is provided.
+ The most important method in this class is generateSequence(), which converts
+ a certain source to a Sequence object.
+ The class Reader can be used as base-class for a class that reads from
+ any source (e.g.
+ to read directly from a midi file, see Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Midi"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Subsection
@@ -1167,7 +1184,7 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	cout << "Score:" << nw.getScore() << endl;
+	cout << "Score:" << seqs.getScore() << endl;
 \end_layout
 
 \begin_layout Plain Layout
@@ -1181,7 +1198,7 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	musical::AlignmentVisualizer av(&nw);
+	musical::AlignmentVisualizer av(&seqs);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1233,6 +1250,13 @@ assuming that libmusical was installed in
 
 \begin_layout Subsection
 Midi
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Midi"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1748,7 +1772,7 @@ musical::NeedlemanWunsch nw =
 
 \begin_layout Plain Layout
 
-	musical::NeedlemanWunsch(seqs,lr,gr);
+	musical::NeedlemanWunsch(&seqs,lr,gr);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1776,7 +1800,7 @@ nw.doAlign();
 
 \begin_layout Plain Layout
 
-cout << "Edit distance:" << nw.getScore() << endl;
+cout << "Edit distance:" << seqs.getScore() << endl;
 \end_layout
 
 \end_inset

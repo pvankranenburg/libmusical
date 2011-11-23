@@ -31,7 +31,14 @@ namespace musical {
  */
 class GapRater {
 public:
+	/**
+	 * Constructor
+	 */
 	GapRater();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~GapRater();
 
 	/**

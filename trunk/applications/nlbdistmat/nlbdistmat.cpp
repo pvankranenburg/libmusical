@@ -106,7 +106,7 @@ int main(int argc, char * argv[]) {
 			musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs, new musical::OptiSimilarityRater(), new musical::ConstantAffineGapRater(-0.8, -0.2));
 			//musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(&seqs, new musical::OptiSimilarityRater(), new musical::ConstantLinearGapRater(-0.6));
 			nw.doAlign();
-			double normalizedscore = nw.getScore() / min(seqs1[i]->size(),seqs2[j]->size());
+			double normalizedscore = seqs.getScore() / min(seqs1[i]->size(),seqs2[j]->size());
 			if (distmat) thedistmat[i*size2+j] = 1.0 - normalizedscore;
 
 		}

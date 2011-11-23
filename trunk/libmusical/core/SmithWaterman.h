@@ -33,10 +33,25 @@ namespace musical {
  * Implementation of the Smith-Watermann local alignment algorithm.
  */
 class SmithWaterman: public musical::AlignmentAlgorithm {
-public:
+protected:
 
+	/**
+	 * Constructor
+	 */
 	SmithWaterman();
+
+public:
+	/**
+	 * Constructor
+	 * sqs: pointer to sequences to be aligned
+	 * sr : pointer to similarity rater
+	 * gr : pointer to gap rater
+	 */
 	SmithWaterman(Sequences * sqs, SimilarityRater * sr, GapRater * gr) : AlignmentAlgorithm(sqs,sr,gr), maxAlignments(1), allowOverlappingMatches(false) { };
+
+	/**
+	 * Destructor
+	 */
 	virtual ~SmithWaterman();
 
 	/**
@@ -60,9 +75,10 @@ public:
 	void disallowOverlappingMatches() { allowOverlappingMatches = false; }
 
 	/**
-	 * Remove the results.
+	 * Reset the parameters to default.
+	 * I.e., maximal 1 alignment and no overlapping alignments
 	 */
-	virtual void specificClear() { maxAlignments = 1; allowOverlappingMatches = false; } ;
+	virtual void resetParameters() { maxAlignments = 1; allowOverlappingMatches = false; } ;
 
 private:
 	NWTrace * s; //this will be the d.p. matrix. created and deleted in doAlign().

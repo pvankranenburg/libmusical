@@ -34,7 +34,14 @@ namespace musical {
  */
 class Sequence {
 public:
+	/**
+	 * Constructor
+	 */
 	Sequence();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~Sequence();
 
 	/**

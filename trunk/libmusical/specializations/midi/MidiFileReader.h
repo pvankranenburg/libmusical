@@ -19,10 +19,21 @@ namespace musical {
  */
 class MidiFileReader: public musical::Reader {
 public:
+	/**
+	 * Constructor
+	 */
 	MidiFileReader();
-	MidiFileReader(std::string fn) : filename(fn) { };
-	virtual ~MidiFileReader();
 
+	/**
+	 * Constructor
+	 * fn : filename of the midi file.
+	 */
+	MidiFileReader(std::string fn) : filename(fn) { };
+
+	/**
+	 * Destructor
+	 */
+	virtual ~MidiFileReader();
 
 	/**
 	 * Returns a pointer to a newly created Sequence, containing a vector of MidiSymbols

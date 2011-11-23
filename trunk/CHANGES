@@ -9,6 +9,10 @@ TODO
 * Add GeneralGlobalAligner
 * Add GeneralLocalAligner
 * Add AffineLocalAligner
+* Add test suite
+
+Release 0.11.0 - xx
+* Moved the resulting alignment from the AlignmentAlgorithm to the Sequences object.
 
 Release 0.10.0 - 21 November 2011
 * Now NeedlemanWunschGotoh uses the AffineGapRater.

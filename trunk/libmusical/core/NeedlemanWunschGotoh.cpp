@@ -337,8 +337,8 @@ void NeedlemanWunschGotoh::doAlign() {
 
 	//find score and do the trace back:
 	//add one alignment to alignments
-	alignments.push_back(std::deque<Trace *>());
-	alignments.back().clear();
+	seqs->alignments.push_back(std::deque<Trace *>());
+	seqs->alignments.back().clear();
 
 	//find out whether to start with s, g1 or g2
 	int i = mn - 1; //point to final cell
@@ -356,10 +356,10 @@ void NeedlemanWunschGotoh::doAlign() {
 	if ( s[(n*mm)+mm-1].accumulatedscore >= g1[(n*mm)+mm-1].accumulatedscore && s[(n*mm)+mm-1].accumulatedscore >= g2[(n*mm)+mm-1].accumulatedscore  ) {
 		if (feedback) cout << "in S (" << i << "," << j << "), to : ";
 		score = s[(n*mm)+mm-1].accumulatedscore;
-		scores.push_back(score);
+		seqs->scores.push_back(score);
 		s[(n*mm)+mm-1].this_ix1 = i;
 		s[(n*mm)+mm-1].this_ix2 = j;
-		alignments[0].push_front(new NWGTrace(s[(n*mm)+mm-1])); //last alignment
+		seqs->alignments[0].push_front(new NWGTrace(s[(n*mm)+mm-1])); //last alignment
 		//point to (i,j) in matrix state.
 		i = s[(n*mm)+mm-1].ix1;
 		j = s[(n*mm)+mm-1].ix2;
@@ -368,10 +368,10 @@ void NeedlemanWunschGotoh::doAlign() {
 	if ( g1[(n*mm)+mm-1].accumulatedscore >= s[(n*mm)+mm-1].accumulatedscore && g1[(n*mm)+mm-1].accumulatedscore >= g2[(n*mm)+mm-1].accumulatedscore  ) {
 		if (feedback) cout << "in G1 (" << i << "," << j << "), to : ";
 		score = g1[(n*mm)+mm-1].accumulatedscore;
-		scores.push_back(score);
+		seqs->scores.push_back(score);
 		g1[(n*mm)+mm-1].this_ix1 = i;
 		g1[(n*mm)+mm-1].this_ix2 = j;
-		alignments[0].push_front(new NWGTrace(g1[(n*mm)+mm-1])); //last alignment
+		seqs->alignments[0].push_front(new NWGTrace(g1[(n*mm)+mm-1])); //last alignment
 		//point to (i,j) in matrix state.
 		i = g1[(n*mm)+mm-1].ix1;
 		j = g1[(n*mm)+mm-1].ix2;
@@ -381,10 +381,10 @@ void NeedlemanWunschGotoh::doAlign() {
 	if ( g2[(n*mm)+mm-1].accumulatedscore >= s[(n*mm)+mm-1].accumulatedscore && g2[(n*mm)+mm-1].accumulatedscore >= g1[(n*mm)+mm-1].accumulatedscore  ) {
 		if (feedback) cout << "in G2 (" << i << "," << j << "), to : ";
 		score = g2[(n*mm)+mm-1].accumulatedscore;
-		scores.push_back(score);
+		seqs->scores.push_back(score);
 		g2[(n*mm)+mm-1].this_ix1 = i;
 		g2[(n*mm)+mm-1].this_ix2 = j;
-		alignments[0].push_front(new NWGTrace(g2[(n*mm)+mm-1])); //last alignment
+		seqs->alignments[0].push_front(new NWGTrace(g2[(n*mm)+mm-1])); //last alignment
 		//point to (i,j) in matrix state.
 		i = g2[(n*mm)+mm-1].ix1;
 		j = g2[(n*mm)+mm-1].ix2;
@@ -400,7 +400,7 @@ void NeedlemanWunschGotoh::doAlign() {
 			if (feedback) cout << "in S (" << i << "," << j << "), to : ";
 			s[i*mm+j].this_ix1 = i;
 			s[i*mm+j].this_ix2 = j;
-			alignments[0].push_front(new NWGTrace(s[i*mm+j]));
+			seqs->alignments[0].push_front(new NWGTrace(s[i*mm+j]));
 			state = s[i*mm+j].state;
 			i_new = s[i*mm+j].ix1;
 			j = s[i*mm+j].ix2;
@@ -410,7 +410,7 @@ void NeedlemanWunschGotoh::doAlign() {
 			if (feedback) cout << "in G1 (" << i << "," << j << "), to : ";
 			g1[i*mm+j].this_ix1 = i;
 			g1[i*mm+j].this_ix2 = j;
-			alignments[0].push_front(new NWGTrace(g1[i*mm+j]));
+			seqs->alignments[0].push_front(new NWGTrace(g1[i*mm+j]));
 			state = g1[i*mm+j].state;
 			i_new = g1[i*mm+j].ix1;
 			j = g1[i*mm+j].ix2;
@@ -420,7 +420,7 @@ void NeedlemanWunschGotoh::doAlign() {
 			if (feedback) cout << "in G2 (" << i << "," << j << "), to : ";
 			g2[i*mm+j].this_ix1 = i;
 			g2[i*mm+j].this_ix2 = j;
-			alignments[0].push_front(new NWGTrace(g2[i*mm+j]));
+			seqs->alignments[0].push_front(new NWGTrace(g2[i*mm+j]));
 			state = g2[i*mm+j].state;
 			i_new = g2[i*mm+j].ix1;
 			j = g2[i*mm+j].ix2;
@@ -441,9 +441,9 @@ void NeedlemanWunschGotoh::doAlign() {
 	//delete [] g2;
 
 	if (feedback) { //print trace
-		for(unsigned int i = 0; i < alignments[0].size(); i++) {
-			cout << alignments[0][i]->getMatrixThisIx1() << " , " << alignments[0][i]->getMatrixThisIx2() << " : "
-				 << alignments[0][i]->getAccumulatedscore() << " : " << alignments[0][i]->getThisscore() << endl;
+		for(unsigned int i = 0; i < seqs->alignments[0].size(); i++) {
+			cout << seqs->alignments[0][i]->getMatrixThisIx1() << " , " << seqs->alignments[0][i]->getMatrixThisIx2() << " : "
+				 << seqs->alignments[0][i]->getAccumulatedscore() << " : " << seqs->alignments[0][i]->getThisscore() << endl;
 		}
 	}
 

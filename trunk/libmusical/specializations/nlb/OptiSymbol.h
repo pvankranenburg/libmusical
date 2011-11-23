@@ -32,7 +32,14 @@ namespace musical {
  */
 class OptiSymbol: public musical::Symbol {
 public:
+	/**
+	 * Constructor
+	 */
 	OptiSymbol();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~OptiSymbol();
 
 	/**

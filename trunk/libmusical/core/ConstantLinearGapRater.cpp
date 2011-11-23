@@ -26,7 +26,7 @@ using namespace std;
 
 namespace musical {
 
-ConstantLinearGapRater::ConstantLinearGapRater() : gapScore(-1.0) {
+ConstantLinearGapRater::ConstantLinearGapRater() : gapScore(0.0) {
 }
 
 ConstantLinearGapRater::ConstantLinearGapRater(double gs) : gapScore(gs) {

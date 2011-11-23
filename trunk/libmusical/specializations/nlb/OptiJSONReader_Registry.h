@@ -32,7 +32,14 @@ namespace musical {
  */
 class OptiJSONReader_Registry: public musical::JSONReader {
 public:
+	/**
+	 * Constructor
+	 */
 	OptiJSONReader_Registry();
+
+	/**
+	 * Destructor
+	 */
 	virtual ~OptiJSONReader_Registry();
 
 	/**

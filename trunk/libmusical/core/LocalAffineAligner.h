@@ -27,8 +27,22 @@ namespace musical {
 
 class LocalAffineAligner: public musical::AlignmentAlgorithm {
 public:
+	/**
+	 * Constructor
+	 */
 	LocalAffineAligner();
-	LocalAffineAligner(Sequences * sqs) : AlignmentAlgorithm(sqs), maxAlignments(1), allowOverlappingMatches(false) { };
+
+	/**
+	 * Constructor
+	 * sqs : sequences to be aligned
+	 * simr : pointer to similarity rater
+	 * gapr : pointer to affine gap rater
+	 */
+	LocalAffineAligner(Sequences * sqs, SimilarityRater * sr, AffineGapRater * afg) : AlignmentAlgorithm(sqs,sr,afg), maxAlignments(1), allowOverlappingMatches(false) { };
+
+	/**
+	 * Destructor
+	 */
 	virtual ~LocalAffineAligner();
 
 	/**
@@ -63,6 +77,7 @@ private:
 	NWGTrace * s;  //this will be the d.p. matrix.
 	NWGTrace * g1; //this will be the d.p. matrix for state 'gap with seq1'.
 	NWGTrace * g2; //this will be the d.p. matrix for state 'gap with seq2'
+
 	int size_s;
 
 	int maxAlignments; //number of local alignments that is returned. -1 is all. default is 1.

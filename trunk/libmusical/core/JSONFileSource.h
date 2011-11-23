@@ -31,9 +31,20 @@ namespace musical {
  */
 class JSONFileSource: public musical::JSONSource {
 public:
+	/**
+	 * Constructor
+	 */
 	JSONFileSource() : filename("") {};
+
+	/**
+	 * Constructor
+	 * fn: filename of the JSON file that has to be read
+	 */
 	JSONFileSource(std::string fn) : filename(fn) {};
 
+	/**
+	 * Destructor
+	 */
 	virtual ~JSONFileSource();
 
 	/**

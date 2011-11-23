@@ -32,8 +32,20 @@ namespace musical {
  */
 class OptiJSONReader: public musical::JSONReader {
 public:
+	/**
+	 * Constructor
+	 */
 	OptiJSONReader();
+
+	/**
+	 * Constructor
+	 * s : pointer to the source of the json string
+	 */
 	OptiJSONReader(JSONSource * s) : JSONReader(s) {};
+
+	/**
+	 * Destructor
+	 */
 	virtual ~OptiJSONReader();
 
 	/**

@@ -30,8 +30,20 @@ namespace musical {
  */
 class JSONReader: public musical::Reader {
 public:
+	/**
+	 * Constructor
+	 */
 	JSONReader();
+
+	/**
+	 * Constructor
+	 * s: source of the json string
+	 */
 	JSONReader(JSONSource * s ) : source(s) {};
+
+	/**
+	 * Destructor
+	 */
 	virtual ~JSONReader();
 
 protected:

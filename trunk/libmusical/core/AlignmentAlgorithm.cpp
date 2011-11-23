@@ -22,7 +22,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace musical {
 
-AlignmentAlgorithm::AlignmentAlgorithm() : simr(NULL) {
+AlignmentAlgorithm::AlignmentAlgorithm() : seqs(NULL), simr(NULL), gapr(NULL), feedback(false) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -35,31 +35,6 @@ AlignmentAlgorithm::~AlignmentAlgorithm() {
 	if (gapr != NULL) delete gapr;
 	gapr = NULL;
 
-	//remove the alignment
-	for (unsigned int i=0; i<alignments.size(); i++) {
-		for (unsigned int j=0; j<alignments[i].size(); j++) {
-			delete alignments[i][j];
-		}
-		alignments[i].clear();
-	}
-	alignments.clear();
-
-
-}
-
-void AlignmentAlgorithm::clearResults() {
-	for (unsigned int i=0; i<alignments.size(); i++) {
-		for (unsigned int j=0; j<alignments[i].size(); j++) {
-			delete alignments[i][j];
-		}
-		alignments[i].clear();
-	}
-	alignments.clear();
-
-	scores.clear();
-
-	//for derived algorithms:
-	this->specificClear();
 }
 
 }

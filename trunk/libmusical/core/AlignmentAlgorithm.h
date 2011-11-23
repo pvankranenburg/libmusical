@@ -28,7 +28,6 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include "Trace.h"
 
 #include <iostream>
-#include <deque>
 #include <limits>
 
 namespace musical {
@@ -38,20 +37,31 @@ namespace musical {
  * All alignment algorithms should derive from this.
  */
 class AlignmentAlgorithm {
-public:
+protected:
+	/**
+	 * Constructor.
+	 */
 	AlignmentAlgorithm();
+
+public:
+	/**
+	 * Constructor. Provides the sequences and raters to the algorithm
+	 * s : pointer to sequences object containing the sequeces to be aligned
+	 * sr : pointer to a similartiy rater
+	 * gr : pointer to a gap rater
+	 */
 	AlignmentAlgorithm(Sequences * s, SimilarityRater * sr, GapRater * gr) : seqs(s), simr(sr), gapr(gr), feedback(false) {};
+
+	/**
+	 * Destructor.
+	 * Deletes the similarity and gap raters, but not the Sequences.
+	 */
 	virtual ~AlignmentAlgorithm();
 
 	/**
 	 * Do the alignment
 	 */
 	virtual void doAlign() = 0;
-
-	/**
-	 * Assign a sequences object to the alignment algorithm
-	 */
-	void setSequences(Sequences * sequences) { seqs = sequences; }
 
 	/**
 	 * Returns pointer to sequence 1
@@ -68,19 +78,14 @@ public:
 	}
 
 	/**
-	 * returns a pointer to the similarity rater
+	 * Returns a pointer to the similarity rater
 	 */
 	SimilarityRater * getSimilarityRater() { return simr; }
 
 	/**
-	 * returns a pointer to the gap rater
+	 * Returns a pointer to the gap rater
 	 */
 	GapRater * getGapRater() { return gapr; }
-
-	/**
-	 * remove all results / score etc.
-	 */
-	void clearResults();
 
 	/**
 	 * Set to true for debugging info to stdout
@@ -90,57 +95,18 @@ public:
 
 protected:
 	/**
-	 * In this function derived classes (algorithms) should put specific cleaning.
-	 * Invoked from clear
+	 * The two sequences that have to be aligned
 	 */
-	virtual void specificClear() = 0;
-
-public:
-	/**
-	 * Get the number of (local) alignments
-	 */
-	int getNoOfAlignments() { return alignments.size(); }
-
-	/**
-	 * Returns the score of alignment c
-	 * Default c=0
-	 * Do invoke doAlign() first.
-	 */
-	double getScore(int c=0) const {
-		if ( c >= (int)scores.size()) {
-			std::cerr << c << "th score not available" << std::endl;
-			return -std::numeric_limits<double>::infinity();
-		}
-		return scores[c];
-	};
-
-	/**
-	 * Get the length of alignment c
-	 * Default c=0
-	 */
-	int getAlignmentSize(int c=0) { return alignments[c].size(); }
-
-	/**
-	 * Returns pointer to nth trace element of alignment c
-	 * Default c = 0
-	 */
-	Trace * getTraceElement(int n, int c=0) {
-		return alignments[c][n];
-	}
-
-protected:
-	/**
-	 * This will contain one or more alignments
-	 */
-	std::vector<std::deque<Trace *> > alignments;
-
-	/**
-	 * contains the scores for the alignments
-	 */
-	vector<double> scores;
-
 	Sequences * seqs;
+
+	/**
+	 * Similarity Rater for symbols
+	 */
 	SimilarityRater * simr;
+
+	/**
+	 * Gap Rater
+	 */
 	GapRater * gapr;
 
 	/**
