@@ -24,21 +24,21 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include <cstdlib>
 using namespace std;
 
-#include "SmithWaterman.h"
+#include "LinearLocalAligner.h"
 #include "miscfunctions.h"
 
 namespace musical {
 
-SmithWaterman::SmithWaterman() : AlignmentAlgorithm(), maxAlignments(1), allowOverlappingMatches(true) {
+LinearLocalAligner::LinearLocalAligner() : AlignmentAlgorithm(), maxAlignments(1), allowOverlappingMatches(true) {
 	// TODO Auto-generated constructor stub
 }
 
-SmithWaterman::~SmithWaterman() {
+LinearLocalAligner::~LinearLocalAligner() {
 	// cout << "SOMETHING WRONG HERE?"<< endl;
 	// TODO Auto-generated destructor stub
 }
 
-void SmithWaterman::doAlign() {
+void LinearLocalAligner::doAlign() {
 
 	bool printmatrix = false;
 

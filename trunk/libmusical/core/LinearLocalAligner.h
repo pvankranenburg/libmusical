@@ -32,13 +32,13 @@ namespace musical {
 /**
  * Implementation of the Smith-Watermann local alignment algorithm.
  */
-class SmithWaterman: public musical::AlignmentAlgorithm {
+class LinearLocalAligner: public musical::AlignmentAlgorithm {
 protected:
 
 	/**
 	 * Constructor
 	 */
-	SmithWaterman();
+	LinearLocalAligner();
 
 public:
 	/**
@@ -47,12 +47,12 @@ public:
 	 * sr : pointer to similarity rater
 	 * gr : pointer to gap rater
 	 */
-	SmithWaterman(Sequences * sqs, SimilarityRater * sr, GapRater * gr) : AlignmentAlgorithm(sqs,sr,gr), maxAlignments(1), allowOverlappingMatches(false) { };
+	LinearLocalAligner(Sequences * sqs, SimilarityRater * sr, GapRater * gr) : AlignmentAlgorithm(sqs,sr,gr), maxAlignments(1), allowOverlappingMatches(false) { };
 
 	/**
 	 * Destructor
 	 */
-	virtual ~SmithWaterman();
+	virtual ~LinearLocalAligner();
 
 	/**
 	 * Do the alignment.
