@@ -17,15 +17,15 @@ set(libmusical_lib_src
 	core/JSONReader.cpp
 	core/JSONSource.cpp
 	core/miscfunctions.cpp
-	core/NeedlemanWunsch.cpp
-	core/NeedlemanWunschGotoh.cpp
+	core/LinearGlobalAligner.cpp
+	core/AffineGlobalAligner.cpp
 	core/NWGTrace.cpp
 	core/NWTrace.cpp
 	core/Reader.cpp
 	core/Sequence.cpp
 	core/Sequences.cpp
 	core/SimilarityRater.cpp
-	core/SmithWaterman.cpp
+	core/LinearLocalAligner.cpp
 	core/Symbol.cpp
 	core/SymbolRegistry.cpp
 	core/Trace.cpp
@@ -87,15 +87,15 @@ install(
 		core/JSONSource.h
 		core/libmusical.h
 		core/miscfunctions.h
-		core/NeedlemanWunsch.h
-		core/NeedlemanWunschGotoh.h
+		core/LinearGlobalAligner.h
+		core/AffineGlobalAligner.h
 		core/NWGTrace.h
 		core/NWTrace.h
 		core/Reader.h
 		core/Sequence.h
 		core/Sequences.h
 		core/SimilarityRater.h
-		core/SmithWaterman.h
+		core/LinearLocalAligner.h
 		core/Symbol.h
 		core/SymbolRegistry.h
 		core/Trace.h
