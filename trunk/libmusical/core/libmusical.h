@@ -52,9 +52,9 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include "ConstantAffineGapRater.h"
 
 //Algorithms
-#include "NeedlemanWunsch.h"
-#include "NeedlemanWunschGotoh.h"
-#include "SmithWaterman.h"
+#include "LinearGlobalAligner.h"
+#include "AffineGlobalAligner.h"
+#include "LinearLocalAligner.h"
 
 //Visualizers
 #include "AlignmentVisualizer.h"
