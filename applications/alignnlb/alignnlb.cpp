@@ -57,7 +57,7 @@ int main(int argc, char * argv[]) {
 	musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6,-0.2);
 
 	// Create an alignment algorithm
-	musical::NeedlemanWunschGotoh nw = musical::NeedlemanWunschGotoh(&seqs, sr, gr);
+	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(&seqs, sr, gr);
 
 	// Debug
 	nw.setFeedback(true);

@@ -56,7 +56,7 @@ int main(int argc, char * argv[]) {
 	musical::ConstantLinearGapRater * gr =  new musical::ConstantLinearGapRater(-0.8);
 
 	clog << "Creating aligner" << endl;
-	musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(&seqs, sr, gr);
+	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(&seqs, sr, gr);
 
 	clog << "Doing the alignment" << endl;
 	nw.doAlign();
