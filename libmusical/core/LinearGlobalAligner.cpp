@@ -25,28 +25,28 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include <iomanip>
 using namespace std;
 
-#include "NeedlemanWunsch.h"
+#include "LinearGlobalAligner.h"
 #include "ConstantLinearGapRater.h"
 
 namespace musical {
 
-NeedlemanWunsch::NeedlemanWunsch() {
+LinearGlobalAligner::LinearGlobalAligner() {
 	//s = (NWTrace *)malloc(200*200*sizeof(NWTrace));
 	//size_s = 200*200;
 	// TODO Auto-generated constructor stub
 }
 
-NeedlemanWunsch::NeedlemanWunsch(Sequences * sqs, SimilarityRater * sr, GapRater * gr) : AlignmentAlgorithm(sqs,sr,gr) {
+LinearGlobalAligner::LinearGlobalAligner(Sequences * sqs, SimilarityRater * sr, GapRater * gr) : AlignmentAlgorithm(sqs,sr,gr) {
 	//s = (NWTrace *)malloc(200*200*sizeof(NWTrace));
 	//size_s = 200*200;
 }
 
 
-NeedlemanWunsch::~NeedlemanWunsch() {
+LinearGlobalAligner::~LinearGlobalAligner() {
 	//free(s);
 }
 
-void NeedlemanWunsch::doAlign() {
+void LinearGlobalAligner::doAlign() {
 	bool feedback = false;
 
 	//make sure n and m are sizes of sequences.

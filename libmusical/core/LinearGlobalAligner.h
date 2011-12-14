@@ -34,12 +34,12 @@ namespace musical {
 /**
  * Implementation of the Needleman-Wunsch algorithm
  */
-class NeedlemanWunsch: public musical::AlignmentAlgorithm {
+class LinearGlobalAligner: public musical::AlignmentAlgorithm {
 protected:
 	/**
 	 * Constructor
 	 */
-	NeedlemanWunsch();
+	LinearGlobalAligner();
 
 public:
 
@@ -49,12 +49,12 @@ public:
 	 * sr: similarity rater
 	 * gr: gap rater
 	 */
-	NeedlemanWunsch(Sequences * sqs, SimilarityRater * sr, GapRater * gr);
+	LinearGlobalAligner(Sequences * sqs, SimilarityRater * sr, GapRater * gr);
 
 	/**
 	 * Destructor
 	 */
-	virtual ~NeedlemanWunsch();
+	virtual ~LinearGlobalAligner();
 
 	/**
 	 * Do the alignment.

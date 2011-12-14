@@ -23,13 +23,13 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include <iomanip>
 using namespace std;
 
-#include "NeedlemanWunschGotoh.h"
+#include "AffineGlobalAligner.h"
 #include "miscfunctions.h"
 #include "AffineGapRater.h"
 
 namespace musical {
 
-NeedlemanWunschGotoh::NeedlemanWunschGotoh() {
+AffineGlobalAligner::AffineGlobalAligner() {
 	/*
 	s = (NWGTrace *)malloc(200*200*sizeof(NWGTrace));
 	g1 = (NWGTrace *)malloc(200*200*sizeof(NWGTrace));
@@ -38,7 +38,7 @@ NeedlemanWunschGotoh::NeedlemanWunschGotoh() {
 	*/
 }
 
-NeedlemanWunschGotoh::NeedlemanWunschGotoh(Sequences * sqs, SimilarityRater * sr, AffineGapRater * agr) : AlignmentAlgorithm(sqs,sr,agr) {
+AffineGlobalAligner::AffineGlobalAligner(Sequences * sqs, SimilarityRater * sr, AffineGapRater * agr) : AlignmentAlgorithm(sqs,sr,agr) {
 	/*
 	s = (NWGTrace *)malloc(200*200*sizeof(NWGTrace));
 	g1 = (NWGTrace *)malloc(200*200*sizeof(NWGTrace));
@@ -48,7 +48,7 @@ NeedlemanWunschGotoh::NeedlemanWunschGotoh(Sequences * sqs, SimilarityRater * sr
 }
 
 
-NeedlemanWunschGotoh::~NeedlemanWunschGotoh() {
+AffineGlobalAligner::~AffineGlobalAligner() {
 	/*
 	free(s);
 	free(g1);
@@ -57,7 +57,7 @@ NeedlemanWunschGotoh::~NeedlemanWunschGotoh() {
 	// TODO Auto-generated destructor stub
 }
 
-void NeedlemanWunschGotoh::doAlign() {
+void AffineGlobalAligner::doAlign() {
 
 	if (feedback) cout << "start alignment" << endl;
 

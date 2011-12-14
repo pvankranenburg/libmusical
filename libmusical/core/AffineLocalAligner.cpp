@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <LocalAffineAligner.h>
+#include "AffineLocalAligner.h"
 
 namespace musical {
 
