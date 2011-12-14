@@ -1,10 +1,4 @@
 TODO
-* Rename the algorithms
-  NeedlemanWunsch -> LinearGlobalAligner
-  NeedlemanWunschGotoh -> AffineGlobalAligner
-  SmithWaterman -> LinearLocalAligner
-  SmithWatermanGotoh -> AffineLocalAligner
-  Reason: the implementations differ from the algorithms in the literature.
 * Add MongeauSankoffAligner (other name?)
 * Add GeneralGlobalAligner
 * Add GeneralLocalAligner
@@ -13,6 +7,12 @@ TODO
 
 Release 0.11.0 - xx
 * Moved the resulting alignment from the AlignmentAlgorithm to the Sequences object.
+* Refactoring
+  NeedlemanWunsch -> LinearGlobalAligner
+  NeedlemanWunschGotoh -> AffineGlobalAligner
+  SmithWaterman -> LinearLocalAligner
+  SmithWatermanGotoh -> AffineLocalAligner
+  Reason: the implementations differ (slightly) from the algorithms in the literature.
 
 Release 0.10.0 - 21 November 2011
 * Now NeedlemanWunschGotoh uses the AffineGapRater.
