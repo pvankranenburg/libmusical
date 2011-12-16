@@ -69,10 +69,6 @@ void LinearLocalAligner::doAlign() {
 	if (feedback) cout << "s allocated : (" << s << ") " << mm << " x " << mn << " = " << mm*mn << endl;
 
 	//initialize initial gaps
-
-	double gapscore = -0.5; //TODO
-
-	//initialize initial gaps
 	s[0*mm+0].ix1 = Trace::NOWHERE;
 	s[0*mm+0].ix2 = Trace::NOWHERE;
 	s[0*mm+0].accumulatedscore = 0.0;
@@ -102,6 +98,8 @@ void LinearLocalAligner::doAlign() {
 	if (feedback) cout << "s initialized" << endl;
 
 	double substsc = 0.0;
+	double gapS1Score = 0.0;
+	double gapS2Score = 0.0;
 
 	int current_ix = -1;
 
@@ -123,13 +121,16 @@ void LinearLocalAligner::doAlign() {
 					s[current_ix].accumulatedscore = 0.0;
 					s[current_ix].thisscore = 0.0;
 				} else {
+
 					substsc = simr->getScore(seqs,k-2,l-2,k-1,l-1);
+					gapS1Score = gapr->getGapScore(seqs, k-1,l-2,k-1,l-1);
+					gapS2Score = gapr->getGapScore(seqs, k-2,l-1,k-1,l-1);
 
 					if(printmatrix) cout << k << "," << l << " substscore: " << substsc << endl;
 
 					S  = s[(k-1)*mm+(l-1)].accumulatedscore + substsc;
-					G1 = s[(k-1)*mm+l].accumulatedscore     + gapscore;
-					G2 = s[k*mm+(l-1)].accumulatedscore     + gapscore;
+					G1 = s[(k-1)*mm+l].accumulatedscore     + gapS1Score;
+					G2 = s[k*mm+(l-1)].accumulatedscore     + gapS2Score;
 
 					if(printmatrix) cout << "S:  " << S << endl;
 					if(printmatrix) cout << "G1: " << G1 << endl;
@@ -145,13 +146,13 @@ void LinearLocalAligner::doAlign() {
 						s[current_ix].ix1 = k-1;
 						s[current_ix].ix2 = l;
 						s[current_ix].accumulatedscore = G1;
-						s[current_ix].thisscore = gapscore;
+						s[current_ix].thisscore = gapS1Score;
 					} else
 					if ( G2 >= G1 && G2 >= S && G2 > 0.0) { //gap
 						s[current_ix].ix1 = k;
 						s[current_ix].ix2 = l-1;
 						s[current_ix].accumulatedscore = G2;
-						s[current_ix].thisscore = gapscore;
+						s[current_ix].thisscore = gapS2Score;
 					} else { //endpoint
 						s[current_ix].ix1 = Trace::NOWHERE;
 						s[current_ix].ix2 = Trace::NOWHERE;
@@ -210,7 +211,7 @@ void LinearLocalAligner::doAlign() {
 		do {
 			s[i*mm+j].this_ix1 = i;
 			s[i*mm+j].this_ix2 = j;
-			seqs->alignments.back().push_front(new NWTrace(s[i*mm+j]));
+			seqs->alignments.back().push_front(new NWTrace(s[i*mm+j])); //copy
 			i_new = s[i*mm+j].ix1;
 			j = s[i*mm+j].ix2;
 			//if (feedback) cout << "wrinting to s[" << i*mm+j << "]" << endl;

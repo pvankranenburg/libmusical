@@ -18,25 +18,34 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "AlignmentAlgorithm.h"
+#ifndef TESTSIMILARITYRATER_H_
+#define TESTSIMILARITYRATER_H_
+
+#include <SimilarityRater.h>
 
 namespace musical {
 
-AlignmentAlgorithm::AlignmentAlgorithm() : seqs(NULL), simr(NULL), gapr(NULL), feedback(false) {
-	// TODO Auto-generated constructor stub
+class TestSimilarityRater: public musical::SimilarityRater {
+public:
+	/**
+	 * Constructor
+	 */
+	TestSimilarityRater();
+
+	/**
+	 * Destructor
+	 */
+	virtual ~TestSimilarityRater();
+
+	/**
+	 * Computes the similarity of seq1[x1] and seq2[y2].
+	 * x1 and y1 are ignored for now.
+	 */
+	virtual double getScore(Sequences * seqs, int x1, int y1, int x2, int y2);
+
+};
 
 }
 
-AlignmentAlgorithm::~AlignmentAlgorithm() {
-	// TODO Auto-generated destructor stub
+#endif /* TESTSIMILARITYRATER_H_ */
 
-	/*
-	if (simr != NULL) delete simr;
-	simr = NULL;
-	if (gapr != NULL) delete gapr;
-	gapr = NULL;
-	*/
-
-}
-
-}

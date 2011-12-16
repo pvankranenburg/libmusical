@@ -609,7 +609,8 @@ Currently, the following variants of the alignment algorithm are implemented:
 \end_layout
 
 \begin_layout Itemize
-Needleman-Wunsch 
+LinearGlobalAlignment.
+ Needleman-Wunsch 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Needleman:1970cs"
@@ -617,7 +618,6 @@ key "Needleman:1970cs"
 \end_inset
 
 .
- Global alignment.
  One symbol from 
 \begin_inset Formula $\mathbf{x}$
 \end_inset
@@ -631,7 +631,8 @@ key "Needleman:1970cs"
 \end_layout
 
 \begin_layout Itemize
-Smith-Waterman 
+LinearLocalAlignment.
+ Smith-Waterman 
 \begin_inset CommandInset citation
 LatexCommand citeyearpar
 key "Smith:1981jt"
@@ -639,7 +640,6 @@ key "Smith:1981jt"
 \end_inset
 
 .
- Local alignment.
  This algorithm finds one or more local alignments, i.e., parts of the sequences
  that approximately match.
  One symbol from 
@@ -655,7 +655,7 @@ key "Smith:1981jt"
 \end_layout
 
 \begin_layout Itemize
-Needleman-Wunsch-Gotoh 
+AffineGlobalAlignment Needleman-Wunsch-Gotoh 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Gotoh:1982zr"

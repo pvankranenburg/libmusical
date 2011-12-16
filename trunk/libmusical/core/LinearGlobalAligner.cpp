@@ -47,7 +47,6 @@ LinearGlobalAligner::~LinearGlobalAligner() {
 }
 
 void LinearGlobalAligner::doAlign() {
-	bool feedback = false;
 
 	//make sure n and m are sizes of sequences.
 

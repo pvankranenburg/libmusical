@@ -18,25 +18,50 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "AlignmentAlgorithm.h"
+
+#ifndef TESTREADER_H_
+#define TESTREADER_H_
+
+#include "Reader.h"
+
+#include <string>
 
 namespace musical {
 
-AlignmentAlgorithm::AlignmentAlgorithm() : seqs(NULL), simr(NULL), gapr(NULL), feedback(false) {
-	// TODO Auto-generated constructor stub
+/**
+ * Reads  representation of a Test sequence into internal representation.
+ * Attributes:
+ * - attr (int)
+ */
+class TestReader: public musical::Reader {
+public:
+	/**
+	 * Constructor
+	 */
+	TestReader() : input("") { };
+
+	/**
+	 * Constructor
+	 */
+	TestReader(std::string inputstring);
+
+	/**
+	 * Destructor
+	 */
+	virtual ~TestReader();
+
+	/**
+	 * Generate the Sequence from the  representation
+	 */
+	Sequence * generateSequence();
+
+	/**
+	 * String containing the sequence. One digit is one symbol. e.g. "22345"
+	 */
+	std::string input;
+};
 
 }
 
-AlignmentAlgorithm::~AlignmentAlgorithm() {
-	// TODO Auto-generated destructor stub
+#endif /* TESTREADER_H_ */
 
-	/*
-	if (simr != NULL) delete simr;
-	simr = NULL;
-	if (gapr != NULL) delete gapr;
-	gapr = NULL;
-	*/
-
-}
-
-}

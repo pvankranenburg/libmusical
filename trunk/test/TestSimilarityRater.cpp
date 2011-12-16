@@ -18,25 +18,31 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "AlignmentAlgorithm.h"
+#include "TestSimilarityRater.h"
+#include "TestSymbol.h"
 
 namespace musical {
 
-AlignmentAlgorithm::AlignmentAlgorithm() : seqs(NULL), simr(NULL), gapr(NULL), feedback(false) {
+TestSimilarityRater::TestSimilarityRater() {
 	// TODO Auto-generated constructor stub
 
 }
 
-AlignmentAlgorithm::~AlignmentAlgorithm() {
+TestSimilarityRater::~TestSimilarityRater() {
 	// TODO Auto-generated destructor stub
+}
 
-	/*
-	if (simr != NULL) delete simr;
-	simr = NULL;
-	if (gapr != NULL) delete gapr;
-	gapr = NULL;
-	*/
+double TestSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
+	//for now ignore x1 and y1. Only return the similarity of the symbols associated with the destination cell
 
+	TestSymbol * s1 = static_cast<TestSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
+	TestSymbol * s2 = static_cast<TestSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
+
+	if ( s1->attr == s2->attr )
+		return 1.0;
+	else
+		return -1.0;
 }
 
 }
+
