@@ -62,7 +62,9 @@ int main(int argc, char * argv[]) {
 	nw.doAlign();
 
 	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
-	clog << "Score: " << 1.0 - normalizedscore << endl;
+	clog << "           Score: " << seqs->getScore() << endl;
+	clog << "Normalized score: " << normalizedscore << endl;
+	clog << "        Distance: " << 1.0 - normalizedscore << endl;
 
 	musical::AlignmentVisualizer av(seqs);
 	av.basicStdoutReport();

@@ -36,7 +36,7 @@ double MidiExactPitchIntervalSimilarityRater::getScore(Sequences * const seqs, c
 	//for now ignore x1 and y1. Only return the similarity of the symbols associated with the destination cell
 
 	//first pitch
-	if (x2 == 0 || y2 == 0) return 0.0; //'neutral' score
+	if (x2 == 0 || y2 == 0) return 1.0;
 
 	MidiSymbol * s1 = static_cast<MidiSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
 	MidiSymbol * s2 = static_cast<MidiSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
@@ -50,10 +50,6 @@ double MidiExactPitchIntervalSimilarityRater::getScore(Sequences * const seqs, c
 	else
 		return -1.0;
 
-	return -1.0;
-
-
-	return 0.0;
 }
 
 }
