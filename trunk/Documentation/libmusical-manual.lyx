@@ -429,17 +429,47 @@ GapRater Returns scores for insertions of one or more gaps.
 \end_layout
 
 \begin_layout Description
-Reader This class creates an object of class Sequence, containing a sequence
- of Symbol objects.
+Reader This class creates an object of class 
+\family typewriter
+Sequence
+\family default
+, containing a sequence of 
+\family typewriter
+Symbol-
+\family default
+objects.
 \end_layout
 
 \begin_layout Standard
-An alignment class has a Sequences-object, a SimilarityRater and a GapRater.
- The last two should be instances of derived classes and the Sequence-object
- could be an instance of a derived class.
+An alignment class has a 
+\family typewriter
+Sequences
+\family default
+-object, a 
+\family typewriter
+SimilarityRater
+\family default
+ and a 
+\family typewriter
+GapRater
+\family default
+.
+ The last two should be instances of derived classes and the 
+\family typewriter
+Sequence
+\family default
+-object 
+\shape italic
+could
+\shape default
+ be an instance of a derived class.
  The algorithms handle sequences, symbols and raters at an abstract level.
- The SimilarityRater is the only class that need to know what kind of Symbols
- the sequence consists of.
+ The 
+\family typewriter
+SimilarityRater
+\family default
+ is the only class that need to know what kind of symbols the sequence consists
+ of.
 \end_layout
 
 \begin_layout Subsection
@@ -558,16 +588,38 @@ JSONSource The task for this class is to get a JSON string from somewhere.
 \end_layout
 
 \begin_layout Description
-JSONReader Derived from Reader.
- This creates a Sequence from a JSON source.
+JSONReader Derived from 
+\family typewriter
+Reader
+\family default
+.
+ This creates a 
+\family typewriter
+Sequence
+\family default
+ from a JSON source.
 \end_layout
 
 \begin_layout Standard
-On the highest level of abstraction, the virtual class Reader is provided.
- The most important method in this class is generateSequence(), which converts
- a certain source to a Sequence object.
- The class Reader can be used as base-class for a class that reads from
- any source (e.g.
+On the highest level of abstraction, the virtual class 
+\family typewriter
+Reader
+\family default
+ is provided.
+ The most important method in this class is 
+\family typewriter
+generateSequence()
+\family default
+, which converts a certain source to a 
+\family typewriter
+Sequence
+\family default
+-object.
+ The class 
+\family typewriter
+Reader
+\family default
+ can be used as base-class for a class that reads from any source (e.g.
  to read directly from a midi file, see Section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -609,7 +661,11 @@ Currently, the following variants of the alignment algorithm are implemented:
 \end_layout
 
 \begin_layout Itemize
-LinearGlobalAlignment.
+
+\family typewriter
+LinearGlobalAlignment
+\family default
+.
  Needleman-Wunsch 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -631,7 +687,11 @@ key "Needleman:1970cs"
 \end_layout
 
 \begin_layout Itemize
-LinearLocalAlignment.
+
+\family typewriter
+LinearLocalAlignment
+\family default
+.
  Smith-Waterman 
 \begin_inset CommandInset citation
 LatexCommand citeyearpar
@@ -655,7 +715,11 @@ key "Smith:1981jt"
 \end_layout
 
 \begin_layout Itemize
-AffineGlobalAlignment Needleman-Wunsch-Gotoh 
+
+\family typewriter
+AffineGlobalAlignment
+\family default
+ Needleman-Wunsch-Gotoh 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Gotoh:1982zr"
@@ -779,18 +843,14 @@ name "sub:NLB"
 \end_layout
 
 \begin_layout Standard
-A specialization is provided under the name 
-\begin_inset Quotes eld
-\end_inset
-
-nlb
+A specialization is provided under the name NLB
 \begin_inset Quotes erd
 \end_inset
 
  (Nederlandse Liederenbank, i.e.
  Database of Dutch Songs), defined in header file 
 \family typewriter
-OptiAlignment.h
+NLBAlignment.h
 \family default
 .
  This implements the configuration that proved best in 
@@ -802,11 +862,11 @@ key "Kranenburg:2010fk"
 \end_inset
 
 .
- Each symbol consists of three attributes: pitch in base 40 representation,
+ Each symbol consists of three attributes: pitch in base-40 representation,
  prhase position and metric weight.
  These attributes are used by the similarity measure (
 \family typewriter
-OptiSimilarityRater
+NLBOptiSimilarityRater
 \family default
 ) to compute the similarity of two symbols.
 \end_layout
@@ -820,7 +880,7 @@ The following classes have been added for this specialization:
 \end_layout
 
 \begin_layout Description
-NLBSymbol Symbol with three data members: pitch in base 40 representation,
+NLBSymbol Symbol with three data members: pitch in base-40 representation,
  prhase position and metric weight.
 \end_layout
 
@@ -860,8 +920,11 @@ bject.
 \end_layout
 
 \begin_layout Standard
-Example of a JSON representation of a OptiSequence (only the first 5 symbols
- are shown):
+Example of a JSON representation of a 
+\family typewriter
+NLBSequence
+\family default
+ (only the first 5 symbols are shown):
 \end_layout
 
 \begin_layout Standard
@@ -1155,7 +1218,8 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(seqs, sr, gr);
+	musical::LinearGlobalAligner lga = musical::LinearGlobalAligner(seqs, sr,
+ gr);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1169,7 +1233,7 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	nw.doAlign();
+	lga.doAlign();
 \end_layout
 
 \begin_layout Plain Layout
@@ -1310,7 +1374,7 @@ The following classes have been added for this specialization:
 \end_layout
 
 \begin_layout Description
-MidiSymbol Symbol with three data members: pitch in base 12 representation,
+MidiSymbol Symbol with three data members: pitch in base-12 representation,
  onset and duration.
 \end_layout
 
@@ -1322,8 +1386,11 @@ MidiExactPitchIntervalSimilarityRater Returns score 1.0 if the interval of
 \end_layout
 
 \begin_layout Description
-MidiFileReader Converts a midi file into a Sequence-object, containing MidiSymbo
-ls.
+MidiFileReader Converts a midi file into a 
+\family typewriter
+Sequence
+\family default
+-object, containing MidiSymbols.
 \end_layout
 
 \begin_layout Section
@@ -1370,6 +1437,14 @@ nlbdistmat fullcollection.flist queries.flist
 
 \end_layout
 
+\begin_layout Standard
+In the directory 
+\family typewriter
+data
+\family default
+ several midi files are provided as example.
+\end_layout
+
 \begin_layout Subsection
 alignmidi
 \end_layout
@@ -1381,6 +1456,8 @@ alignmidi
 \family default
  aligns two monophonic midi files and writes the alignment to the standard
  output stream.
+ A skyline-algorithm is used to convert the midi stream into a monophonic
+ stream.
 \end_layout
 
 \begin_layout Standard
@@ -1396,6 +1473,14 @@ alignmidi file1.mid file2.mid
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+In the directory 
+\family typewriter
+data
+\family default
+ several midi files are provided as example.
 \end_layout
 
 \begin_layout Section
@@ -1559,7 +1644,7 @@ AlignmentVisualizer
 \end_layout
 
 \begin_layout Standard
-After performing all these steps, the Sequences, and the raters can be assigned
+After performing all these steps, the sequences, and the raters can be assigned
  to an alignment algorithm.
 \end_layout
 
@@ -1670,6 +1755,14 @@ alignmidi file1.mid file2.mid
 
 \end_layout
 
+\begin_layout Standard
+In the directory 
+\family typewriter
+data
+\family default
+ several midi files are provided as example.
+\end_layout
+
 \begin_layout Subsection
 Levenshtein distance
 \end_layout
@@ -1682,9 +1775,9 @@ key "Levenshtein:1966kx"
 
 \end_inset
 
- can be obtained by using the Needleman-Wunsch algorithm with fixed gap
- score of -1 and a similarityrater that returns 0 for a perfect match and
- -1 otherwhise.
+ can be obtained by using the Linear Global Alignment algorithm with fixed
+ gap score of -1 and a similarityrater that returns 0 for a perfect match
+ and -1 otherwhise.
  The score of the algorithm is the negation of the edit distance because
  it counts the edits (substitutions and insertions/deletions).
  Since the 
@@ -1778,12 +1871,12 @@ musical::ConstantLinearGapRater * gr =
 
 \begin_layout Plain Layout
 
-musical::NeedlemanWunsch nw =
+musical::LinearGlobalAligner lga =
 \end_layout
 
 \begin_layout Plain Layout
 
-	musical::NeedlemanWunsch(seqs,lr,gr);
+	musical::LinearGlobalAligner(seqs,lr,gr);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1797,7 +1890,7 @@ musical::NeedlemanWunsch nw =
 
 \begin_layout Plain Layout
 
-nw.doAlign();
+lga.doAlign();
 \end_layout
 
 \begin_layout Plain Layout

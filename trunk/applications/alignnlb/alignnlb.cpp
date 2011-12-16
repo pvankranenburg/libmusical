@@ -60,17 +60,19 @@ int main(int argc, char * argv[]) {
 	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
 
 	// Debug
-	nw.setFeedback(true);
+	nw.setFeedback(false);
 
 	// Do the alignment
 	nw.doAlign();
 
-	// Print the score
-	cout << "Score:" << seqs->getScore() << endl;
-
 	// Print the alignment to stdout
 	musical::AlignmentVisualizer av(seqs);
 	av.basicStdoutReport();
+
+	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
+	clog << "           Score: " << seqs->getScore() << endl;
+	clog << "Normalized score: " << normalizedscore << endl;
+	clog << "        Distance: " << 1.0 - normalizedscore << endl;
 
 	// free memory
 	delete seq1;

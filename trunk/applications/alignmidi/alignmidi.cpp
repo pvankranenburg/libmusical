@@ -61,13 +61,19 @@ int main(int argc, char * argv[]) {
 	clog << "Doing the alignment" << endl;
 	nw.doAlign();
 
+	musical::AlignmentVisualizer av(seqs);
+	av.basicStdoutReport();
+
 	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
 	clog << "           Score: " << seqs->getScore() << endl;
 	clog << "Normalized score: " << normalizedscore << endl;
 	clog << "        Distance: " << 1.0 - normalizedscore << endl;
 
-	musical::AlignmentVisualizer av(seqs);
-	av.basicStdoutReport();
+	delete seq1;
+	delete seq2;
+	delete seqs;
+	delete sr;
+	delete gr;
 
 	return 0;
 }
