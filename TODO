@@ -1,0 +1,6 @@
+* Add MongeauSankoffAligner (other name?)
+* Add GeneralGlobalAligner
+* Add GeneralLocalAligner
+* Add AffineLocalAligner
+* Add more tests
+* Look into memory management (references instead of pointers?)

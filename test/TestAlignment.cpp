@@ -32,7 +32,7 @@ int main(int argc, char * argv[]) {
 	//Construct alignmentalgorithm
 	musical::LinearLocalAligner lla(seqs, sr, gr);
 
-	lla.setMaxAlignments(100);
+	lla.setMaxAlignments(-1);
 	lla.setFeedback(false);
 	//lla.doAllowOverlappingMatches();
 	lla.disallowOverlappingMatches();
@@ -47,6 +47,7 @@ int main(int argc, char * argv[]) {
 		cout << endl << "Linear local alignment " << i << " : " << endl;
 		av.basicStdoutReport(i);
 	}
+
 
 	/*
 	 * LINEARGLOBAL
