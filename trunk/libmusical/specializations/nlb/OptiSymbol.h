@@ -45,7 +45,7 @@ public:
 	/**
 	 * Returns a string representation of the symbol
 	 */
-	std::string toString() ;
+	std::string toString() const ;
 
 	int pitch40;
 	float phrasepos;

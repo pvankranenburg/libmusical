@@ -38,7 +38,7 @@ LinearLocalAligner::~LinearLocalAligner() {
 	// TODO Auto-generated destructor stub
 }
 
-void LinearLocalAligner::doAlign() {
+void LinearLocalAligner::doAlign() const {
 
 	bool printmatrix = false;
 
@@ -64,7 +64,7 @@ void LinearLocalAligner::doAlign() {
 
 	//create matrix
 	//s = new NWTrace[(mm)*(mn)];
-	s = (NWTrace *)malloc(mm*mn*sizeof(NWTrace));
+	NWTrace * s = (NWTrace *)malloc(mm*mn*sizeof(NWTrace));
 
 	if (feedback) cout << "s allocated : (" << s << ") " << mm << " x " << mn << " = " << mm*mn << endl;
 
@@ -106,8 +106,9 @@ void LinearLocalAligner::doAlign() {
 	double S, G1, G2;
 
 	//For all local alignments:
-	if (maxAlignments == -1) maxAlignments = m*n;	// m*n is more than enough
-	while ( seqs->alignments.size() < (unsigned int)maxAlignments) {
+	int useMaxAlignments = maxAlignments;
+	if (maxAlignments == -1) useMaxAlignments = m*n;	// m*n is more than enough
+	while ( seqs->alignments.size() < (unsigned int)useMaxAlignments) {
 
 		// (re)fill matrix
 		for(int k=1; k<mn; k++) {

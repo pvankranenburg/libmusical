@@ -64,48 +64,48 @@ public:
 	 * The parameters are indices in seq1 and seq2. First symbol has index 0
 	 * Condition: x1==x2==-1 || y1==y2==-1
 	 */
-	virtual double getInitializationScore(Sequences * seqs, int x1, int y1, int x2, int y2);
+	virtual double getInitializationScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
 
 	/**
 	 * Returns gap score for going from (x1,y1) to (x2,y2).
 	 * The parameters are indices in seq1 and seq2. First symbol has index 0.
 	 * Condition: x1==x2 || y1==y2.
 	 */
-	virtual double getGapScore(Sequences * seqs, int x1, int y1, int x2, int y2);
+	virtual double getGapScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
 
 	/**
 	 * Returns gap opening score for going from (x1,y1) to (x2,y2).
 	 * The parameters are indices in seq1 and seq2. First symbol has index 0.
 	 * Condition: (x1==x2 && y1 = y2-1) || (x1==x2-1 && y1 == y2)
 	 */
-	virtual double getGapOpeningScore(Sequences * seqs, int x1, int y1, int x2, int y2);
+	virtual double getGapOpeningScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
 
 	/**
 	 * Returns gap extension score for going from (x1,y1) to (x2,y2).
 	 * The parameters are indices in seq1 and seq2. First symbol has index 0.
 	 * Condition: (x1==x2 && y1 = y2-1) || (x1==x2-1 && y1 == y2)
 	 */
-	virtual double getGapExtensionScore(Sequences * seqs, int x1, int y1, int x2, int y2);
+	virtual double getGapExtensionScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
 
 	/**
 	 * Sets the (fixed) gap opening score.
 	 */
-	void setGapOpeningScore(double gs) { gapOpeningScore = gs; };
+	void setGapOpeningScore(const double gs) { gapOpeningScore = gs; };
 
 	/**
 	 * Sets the (fixed) gap extension score.
 	 */
-	void setGapExtensionScore(double es) { gapExtensionScore = es; };
+	void setGapExtensionScore(const double es) { gapExtensionScore = es; };
 
 	/**
 	 * Sets the (fixed) initial gap opening score.
 	 */
-	void setInitialGapOpeningScore(double igs) { initialGapOpeningScore = igs; };
+	void setInitialGapOpeningScore(const double igs) { initialGapOpeningScore = igs; };
 
 	/**
 	 * Sets the (fixed) initial gap extension score.
 	 */
-	void setInitialGapExtensionScore(double ies) { initialGapExtensionScore = ies; };
+	void setInitialGapExtensionScore(const double ies) { initialGapExtensionScore = ies; };
 
 private:
 	/**

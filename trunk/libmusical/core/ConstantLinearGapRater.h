@@ -52,19 +52,19 @@ public:
 	 * The parameters are indices in seq1 and seq2. First symbol has index 0
 	 * Condition: x1=x2=-1 or y1=y2=-1
 	 */
-	virtual double getInitializationScore(Sequences * seqs, int x1, int y1, int x2, int y2);
+	virtual double getInitializationScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
 
 	/**
 	 * Returns gapscore for going from (x1,y1) to (y2,y2)
 	 * The parameters are indices in seq1 and seq2. First symbol has index 0
 	 * Condition: x1=x2 or y1=y2
 	 */
-	virtual double getGapScore(Sequences * seqs, int x1, int y1, int x2, int y2);
+	virtual double getGapScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
 
 	/**
 	 * Sets the (fixed) score for inserting one gap.
 	 */
-	void setGapScore(double gs) { gapScore = gs; };
+	void setGapScore(const double gs) { gapScore = gs; };
 
 private:
 	double gapScore;

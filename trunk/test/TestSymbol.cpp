@@ -35,7 +35,7 @@ TestSymbol::~TestSymbol() {
 	// TODO Auto-generated destructor stub
 }
 
-std::string TestSymbol::toString() {
+std::string TestSymbol::toString() const {
 	stringstream ss;
 	ss << "Attribute: " << attr;
 	return ss.str();

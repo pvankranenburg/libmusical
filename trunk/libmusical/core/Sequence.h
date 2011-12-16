@@ -47,7 +47,7 @@ public:
 	/**
 	 * Get symbol at index ix
 	 */
-	Symbol* getSymbolAt(int ix) { return symbols[ix]; }
+	Symbol* getSymbolAt(const int ix) const { return symbols[ix]; }
 
 	/**
 	 * Add a symbol
@@ -67,12 +67,12 @@ public:
 	/**
 	 * Returns the name of the sequence.
 	 */
-	std::string getName() { return name; }
+	std::string getName() const { return name; }
 
 	/**
 	 * set the name
 	 */
-	void setName(std::string n) { name = n; }
+	void setName(const std::string n) { name = n; }
 
 
 

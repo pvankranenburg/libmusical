@@ -46,14 +46,14 @@ public:
 	 * x1, x2, y1, and y2 are indices in the sequences. First symbol is at position 0.
 	 * Conditions: either x1=x2=-1 or y1=y2=-1.
 	 */
-	virtual double getInitializationScore(Sequences * seqs, int x1, int y1, int x2, int y2) = 0;
+	virtual double getInitializationScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const = 0;
 
 	/**
 	 * Returns the score for gap of arbitrary length.
 	 * x1, x2, y1, and y2 are indices in the sequences. First symbol is at position 0.
 	 * Conditions: either x1 == x2 or y1 == y2
 	 */
-	virtual double getGapScore(Sequences * seqs, int x1, int y1, int x2, int y2) = 0;
+	virtual double getGapScore(Sequences *const  seqs, const int x1, const int y1,const  int x2, const int y2) const = 0;
 };
 
 }

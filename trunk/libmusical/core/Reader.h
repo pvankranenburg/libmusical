@@ -45,7 +45,7 @@ public:
 	/**
 	 * Returns a pointer to a newly created Sequence, containing a vector of Symbols and possibly Sequence-level attributes.
 	 */
-	virtual Sequence * generateSequence() = 0;
+	virtual Sequence * generateSequence() const = 0;
 
 };
 

@@ -41,7 +41,7 @@ OptiJSONReader::~OptiJSONReader() {
 	// TODO Auto-generated destructor stub
 }
 
-Sequence* OptiJSONReader::generateSequence() {
+Sequence* OptiJSONReader::generateSequence() const {
 	//create a new sequence
 	OptiSequence * nwseq = new OptiSequence; //NB OptiSequence contains a pitch histogram
 	string json_string = source->getJSONString();

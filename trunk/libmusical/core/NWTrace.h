@@ -55,32 +55,32 @@ public:
 	/**
 	 * Returns index of symbol from sequence 1, or -1 for a gap
 	 */
-	int getIx1() { if ( this_ix1 == 0 ) return -1; if ( this_ix1 != ix1 ) return this_ix1 - 1; else return -1; }
+	int getIx1() const { if ( this_ix1 == 0 ) return -1; if ( this_ix1 != ix1 ) return this_ix1 - 1; else return -1; }
 
 	/**
 	 * Returns index of symbol from sequence 2, or -1 for a gap
 	 */
-	int getIx2() { if ( this_ix2 == 0 ) return -1; if ( this_ix2 != ix2 ) return this_ix2 - 1; else return -1; }
+	int getIx2() const { if ( this_ix2 == 0 ) return -1; if ( this_ix2 != ix2 ) return this_ix2 - 1; else return -1; }
 
 	/**
 	 * Returns for sequence 1 the index of the cell in the dynamic programming matrix to which current Trace object is pointing.
 	 */
-	int getMatrixPreviousIx1() { return ix1; };
+	int getMatrixPreviousIx1() const { return ix1; };
 
 	/**
 	 * Returns for sequence 2 the index of the cell in the dynamic programming matrix to which current Trace object is pointing.
 	 */
-	int getMatrixPreviousIx2() { return ix2; };
+	int getMatrixPreviousIx2() const { return ix2; };
 
 	/**
 	 * Returns for sequence 1 the index of the cell in the dynamic programming matrix in which this Trace object is.
 	 */
-	int getMatrixThisIx1() { return this_ix1; };
+	int getMatrixThisIx1() const { return this_ix1; };
 
 	/**
 	 * Returns for sequence 2 the index of the cell in the dynamic programming matrix in which this Trace object is.
 	 */
-	int getMatrixThisIx2() { return this_ix2; };
+	int getMatrixThisIx2() const { return this_ix2; };
 
 public:
 	int ix1; //the indices of the previous matrix cell in the alignment

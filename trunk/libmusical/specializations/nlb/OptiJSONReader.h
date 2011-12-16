@@ -51,7 +51,7 @@ public:
 	/**
 	 * Generate the sequence.
 	 */
-	virtual Sequence* generateSequence();
+	virtual Sequence* generateSequence() const;
 };
 
 }

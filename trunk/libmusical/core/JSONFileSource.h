@@ -50,7 +50,7 @@ public:
 	/**
 	 * Returns the JSON string from the file with name ::filename as a single string without newlines.
 	 */
-	std::string getJSONString();
+	std::string getJSONString() const;
 
 private:
 	const std::string filename;

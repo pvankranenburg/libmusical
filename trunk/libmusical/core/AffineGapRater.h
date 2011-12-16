@@ -43,7 +43,7 @@ public:
 	 * Condition: (x1==x2 && y1 = y2-1) || (x1==x2-1 && y1 == y2)
 	 * This function is unique for Affine gap cost raters.
 	 */
-	virtual double getGapOpeningScore(Sequences * seqs, int x1, int y1, int x2, int y2) = 0;
+	virtual double getGapOpeningScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const = 0;
 
 	/**
 	 * Returns gap extension score for going from (x1,y1) to (x2,y2).
@@ -51,7 +51,7 @@ public:
 	 * Condition: (x1==x2 && y1 = y2-1) || (x1==x2-1 && y1 == y2)
 	 * This function is unique for Affine gap cost raters.
 	 */
-	virtual double getGapExtensionScore(Sequences * seqs, int x1, int y1, int x2, int y2) = 0;
+	virtual double getGapExtensionScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const = 0;
 
 };
 

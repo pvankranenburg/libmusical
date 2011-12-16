@@ -67,24 +67,24 @@ public:
 	/**
 	 * Get sequence 1
 	 */
-	Sequence * getSeq1() {return seq1;};
+	Sequence * getSeq1() const {return seq1;};
 
 	/**
 	 * Get sequence 2
 	 */
-	Sequence * getSeq2() {return seq2;};
+	Sequence * getSeq2() const {return seq2;};
 
 	/**
 	 * Get the number of (local) alignments
 	 */
-	int getNoOfAlignments() { return alignments.size(); }
+	int getNoOfAlignments() const { return alignments.size(); }
 
 	/**
 	 * Returns the score of alignment c
 	 * Default c=0
 	 * Do invoke doAlign() first.
 	 */
-	double getScore(int c=0) const {
+	double getScore(const int c=0) const {
 		if ( c >= (int)scores.size()) {
 			std::cerr << c << "th score not available" << std::endl;
 			return -std::numeric_limits<double>::infinity();
@@ -96,13 +96,13 @@ public:
 	 * Get the length of alignment c
 	 * Default c=0
 	 */
-	int getAlignmentSize(int c=0) { return alignments[c].size(); }
+	int getAlignmentSize(const int c=0) const { return alignments[c].size(); }
 
 	/**
 	 * Returns pointer to nth trace element of alignment c
 	 * Default c = 0
 	 */
-	Trace * getTraceElement(int n, int c=0) {
+	Trace * getTraceElement(const int n, const int c=0) const {
 		return alignments[c][n];
 	}
 

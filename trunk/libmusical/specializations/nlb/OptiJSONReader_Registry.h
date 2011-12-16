@@ -45,7 +45,7 @@ public:
 	/**
 	 * Generates the sequence of SymbolRegistry symbols.
 	 */
-	Sequence * generateSequence();
+	Sequence * generateSequence() const;
 };
 
 }

@@ -37,7 +37,7 @@ OptiSymbol::~OptiSymbol() {
 	// TODO Auto-generated destructor stub
 }
 
-string OptiSymbol::toString() {
+string OptiSymbol::toString() const {
 	stringstream ss;
 	ss << pitch40;
 	return ss.str();

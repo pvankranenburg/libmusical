@@ -54,7 +54,7 @@ public:
 	 * Print a textual representation of alignment c to stdout
 	 * Default c=0
 	 */
-	void basicStdoutReport(int c=0);
+	void basicStdoutReport(const int c=0) const;
 
 	/**
 	 * Produces a gnuplot inputfile that shows the aligned sequences below each other.
@@ -64,13 +64,13 @@ public:
 	 * <filebasename>.data - contains the alignment data
 	 * Gnuplot will produce <filebasename>.ps
 	 */
-	void toGnuPlot(std::string filebasename, int c=0);
+	void toGnuPlot(const std::string filebasename, const int c=0) const;
 
 	/**
 	 * Same as toGnuPlot, but allows to set the extent of the y-axis of the resulting
 	 * Plot.
 	 */
-	void toGnuPlot(std::string filebasename, float minyvalue, float maxyvalue, int c=0);
+	void toGnuPlot(const std::string filebasename, const float minyvalue, const float maxyvalue, const int c=0) const;
 
 private:
 

@@ -47,7 +47,7 @@ public:
 
 	//resolution? ticks per quarter / ms?
 
-	std::string toString();
+	std::string toString() const;
 
 };
 

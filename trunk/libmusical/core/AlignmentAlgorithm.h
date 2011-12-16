@@ -61,36 +61,41 @@ public:
 	/**
 	 * Do the alignment
 	 */
-	virtual void doAlign() = 0;
+	virtual void doAlign() const = 0;
 
 	/**
 	 * Returns pointer to sequence 1
 	 */
-	Sequence * getSeq1() {
+	Sequence * getSeq1() const {
 		return seqs->getSeq1();
 	}
 
 	/**
 	 * Returns pointer to sequence 2
 	 */
-	Sequence * getSeq2() {
+	Sequence * getSeq2() const {
 		return seqs->getSeq2();
 	}
 
 	/**
 	 * Returns a pointer to the similarity rater
 	 */
-	SimilarityRater * getSimilarityRater() { return simr; }
+	SimilarityRater * getSimilarityRater() const { return simr; }
 
 	/**
 	 * Returns a pointer to the gap rater
 	 */
-	GapRater * getGapRater() { return gapr; }
+	GapRater * getGapRater() const { return gapr; }
 
 	/**
 	 * Set to true for debugging info to stdout
 	 */
-	void setFeedback(bool f) { feedback = f; };
+	void setFeedback(const bool f) { feedback = f; };
+
+	/**
+	 * Reset the parameters to default.
+	 */
+	virtual void resetParameters() = 0 ;
 
 
 protected:

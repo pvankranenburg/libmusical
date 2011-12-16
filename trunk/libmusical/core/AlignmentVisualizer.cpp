@@ -37,7 +37,7 @@ AlignmentVisualizer::~AlignmentVisualizer() {
 	// TODO Auto-generated destructor stub
 }
 
-void AlignmentVisualizer::basicStdoutReport(int c) {
+void AlignmentVisualizer::basicStdoutReport(const int c) const {
 
 	if ( c >= seqs->getNoOfAlignments() ) {
 		cerr << "No alignment available at index " << c << endl;
@@ -61,7 +61,7 @@ void AlignmentVisualizer::basicStdoutReport(int c) {
 
 }
 
-void AlignmentVisualizer::toGnuPlot(string filebasename, int c) {
+void AlignmentVisualizer::toGnuPlot(const string filebasename, const int c) const {
 	float maxvalue = -std::numeric_limits<float>::infinity();
 	float minvalue = std::numeric_limits<float>::infinity();
 
@@ -81,7 +81,7 @@ void AlignmentVisualizer::toGnuPlot(string filebasename, int c) {
 	toGnuPlot(filebasename, minvalue, maxvalue, c);
 }
 
-void AlignmentVisualizer::toGnuPlot(string filebasename, float minyvalue, float maxyvalue, int c) {
+void AlignmentVisualizer::toGnuPlot(const string filebasename, const float minyvalue, const float maxyvalue, const int c) const {
 
 	if ( c >= seqs->getNoOfAlignments() ) {
 		cerr << "No alignment available at index " << c << endl;
