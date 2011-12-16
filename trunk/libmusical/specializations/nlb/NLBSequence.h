@@ -19,8 +19,8 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#ifndef OPTISEQUENCE_H_
-#define OPTISEQUENCE_H_
+#ifndef NLBSEQUENCE_H_
+#define NLBSEQUENCE_H_
 
 #include "Sequence.h"
 #include <map>
@@ -29,19 +29,19 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 namespace musical {
 
 /**
- * A sequence of OptiSymbols.
+ * A sequence of NLBSymbols.
  */
-class OptiSequence: public musical::Sequence {
+class NLBSequence: public musical::Sequence {
 public:
 	/**
 	 * Constructor
 	 */
-	OptiSequence();
+	NLBSequence();
 
 	/**
 	 * Destructor
 	 */
-	virtual ~OptiSequence();
+	virtual ~NLBSequence();
 
 public:
 	//(normalized) histogram for pitches in base-40 encoding.
@@ -54,4 +54,4 @@ public:
 
 }
 
-#endif /* OPTISEQUENCE_H_ */
+#endif /* NLBSEQUENCE_H_ */

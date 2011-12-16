@@ -28,7 +28,7 @@ using namespace std;
 #include <time.h>
 
 #include "libmusical.h"
-#include "OptiAlignment.h"
+#include "NLBAlignment.h"
 
 /**
  * returns the current time in microsecs.
@@ -58,17 +58,17 @@ int main(int argc, char * argv[]) {
 
 	listfile1.open(argv[1]);
 	listfile2.open(argv[2]);
-	vector<musical::OptiSequence *> seqs1;
-	vector<musical::OptiSequence *> seqs2;
+	vector<musical::NLBSequence *> seqs1;
+	vector<musical::NLBSequence *> seqs2;
 	while (getline(listfile1, seq1name)) {
-		musical::OptiJSONReader mr1(new musical::JSONFileSource(seq1name));
-		seqs1.push_back(static_cast<musical::OptiSequence*>(mr1.generateSequence()));
+		musical::NLBJSONReader mr1(new musical::JSONFileSource(seq1name));
+		seqs1.push_back(static_cast<musical::NLBSequence*>(mr1.generateSequence()));
 		if ( seqs1.size() % 1000 == 0 ) cout << seq1name << endl;
 	}
 
 	while (getline(listfile2, seq2name)) {
-		musical::OptiJSONReader mr2(new musical::JSONFileSource(seq2name));
-		seqs2.push_back(static_cast<musical::OptiSequence*>(mr2.generateSequence()));
+		musical::NLBJSONReader mr2(new musical::JSONFileSource(seq2name));
+		seqs2.push_back(static_cast<musical::NLBSequence*>(mr2.generateSequence()));
 		if ( seqs2.size()%1000 == 0 ) cout << seq2name << endl;
 	}
 	listfile1.close();
@@ -102,13 +102,16 @@ int main(int argc, char * argv[]) {
 		#pragma omp parallel for
 		for(int j=0; j<size2; j++) {
 			if ( j%1000 == 0 ) cout << "." << flush;
-			musical::OptiSequences seqs = musical::OptiSequences(seqs1[i],seqs2[j]);
-			musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(&seqs, new musical::OptiSimilarityRater(), new musical::ConstantAffineGapRater(-0.8, -0.2));
-			//musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(&seqs, new musical::OptiSimilarityRater(), new musical::ConstantLinearGapRater(-0.6));
+			musical::NLBSequences * seqs = new musical::NLBSequences(seqs1[i],seqs2[j]);
+			musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
+			musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.8, -0.2);
+			musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
 			nw.doAlign();
-			double normalizedscore = seqs.getScore() / min(seqs1[i]->size(),seqs2[j]->size());
+			double normalizedscore = seqs->getScore() / min(seqs1[i]->size(),seqs2[j]->size());
 			if (distmat) thedistmat[i*size2+j] = 1.0 - normalizedscore;
-
+			delete seqs;
+			delete gr;
+			delete sr;
 		}
 		cout << endl;
 	}
@@ -129,6 +132,10 @@ int main(int argc, char * argv[]) {
 		}
 		free(thedistmat);
 	}
+
+	//delete te sequences:
+	for (int i=0; i<size1; i++) delete seqs1[i];
+	for (int j=0; j<size2; j++) delete seqs2[j];
 
 	return 0;
 }

@@ -32,7 +32,7 @@ namespace musical {
 /**
  * Max of two doubles
  */
-inline double fmax(double a,double b) { return (a>b)?a:b; };
+inline double fmax(const double a, const double b) { return (a>b)?a:b; };
 
 class BadConversion : public std::runtime_error {
 public:

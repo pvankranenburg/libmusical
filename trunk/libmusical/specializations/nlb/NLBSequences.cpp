@@ -22,28 +22,28 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include<iostream>
 using namespace std;
 
-#include "OptiSequences.h"
+#include "NLBSequences.h"
 #include "miscfunctions.h"
 
 namespace musical {
 
-OptiSequences::OptiSequences() {
+NLBSequences::NLBSequences() {
 	// TODO Auto-generated constructor stub
 
 }
 
-OptiSequences::~OptiSequences() {
+NLBSequences::~NLBSequences() {
 	// TODO Auto-generated destructor stub
 }
 
-void OptiSequences::computePitch40HistogramShift() {
-	//pitch40HistogramShift = histogramShift( static_cast<OptiSequence*>(getSeq1())->pitchHistogram, 200, static_cast<OptiSequence*>(getSeq2())->pitchHistogram, 200);
-	//pitch40HistogramShift = histogramShift_bound(static_cast<OptiSequence*>(getSeq1())->pitchHistogram, 200, static_cast<OptiSequence*>(getSeq2())->pitchHistogram, 200);
+void NLBSequences::computePitch40HistogramShift() {
+	//pitch40HistogramShift = histogramShift( static_cast<NLBSequence*>(getSeq1())->pitchHistogram, 200, static_cast<NLBSequence*>(getSeq2())->pitchHistogram, 200);
+	//pitch40HistogramShift = histogramShift_bound(static_cast<NLBSequence*>(getSeq1())->pitchHistogram, 200, static_cast<NLBSequence*>(getSeq2())->pitchHistogram, 200);
 	//pitch40HistogramShift = 10;
 	//cout << getSeq1()->name << " - " << getSeq2()->name << " : " << pitch40HistogramShiftA << endl;
 
-	double * hist1 = static_cast<OptiSequence*>(getSeq1())->pitchHistogram;
-	double * hist2 = static_cast<OptiSequence*>(getSeq2())->pitchHistogram;
+	double * hist1 = static_cast<NLBSequence*>(getSeq1())->pitchHistogram;
+	double * hist2 = static_cast<NLBSequence*>(getSeq2())->pitchHistogram;
 	int length1 = 200;
 	int length2 = 200;
 

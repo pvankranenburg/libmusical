@@ -61,7 +61,7 @@
 \begin_body
 
 \begin_layout Title
-libmusical 0.10.0
+libmusical 1.0.0
 \end_layout
 
 \begin_layout Author
@@ -698,8 +698,7 @@ General Alignment.
 \end_layout
 
 \begin_layout Itemize
-Smith-Waterman-Gotoh.
- Local alignment with affine gap cost.
+Local alignment with affine gap cost.
 \end_layout
 
 \begin_layout Itemize
@@ -821,18 +820,18 @@ The following classes have been added for this specialization:
 \end_layout
 
 \begin_layout Description
-OptiSymbol Symbol with three data members: pitch in base 40 representation,
+NLBSymbol Symbol with three data members: pitch in base 40 representation,
  prhase position and metric weight.
 \end_layout
 
 \begin_layout Description
-OptiSequence Sequence of OptiSymbols.
+NLBSequence Sequence of NLBSymbols.
  As an extra data-member, this class has a pitch histogram describing the
  pitch distribution in the melody.
 \end_layout
 
 \begin_layout Description
-OptiSequences Pair of OptiSequences.
+NLBSequences Pair of NLBSequences.
  This class has a method to compute the shift of the histogram of the second
  sequence such that the intersection of both histograms is maximal.
  This is the shift in pitch that is needed to make the alignment transposition
@@ -840,8 +839,8 @@ OptiSequences Pair of OptiSequences.
 \end_layout
 
 \begin_layout Description
-OptiSimilarityRater Implements the similarity measure of OptiSymbols as
- described in 
+NLBOptiSimilarityRater Implements the best performing similarity measure
+ for NLBSymbols as described in 
 \begin_inset CommandInset citation
 LatexCommand citet
 after "Ch.6"
@@ -853,8 +852,8 @@ key "Kranenburg:2010fk"
 \end_layout
 
 \begin_layout Description
-OptiJSONReader Converts a JSON representation of the sequence to an OptiSequence
--object.
+NLBJSONReader Converts a JSON representation of the sequence to an NLBSequence-o
+bject.
  The JSON string can provide a pitch histogram, as shown below.
  If it does not, then the histogram is generated on the fly.
  This histogram will be used to make the alignment transposition invariant.
@@ -1025,7 +1024,7 @@ using namespace std;
 
 \begin_layout Plain Layout
 
-#include "OptiAlignment.h"
+#include "NLBAlignment.h"
 \end_layout
 
 \begin_layout Plain Layout
@@ -1053,8 +1052,8 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	musical::OptiJSONReader mr1(new musical::JSONFileSource("/path/to/melody1.json")
-);
+	musical::NLBJSONReader mr1(new musical::JSONFileSource("/path/to/melody1.json"))
+;
 \end_layout
 
 \begin_layout Plain Layout
@@ -1069,12 +1068,12 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	musical::OptiSequence * seq1 =
+	musical::NLBSequence * seq1 =
 \end_layout
 
 \begin_layout Plain Layout
 
-		static_cast<musical::OptiSequence*>(mr1.generateSequence());
+		static_cast<musical::NLBSequence*>(mr1.generateSequence());
 \end_layout
 
 \begin_layout Plain Layout
@@ -1088,18 +1087,18 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	musical::OptiJSONReader mr2(new musical::JSONFileSource("/path/to/melody2.json")
-);
+	musical::NLBJSONReader mr2(new musical::JSONFileSource("/path/to/melody2.json"))
+;
 \end_layout
 
 \begin_layout Plain Layout
 
-	musical::OptiSequence * seq2 =
+	musical::NLBSequence * seq2 =
 \end_layout
 
 \begin_layout Plain Layout
 
-		static_cast<musical::OptiSequence*>(mr2.generateSequence());
+		static_cast<musical::NLBSequence*>(mr2.generateSequence());
 \end_layout
 
 \begin_layout Plain Layout
@@ -1113,7 +1112,7 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	musical::OptiSequences seqs = musical::OptiSequences(seq1,seq2);
+	musical::NLBSequences * seqs = new musical::NLBSequences(seq1,seq2);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1127,7 +1126,7 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	musical::OptiSimilarityRater * sr = new musical::OptiSimilarityRater();
+	musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
 \end_layout
 
 \begin_layout Plain Layout
@@ -1156,7 +1155,7 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(&seqs, sr, gr);
+	musical::NeedlemanWunsch nw = musical::NeedlemanWunsch(seqs, sr, gr);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1184,7 +1183,7 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	cout << "Score:" << seqs.getScore() << endl;
+	cout << "Score:" << seqs->getScore() << endl;
 \end_layout
 
 \begin_layout Plain Layout
@@ -1198,12 +1197,46 @@ int main(int argc, char * argv[]) {
 
 \begin_layout Plain Layout
 
-	musical::AlignmentVisualizer av(&seqs);
+	musical::AlignmentVisualizer av(seqs);
 \end_layout
 
 \begin_layout Plain Layout
 
 	av.basicStdoutReport();
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	// release memory
+\end_layout
+
+\begin_layout Plain Layout
+
+	delete seq1;
+\end_layout
+
+\begin_layout Plain Layout
+
+	delete seq2;
+\end_layout
+
+\begin_layout Plain Layout
+
+	delete seqs;
+\end_layout
+
+\begin_layout Plain Layout
+
+	delete sr;
+\end_layout
+
+\begin_layout Plain Layout
+
+	delete gr;
 \end_layout
 
 \begin_layout Plain Layout
@@ -1531,28 +1564,6 @@ After performing all these steps, the Sequences, and the raters can be assigned
 \end_layout
 
 \begin_layout Section
-Roadmap
-\end_layout
-
-\begin_layout Standard
-The current version, 0.9, implements three alignment algorithms and two applicati
-ons for musical sequences.
- There are, however, remaining issues that have to be sovled.
- Furthermore, future versions will provide new features and new alignment
- algorithms.
- For version 1.0 the following improvements are planned:
-\end_layout
-
-\begin_layout Itemize
-Improvements in exception handling.
- This will make the software more robust.
-\end_layout
-
-\begin_layout Itemize
-Adding Smith-Waterman-Gotoh algorithm.
-\end_layout
-
-\begin_layout Section
 Misc
 \end_layout
 
@@ -1772,7 +1783,7 @@ musical::NeedlemanWunsch nw =
 
 \begin_layout Plain Layout
 
-	musical::NeedlemanWunsch(&seqs,lr,gr);
+	musical::NeedlemanWunsch(seqs,lr,gr);
 \end_layout
 
 \begin_layout Plain Layout

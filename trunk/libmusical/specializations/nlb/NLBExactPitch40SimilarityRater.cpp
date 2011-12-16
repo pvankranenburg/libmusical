@@ -19,31 +19,31 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#include "ExactPitch40SimilarityRater.h"
-#include "OptiSymbol.h"
-#include "OptiSequences.h"
+#include "NLBExactPitch40SimilarityRater.h"
+#include "NLBSymbol.h"
+#include "NLBSequences.h"
 
 namespace musical {
 
-ExactPitch40SimilarityRater::ExactPitch40SimilarityRater() {
+NLBExactPitch40SimilarityRater::NLBExactPitch40SimilarityRater() {
 	// TODO Auto-generated constructor stub
 
 }
 
-ExactPitch40SimilarityRater::~ExactPitch40SimilarityRater() {
+NLBExactPitch40SimilarityRater::~NLBExactPitch40SimilarityRater() {
 	// TODO Auto-generated destructor stub
 }
 
-double ExactPitch40SimilarityRater::getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const {
+double NLBExactPitch40SimilarityRater::getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const {
 
 	//for now ignore x1 and y1. Only return the similarity of the symbols associated with the destination cell
 
-	OptiSymbol * s1 = static_cast<OptiSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
-	OptiSymbol * s2 = static_cast<OptiSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
+	NLBSymbol * s1 = static_cast<NLBSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
+	NLBSymbol * s2 = static_cast<NLBSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
 
 	//cout << x2 << " : " << pitch1 << " - " << y2 << " : " << pitch2 << endl;
 
-	int pitchShift = static_cast<OptiSequences *>(seqs)->getPitch40Shift();
+	int pitchShift = static_cast<NLBSequences *>(seqs)->getPitch40Shift();
 
 	if ( s1->pitch40 == s2->pitch40+pitchShift )
 		return 1.0;
