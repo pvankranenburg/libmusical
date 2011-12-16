@@ -168,8 +168,8 @@ void LinearGlobalAligner::doAlign() const {
 		cout << endl;
 		for(int k=0; k<mn; k++) {
 			for(int l=0; l<mm; l++) {
-				cout << setw(2)<<s[k*mm+l].ix1<<"-"<<setw(2) << s[k*mm+l].ix2 << "  ";
-				//cout << setw(6)<< s[k*mm+l].accumulatedscore;
+				//cout << setw(2)<<s[k*mm+l].ix1<<"-"<<setw(2) << s[k*mm+l].ix2 << "  ";
+				cout << setw(6)<< s[k*mm+l].accumulatedscore;
 			}
 			cout << endl;
 		}
