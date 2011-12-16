@@ -5,12 +5,15 @@ set (libmusical_VERSION_PATCH x)
 
 cmake_minimum_required(VERSION 2.6)
 
+ENABLE_TESTING()
+
 if(CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "-O3 -Wall")
+    set(CMAKE_CXX_FLAGS "-fno-builtin-malloc -fno-builtin-calloc -fno-builtin-realloc -fno-builtin-free -g -Wall -ltcmalloc")
 endif()
 
 add_subdirectory(libmusical)
 add_subdirectory(applications)
+add_subdirectory(test)
 #add_subdirectory(Documentation)
 
 SET(CPACK_GENERATOR "TGZ")

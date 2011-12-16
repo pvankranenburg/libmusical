@@ -18,25 +18,14 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "AlignmentAlgorithm.h"
+#ifndef TESTALIGNMENT_H_
+#define TESTALIGNMENT_H_
 
-namespace musical {
+#include "TestReader.h"
 
-AlignmentAlgorithm::AlignmentAlgorithm() : seqs(NULL), simr(NULL), gapr(NULL), feedback(false) {
-	// TODO Auto-generated constructor stub
+#include "TestSymbol.h"
 
-}
+#include "TestSimilarityRater.h"
 
-AlignmentAlgorithm::~AlignmentAlgorithm() {
-	// TODO Auto-generated destructor stub
+#endif /* TESTALIGNMENT_H_ */
 
-	/*
-	if (simr != NULL) delete simr;
-	simr = NULL;
-	if (gapr != NULL) delete gapr;
-	gapr = NULL;
-	*/
-
-}
-
-}

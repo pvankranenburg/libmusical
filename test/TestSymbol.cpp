@@ -18,25 +18,28 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "AlignmentAlgorithm.h"
+
+#include "TestSymbol.h"
+
+#include <sstream>
+using namespace std;
 
 namespace musical {
 
-AlignmentAlgorithm::AlignmentAlgorithm() : seqs(NULL), simr(NULL), gapr(NULL), feedback(false) {
+TestSymbol::TestSymbol() {
 	// TODO Auto-generated constructor stub
 
 }
 
-AlignmentAlgorithm::~AlignmentAlgorithm() {
+TestSymbol::~TestSymbol() {
 	// TODO Auto-generated destructor stub
+}
 
-	/*
-	if (simr != NULL) delete simr;
-	simr = NULL;
-	if (gapr != NULL) delete gapr;
-	gapr = NULL;
-	*/
-
+std::string TestSymbol::toString() {
+	stringstream ss;
+	ss << "Attribute: " << attr;
+	return ss.str();
 }
 
 }
+

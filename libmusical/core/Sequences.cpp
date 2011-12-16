@@ -30,6 +30,7 @@ Sequences::Sequences() {
 
 Sequences::~Sequences() {
 	// TODO Auto-generated destructor stub
+	clearResults();
 }
 
 void Sequences::clearResults() {

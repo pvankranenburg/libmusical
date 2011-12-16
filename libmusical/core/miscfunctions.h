@@ -24,13 +24,50 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdexcept>
+#include <sstream>
 
 namespace musical {
 
 /**
  * Max of two doubles
  */
-inline double fmax(double a,double b) { return (a>b)?a:b; }
+inline double fmax(double a,double b) { return (a>b)?a:b; };
+
+class BadConversion : public std::runtime_error {
+public:
+	BadConversion(const std::string& s)	: std::runtime_error(s) { }
+};
+
+inline int convertToInt(const std::string& s) {
+	std::istringstream i(s);
+	int x;
+	if (!(i >> x))
+	  throw BadConversion("convertToInt(\"" + s + "\")");
+	return x;
+}
+
+inline float convertToFloat(const std::string& s) {
+	std::istringstream i(s);
+	float x;
+	if (!(i >> x))
+	  throw BadConversion("convertToFloat(\"" + s + "\")");
+	return x;
+}
+
+inline std::string convertToString(const int i) {
+	std::ostringstream o;
+	if (!(o << i))
+	  throw BadConversion("convertToString(...)");
+	return o.str();
+}
+
+inline std::string convertToString(const double d) {
+	std::ostringstream o;
+	if (!(o << d))
+	  throw BadConversion("convertToString(...)");
+	return o.str();
+}
 
 }
 
