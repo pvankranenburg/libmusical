@@ -19,8 +19,8 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#ifndef OPTIJSONREADER_REGISTRY_H_
-#define OPTIJSONREADER_REGISTRY_H_
+#ifndef NLBJSONREADER_REGISTRY_H_
+#define NLBJSONREADER_REGISTRY_H_
 
 #include "JSONReader.h"
 
@@ -50,4 +50,4 @@ public:
 
 }
 
-#endif /* OPTIJSONREADER_REGISTRY_H_ */
+#endif /* NLBJSONREADER_REGISTRY_H_ */

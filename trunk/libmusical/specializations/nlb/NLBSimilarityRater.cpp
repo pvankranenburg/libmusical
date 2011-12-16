@@ -21,37 +21,37 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <cmath>
 
-#include "OptiSimilarityRater.h"
-#include "OptiSymbol.h"
-#include "OptiSequences.h"
+#include "NLBOptiSimilarityRater.h"
+#include "NLBSymbol.h"
+#include "NLBSequences.h"
 
 namespace musical {
 
-OptiSimilarityRater::OptiSimilarityRater() {
+NLBOptiSimilarityRater::NLBOptiSimilarityRater() {
 	// TODO Auto-generated constructor stub
 
 }
 
-OptiSimilarityRater::~OptiSimilarityRater() {
+NLBOptiSimilarityRater::~NLBOptiSimilarityRater() {
 	// TODO Auto-generated destructor stub
 }
 
-double OptiSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, int y2) const {
+double NLBOptiSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, int y2) const {
 
-	OptiSymbol * s1;
-	OptiSymbol * s2;
+	NLBSymbol * s1;
+	NLBSymbol * s2;
 	double result;
 	int diff;
 
 	//for now ignore x1 and y1. Only return the similarity of the symbols associated with the destination cell
 
 	//dynamic_cast would be better, but much, much slower
-	s1 = static_cast<OptiSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
-	s2 = static_cast<OptiSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
-	//s1 = static_cast<OptiSymbol *>(seqs->seq1->symbols[x2]);
-	//s2 = static_cast<OptiSymbol *>(seqs->seq2->symbols[y2]);
+	s1 = static_cast<NLBSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
+	s2 = static_cast<NLBSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
+	//s1 = static_cast<NLBSymbol *>(seqs->seq1->symbols[x2]);
+	//s2 = static_cast<NLBSymbol *>(seqs->seq2->symbols[y2]);
 
-	int pitchshift = static_cast<OptiSequences *>(seqs)->getPitch40Shift();
+	int pitchshift = static_cast<NLBSequences *>(seqs)->getPitch40Shift();
 
 	//cout << x2 << " : " << pitch1 << " - " << y2 << " : " << pitch2 << endl;
 
