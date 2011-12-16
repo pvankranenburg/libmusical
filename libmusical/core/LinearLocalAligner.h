@@ -57,12 +57,12 @@ public:
 	/**
 	 * Do the alignment.
 	 */
-	void doAlign();
+	void doAlign() const;
 
 	/**
 	 * set max number of alignments
 	 */
-	void setMaxAlignments(int m) { maxAlignments = m; }
+	void setMaxAlignments(const int m) { maxAlignments = m; }
 
 	/**
 	 * Allow for overlapping matches
@@ -75,14 +75,22 @@ public:
 	void disallowOverlappingMatches() { allowOverlappingMatches = false; }
 
 	/**
+	 * get max number of alignments
+	 */
+	int getMaxAlignments() const { return maxAlignments; }
+
+	/**
+	 * allow overlapping matches?
+	 */
+	bool getAllowOverlappingMatches() const { return allowOverlappingMatches; }
+
+	/**
 	 * Reset the parameters to default.
 	 * I.e., maximal 1 alignment and no overlapping alignments
 	 */
-	virtual void resetParameters() { maxAlignments = 1; allowOverlappingMatches = false; } ;
+	void resetParameters() { maxAlignments = 1; allowOverlappingMatches = false; } ;
 
 private:
-	NWTrace * s; //this will be the d.p. matrix. created and deleted in doAlign().
-
 	int maxAlignments; //number of local alignments that is returned. -1 is all. default is 1.
 	bool allowOverlappingMatches; // if true: symbols can occur in more than one local alignment. Default: false
 

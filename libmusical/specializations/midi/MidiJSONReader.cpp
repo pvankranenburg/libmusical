@@ -38,7 +38,7 @@ MidiJSONReader::~MidiJSONReader() {
 	// TODO Auto-generated destructor stub
 }
 
-Sequence* MidiJSONReader::generateSequence() {
+Sequence* MidiJSONReader::generateSequence() const {
 	//create a new sequence
 	Sequence * nwseq = new Sequence;
 	string json_string = source->getJSONString();

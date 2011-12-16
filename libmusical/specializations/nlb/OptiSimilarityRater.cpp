@@ -36,7 +36,12 @@ OptiSimilarityRater::~OptiSimilarityRater() {
 	// TODO Auto-generated destructor stub
 }
 
-double OptiSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
+double OptiSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, int y2) const {
+
+	OptiSymbol * s1;
+	OptiSymbol * s2;
+	double result;
+	int diff;
 
 	//for now ignore x1 and y1. Only return the similarity of the symbols associated with the destination cell
 

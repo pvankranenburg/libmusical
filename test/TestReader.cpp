@@ -38,7 +38,7 @@ TestReader::~TestReader() {
 	// TODO Auto-generated destructor stub
 }
 
-Sequence* TestReader::generateSequence() {
+Sequence* TestReader::generateSequence() const {
 	//create a new sequence
 	Sequence * nwseq = new Sequence;
 	//cout << json_string << endl;

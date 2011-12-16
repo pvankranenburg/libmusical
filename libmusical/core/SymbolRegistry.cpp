@@ -37,7 +37,7 @@ SymbolRegistry::~SymbolRegistry() {
 	// TODO Auto-generated destructor stub
 }
 
-string SymbolRegistry::toString() {
+string SymbolRegistry::toString() const {
 	//iterate over all name/value pairs
 	map<std::string,float>::const_iterator fl_iterator = floats.begin();
 	map<std::string,int>::const_iterator int_iterator = ints.begin();

@@ -48,17 +48,17 @@ public:
 	/**
 	 * Returns a string representation of the symbol.
 	 */
-	std::string toString();
+	std::string toString() const;
 
 	/**
 	 * Returns the floating point value of a float attribute with key "key".
 	 */
-	float getFloat(std::string key) { return floats[key]; }
+	float getFloat(const std::string key) { return floats[key]; } //why can't this be const?
 
 	/**
 	 * Add a floating point value with key "key"
 	 */
-	void addFloat(std::string key, float v ) { floats[key] = v; }
+	void addFloat(const std::string key, const float v ) { floats[key] = v; }
 
 	/**
 	 * Returns the integer value of an int attribute with key "key"
@@ -68,27 +68,27 @@ public:
 	/**
 	 * Add an int
 	 */
-	void addInt(std::string key, int i) { ints[key] = i; }
+	void addInt(const std::string key, const int i) { ints[key] = i; }
 
 	/**
 	 * Returns the bool value of a bool attribute with key "key"
 	 */
-	bool  getBool (std::string key) { return bools[key]; }
+	bool  getBool (const std::string key) { return bools[key]; }
 
 	/**
 	 * Adds a bool
 	 */
-	void addBool(std::string key, bool b) { bools[key] = b; }
+	void addBool(const std::string key, const bool b) { bools[key] = b; }
 
 	/**
 	 * Returns the string value of a string attribute with key "key"
 	 */
-	std::string getString(std::string key) { return strings[key]; }
+	std::string getString(const std::string key) { return strings[key]; }
 
 	/**
 	 * Adds a string
 	 */
-	void addString(std::string key, std::string s) { strings[key] = s; }
+	void addString(const std::string key, const std::string s) { strings[key] = s; }
 
 public:
 	std::map<std::string,float> floats;

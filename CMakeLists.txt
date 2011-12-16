@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 2.6)
 ENABLE_TESTING()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "-fno-builtin-malloc -fno-builtin-calloc -fno-builtin-realloc -fno-builtin-free -g -Wall -ltcmalloc")
+    set(CMAKE_CXX_FLAGS "-g -Wall")
 endif()
 
 add_subdirectory(libmusical)

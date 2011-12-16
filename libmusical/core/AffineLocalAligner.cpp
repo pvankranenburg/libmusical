@@ -31,7 +31,7 @@ LocalAffineAligner::~LocalAffineAligner() {
 	// TODO Auto-generated destructor stub
 }
 
-void LocalAffineAligner::doAlign() {
+void LocalAffineAligner::doAlign() const {
 
 	cerr << "void LocalAffineAligner::doAlign() not yet finished." << endl;
 
@@ -58,9 +58,9 @@ void LocalAffineAligner::doAlign() {
 	int mn = n + 1;
 
 	//create matrices
-	s = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
-	g1 = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
-	g2 = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
+	NWGTrace * s = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
+	NWGTrace * g1 = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
+	NWGTrace * g2 = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
 
 	if (feedback) cout << " s allocated : (" << s  << ") " << mm << " x " << mn << " = " << mm*mn << endl;
 	if (feedback) cout << "g1 allocated : (" << g1 << ") " << mm << " x " << mn << " = " << mm*mn << endl;

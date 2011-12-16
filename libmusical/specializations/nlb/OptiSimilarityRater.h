@@ -46,14 +46,8 @@ public:
 	 * Computes the similarity of seq1[x1] and seq2[y2].
 	 * x1 and y1 are ignored for now.
 	 */
-	virtual double getScore(Sequences * seqs, int x1, int y1, int x2, int y2);
+	virtual double getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
 
-private:
-	//declare these here, instead of in the definition of getScore().
-	OptiSymbol * s1;
-	OptiSymbol * s2;
-	double result;
-	int diff;
 
 };
 

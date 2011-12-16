@@ -46,7 +46,7 @@ LinearGlobalAligner::~LinearGlobalAligner() {
 	//free(s);
 }
 
-void LinearGlobalAligner::doAlign() {
+void LinearGlobalAligner::doAlign() const {
 
 	//make sure n and m are sizes of sequences.
 
@@ -75,7 +75,7 @@ void LinearGlobalAligner::doAlign() {
 
 	//s = new NWTrace[(mm)*(mn)];
 
-	s = (NWTrace *)malloc(mm*mn*sizeof(NWTrace));
+	NWTrace * s = (NWTrace *)malloc(mm*mn*sizeof(NWTrace));
 
 	if (feedback) cout << endl << "size: " << (mm)*(mn)*sizeof(NWTrace) << endl;
 

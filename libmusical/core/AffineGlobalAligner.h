@@ -58,16 +58,12 @@ public:
 	/**
 	 * Do the alignment
 	 */
-	void doAlign();
+	void doAlign() const;
 
-private:
 	/**
-	 * This algorithm needs three matrices
+	 * Required function to reset parameters.
 	 */
-	NWGTrace * s;  //this will be the d.p. matrix.
-	NWGTrace * g1; //this will be the d.p. matrix for state 'gap with seq1'.
-	NWGTrace * g2; //this will be the d.p. matrix for state 'gap with seq2'
-	int size_s;
+	void resetParameters() { };
 
 };
 

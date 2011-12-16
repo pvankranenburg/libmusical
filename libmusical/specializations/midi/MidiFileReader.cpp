@@ -19,7 +19,7 @@ MidiFileReader::~MidiFileReader() {
 	// TODO Auto-generated destructor stub
 }
 
-Sequence * MidiFileReader::generateSequence() {
+Sequence * MidiFileReader::generateSequence() const {
 	Sequence * nwseq = new Sequence();
 
 	CSUU_POD::Melody md = getOPDfromMIDI(filename);
@@ -59,7 +59,7 @@ CSUU_POD::Melody pod_melody_from_midi(std::string const &filename);
 
 namespace musical {
 
-CSUU_POD::Melody MidiFileReader::getOPDfromMIDI(std::string fn) {
+CSUU_POD::Melody MidiFileReader::getOPDfromMIDI(const std::string fn) const {
 	return pod_melody_from_midi(fn);
 }
 

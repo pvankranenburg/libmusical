@@ -36,7 +36,7 @@ ConstantLinearGapRater::~ConstantLinearGapRater() {
 	// TODO Auto-generated destructor stub
 }
 
-double ConstantLinearGapRater::getInitializationScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
+double ConstantLinearGapRater::getInitializationScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const {
 	//either x1=x2=-1 (initial gap in x)
 	//or y1=y2=-1 (initial gap in y)
 
@@ -51,7 +51,7 @@ double ConstantLinearGapRater::getInitializationScore(Sequences * seqs, int x1, 
 	return 0.0;
 }
 
-double ConstantLinearGapRater::getGapScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
+double ConstantLinearGapRater::getGapScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const {
 	if ( x1 == x2 ) { // gap in x
 		return gapScore * (double)(y2-y1);
 	}

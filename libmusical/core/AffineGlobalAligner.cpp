@@ -57,7 +57,7 @@ AffineGlobalAligner::~AffineGlobalAligner() {
 	// TODO Auto-generated destructor stub
 }
 
-void AffineGlobalAligner::doAlign() {
+void AffineGlobalAligner::doAlign() const {
 
 	if (feedback) cout << "start alignment" << endl;
 
@@ -82,9 +82,9 @@ void AffineGlobalAligner::doAlign() {
 	//g1 = new NWGTrace[(mm)*(mn)];
 	//g2 = new NWGTrace[(mm)*(mn)];
 
-	s = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
-	g1 = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
-	g2 = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
+	NWGTrace * s = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
+	NWGTrace * g1 = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
+	NWGTrace * g2 = (NWGTrace *)malloc(mm*mn*sizeof(NWGTrace));
 
 	/*
 	if ( mm*mn > size_s ) {

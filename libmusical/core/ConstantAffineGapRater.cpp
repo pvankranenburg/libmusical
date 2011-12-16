@@ -54,7 +54,7 @@ ConstantAffineGapRater::~ConstantAffineGapRater() {
 	// TODO Auto-generated destructor stub
 }
 
-double ConstantAffineGapRater::getInitializationScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
+double ConstantAffineGapRater::getInitializationScore(Sequences * const seqs, int x1, int y1, int x2, int y2) const {
 	//either x1=x2=0 (initial gap in x)
 	//or y1=y2=0 (initial gap in y)
 
@@ -69,7 +69,7 @@ double ConstantAffineGapRater::getInitializationScore(Sequences * seqs, int x1, 
 	return 0.0;
 }
 
-double ConstantAffineGapRater::getGapScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
+double ConstantAffineGapRater::getGapScore(Sequences * const seqs, int x1, int y1, int x2, int y2) const {
 	if ( x1 == x2 ) { // gap in x
 		return gapOpeningScore * (double)(y2-y1-1)*gapExtensionScore;
 	}
@@ -81,7 +81,7 @@ double ConstantAffineGapRater::getGapScore(Sequences * seqs, int x1, int y1, int
 	return 0.0;
 }
 
-double ConstantAffineGapRater::getGapOpeningScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
+double ConstantAffineGapRater::getGapOpeningScore(Sequences * const seqs, int x1, int y1, int x2, int y2) const {
 
 	//just ignore the matrix coefficients
 	//For robustness it could be good to check whether (x1==x2 && y1==y2-1) || (x1==x2-1 && y1==y2)
@@ -89,7 +89,7 @@ double ConstantAffineGapRater::getGapOpeningScore(Sequences * seqs, int x1, int 
 	return gapOpeningScore;
 }
 
-double ConstantAffineGapRater::getGapExtensionScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
+double ConstantAffineGapRater::getGapExtensionScore(Sequences * const seqs, int x1, int y1, int x2, int y2) const {
 
 	//just ignore the matrix coefficients
 	//For robustness it could be good to check whether (x1==x2 && y1==y2-1) || (x1==x2-1 && y1==y2)

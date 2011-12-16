@@ -59,11 +59,12 @@ public:
 	/**
 	 * Do the alignment.
 	 */
-	void doAlign();
+	void doAlign() const;
 
-private:
-	NWTrace * s; //this is be the d.p. matrix
-	int size_s;
+	/**
+	 * Required function to reset parameters.
+	 */
+	void resetParameters() { };
 
 };
 

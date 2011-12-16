@@ -44,7 +44,7 @@ public:
 	/**
 	 * Returns the JSON string.
 	 */
-	virtual std::string getJSONString() = 0;
+	virtual std::string getJSONString() const = 0;
 };
 
 }

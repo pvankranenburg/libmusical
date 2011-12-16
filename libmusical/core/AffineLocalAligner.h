@@ -48,12 +48,12 @@ public:
 	/**
 	 * Do the alignment
 	 */
-	void doAlign();
+	void doAlign() const;
 
 	/**
 	 * set max number of alignments
 	 */
-	void setMaxAlignments(int m) { maxAlignments = m; }
+	void setMaxAlignments(const int m) { maxAlignments = m; }
 
 	/**
 	 * Allow for overlapping matches
@@ -66,19 +66,22 @@ public:
 	void disallowOverlappingMatches() { allowOverlappingMatches = false; }
 
 	/**
-	 * Remove the results.
+	 * get max number of alignments
 	 */
-	virtual void specificClear() { maxAlignments = 1; allowOverlappingMatches = false; } ;
+	int getMaxAlignments() const { return maxAlignments; }
+
+	/**
+	 * allow overlapping matches?
+	 */
+	bool getAllowOverlappingMatches() const { return allowOverlappingMatches; }
+
+	/**
+	 * Required function to reset parameters.
+	 */
+	void resetParameters() { maxAlignments = 1; allowOverlappingMatches = false; };
+
 
 private:
-	/**
-	 * This algorithm needs three matrices
-	 */
-	NWGTrace * s;  //this will be the d.p. matrix.
-	NWGTrace * g1; //this will be the d.p. matrix for state 'gap with seq1'.
-	NWGTrace * g2; //this will be the d.p. matrix for state 'gap with seq2'
-
-	int size_s;
 
 	int maxAlignments; //number of local alignments that is returned. -1 is all. default is 1.
 	bool allowOverlappingMatches; // if true: symbols can occur in more than one local alignment. Default: false

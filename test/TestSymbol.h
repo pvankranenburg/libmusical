@@ -43,7 +43,7 @@ public:
 
 	int attr;
 
-	std::string toString();
+	std::string toString() const;
 
 };
 

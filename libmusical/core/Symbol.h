@@ -44,12 +44,12 @@ public:
 	/**
 	 * Get the next symbol
 	 */
-	Symbol * getNext() { return next; }
+	Symbol * getNext() const { return next; }
 
 	/**
 	 * Get the previous symbol
 	 */
-	Symbol * getPrevious() { return previous; }
+	Symbol * getPrevious() const { return previous; }
 
 	/**
 	 * Set the next symbol
@@ -64,24 +64,24 @@ public:
 	/**
 	 * Set the id
 	 */
-	void setId(std::string i) { id = i; }
+	void setId(const std::string i) { id = i; }
 
 	/**
 	 * Get the id
 	 */
-	std::string getId() { return id; }
+	std::string getId() const { return id; }
 
 	/**
 	 * Returns a string representation of the symbol.
 	 */
-	virtual std::string toString() = 0;
+	virtual std::string toString() const = 0;
 
 	/**
 	 * Returns a float representation of the symbol.
 	 * Default: return 1.0. Can be overridden by derived classes
 	 * Used by AlignmentVisualizer.
 	 */
-	virtual float toFloat() { return 1.0; }
+	virtual float toFloat() const { return 1.0; }
 
 protected:
 	std::string id;

@@ -48,7 +48,7 @@ public:
 	 * In future implementations, these can be used to align k symbols from seq1 with l symbols from seq2.
 	 *
 	 */
-	double getScore(Sequences * seqs, int x1, int y1, int x2, int y2);
+	double getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
 
 };
 

@@ -50,7 +50,7 @@ public:
 	/**
 	 * Generate the Sequence from the JSON representation
 	 */
-	Sequence * generateSequence();
+	Sequence * generateSequence() const;
 
 };
 

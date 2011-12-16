@@ -38,11 +38,11 @@ public:
 	/**
 	 * Returns a pointer to a newly created Sequence, containing a vector of MidiSymbols
 	 */
-	Sequence * generateSequence() ;
+	Sequence * generateSequence() const ;
 
 
 private:
-	CSUU_POD::Melody getOPDfromMIDI(std::string filename);
+	CSUU_POD::Melody getOPDfromMIDI(const std::string filename) const;
 	std::string filename;
 };
 

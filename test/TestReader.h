@@ -53,7 +53,7 @@ public:
 	/**
 	 * Generate the Sequence from the  representation
 	 */
-	Sequence * generateSequence();
+	Sequence * generateSequence() const;
 
 	/**
 	 * String containing the sequence. One digit is one symbol. e.g. "22345"

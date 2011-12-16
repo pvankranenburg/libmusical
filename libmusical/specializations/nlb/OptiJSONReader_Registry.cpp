@@ -38,7 +38,7 @@ OptiJSONReader_Registry::~OptiJSONReader_Registry() {
 	// TODO Auto-generated destructor stub
 }
 
-Sequence* OptiJSONReader_Registry::generateSequence() {
+Sequence* OptiJSONReader_Registry::generateSequence() const {
 	//create a new sequence
 	Sequence * nwseq = new Sequence;
 	string json_string = source->getJSONString();

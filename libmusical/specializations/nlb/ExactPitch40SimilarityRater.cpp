@@ -34,7 +34,7 @@ ExactPitch40SimilarityRater::~ExactPitch40SimilarityRater() {
 	// TODO Auto-generated destructor stub
 }
 
-double ExactPitch40SimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, int y2) {
+double ExactPitch40SimilarityRater::getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const {
 
 	//for now ignore x1 and y1. Only return the similarity of the symbols associated with the destination cell
 

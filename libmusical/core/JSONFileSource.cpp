@@ -29,7 +29,7 @@ JSONFileSource::~JSONFileSource() {
 	// TODO Auto-generated destructor stub
 }
 
-std::string JSONFileSource::getJSONString() {
+std::string JSONFileSource::getJSONString() const {
 	ifstream infile;
 
 	string result = "";
