@@ -19,25 +19,25 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#ifndef OPTISEQUENCES_H_
-#define OPTISEQUENCES_H_
+#ifndef NLBSEQUENCES_H_
+#define NLBSEQUENCES_H_
 
-#include "OptiSequence.h"
+#include "NLBSequence.h"
 #include "Sequences.h"
 #include <map>
 
 namespace musical {
 
 /**
- * Pair of two sequences of OptiSymbol.
+ * Pair of two sequences of NLBSymbol.
  */
-class OptiSequences: public musical::Sequences {
+class NLBSequences: public musical::Sequences {
 
 private:
 	/**
 	 * Constructor
 	 */
-	OptiSequences(); //private to ensure that only OptiSequences are assigned
+	NLBSequences(); //private to ensure that only NLBSequences are assigned
 
 public:
 	/**
@@ -45,12 +45,12 @@ public:
 	 * seq1 : pointer to first sequence
 	 * seq2 : pointer to second sequence
 	 */
-	OptiSequences(OptiSequence * seq1, OptiSequence * seq2) : Sequences(seq1,seq2) { computePitch40HistogramShift(); };
+	NLBSequences(NLBSequence * seq1, NLBSequence * seq2) : Sequences(seq1,seq2) { computePitch40HistogramShift(); };
 
 	/**
 	 * Destructor
 	 */
-	virtual ~OptiSequences();
+	virtual ~NLBSequences();
 
 	/**
 	 * Computes how much the base40 pitch of seq2 has to be shifted in order to correspond to the pitch of seq1.
@@ -71,4 +71,4 @@ private:
 
 }
 
-#endif /* OPTISEQUENCES_H_ */
+#endif /* NLBSEQUENCES_H_ */

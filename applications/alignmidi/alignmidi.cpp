@@ -41,7 +41,7 @@ int main(int argc, char * argv[]) {
 
 	musical::Sequence * seq1 = mfr1.generateSequence();
 	musical::Sequence * seq2 = mfr2.generateSequence();
-	musical::Sequences seqs = musical::Sequences(seq1,seq2);
+	musical::Sequences * seqs = new musical::Sequences(seq1,seq2);
 
 	//seq1->dump_stdout();
 	//seq2->dump_stdout();
@@ -56,15 +56,15 @@ int main(int argc, char * argv[]) {
 	musical::ConstantLinearGapRater * gr =  new musical::ConstantLinearGapRater(-0.8);
 
 	clog << "Creating aligner" << endl;
-	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(&seqs, sr, gr);
+	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr, gr);
 
 	clog << "Doing the alignment" << endl;
 	nw.doAlign();
 
-	double normalizedscore = seqs.getScore() / min(seq1->size(),seq2->size());
+	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
 	clog << "Score: " << 1.0 - normalizedscore << endl;
 
-	musical::AlignmentVisualizer av(&seqs);
+	musical::AlignmentVisualizer av(seqs);
 	av.basicStdoutReport();
 
 	return 0;

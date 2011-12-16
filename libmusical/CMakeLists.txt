@@ -46,14 +46,12 @@ set(libmusical_lib_src
 	specializations/midi/MidiJSONReader.cpp
 	specializations/midi/MidiFileReader.cpp
 	specializations/midi/MidiSymbol.cpp
-	specializations/nlb/ExactPitch40SimilarityRater.cpp
-	specializations/nlb/OptiJSONReader.cpp
-	specializations/nlb/OptiJSONReader_Registry.cpp
-	specializations/nlb/OptiSequence.cpp
-	specializations/nlb/OptiSequences.cpp
-	specializations/nlb/OptiSimilarityRater.cpp
-	specializations/nlb/OptiSimilarityRater_Registry.cpp
-	specializations/nlb/OptiSymbol.cpp
+	specializations/nlb/NLBExactPitch40SimilarityRater.cpp
+	specializations/nlb/NLBJSONReader.cpp
+	specializations/nlb/NLBSequence.cpp
+	specializations/nlb/NLBSequences.cpp
+	specializations/nlb/NLBOptiSimilarityRater.cpp
+	specializations/nlb/NLBSymbol.cpp
 )
 
 include_directories(core libjson IMACPP CSUUMidiReader)
@@ -104,15 +102,13 @@ install(
 		specializations/midi/MidiFileReader.h
 		specializations/midi/MidiJSONReader.h
 		specializations/midi/MidiSymbol.h
-		specializations/nlb/ExactPitch40SimilarityRater.h
-		specializations/nlb/OptiAlignment.h
-		specializations/nlb/OptiJSONReader.h
-		specializations/nlb/OptiJSONReader_Registry.h
-		specializations/nlb/OptiSequence.h
-		specializations/nlb/OptiSequences.h
-		specializations/nlb/OptiSimilarityRater.h
-		specializations/nlb/OptiSimilarityRater_Registry.h
-		specializations/nlb/OptiSymbol.h
+		specializations/nlb/NLBExactPitch40SimilarityRater.h
+		specializations/nlb/NLBAlignment.h
+		specializations/nlb/NLBJSONReader.h
+		specializations/nlb/NLBSequence.h
+		specializations/nlb/NLBSequences.h
+		specializations/nlb/NLBOptiSimilarityRater.h
+		specializations/nlb/NLBSymbol.h
 	DESTINATION include/libmusical)
 
 install(DIRECTORY libjson/ DESTINATION include/libmusical FILES_MATCHING PATTERN "*.h" PATTERN ".svn" EXCLUDE)

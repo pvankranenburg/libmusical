@@ -22,7 +22,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 using namespace std;
 
 #include "libmusical.h"
-#include "OptiAlignment.h"
+#include "NLBAlignment.h"
 
 int main(int argc, char * argv[]) {
 
@@ -36,28 +36,28 @@ int main(int argc, char * argv[]) {
 
 	// Get a JSON string for sequence 1 from a file
 	// Create a Reader object for the JSON string
-	musical::OptiJSONReader mr1(new musical::JSONFileSource(argv[1]));
+	musical::NLBJSONReader mr1(new musical::JSONFileSource(argv[1]));
 
 	// Ask the Reader to generate the Sequence
-	musical::OptiSequence * seq1 =
-		static_cast<musical::OptiSequence*>(mr1.generateSequence());
+	musical::NLBSequence * seq1 =
+		static_cast<musical::NLBSequence*>(mr1.generateSequence());
 
 	// Do the same for sequence 2
-	musical::OptiJSONReader mr2(new musical::JSONFileSource(argv[2]));
-	musical::OptiSequence * seq2 =
-		static_cast<musical::OptiSequence*>(mr2.generateSequence());
+	musical::NLBJSONReader mr2(new musical::JSONFileSource(argv[2]));
+	musical::NLBSequence * seq2 =
+		static_cast<musical::NLBSequence*>(mr2.generateSequence());
 
 	// Encapsulate the two sequences in a Sequences object
-	musical::OptiSequences seqs = musical::OptiSequences(seq1,seq2);
+	musical::NLBSequences * seqs = new musical::NLBSequences(seq1,seq2);
 
 	// Create a similarity rater
-	musical::OptiSimilarityRater * sr = new musical::OptiSimilarityRater();
+	musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
 
 	// Create a gap rater
 	musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6,-0.2);
 
 	// Create an alignment algorithm
-	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(&seqs, sr, gr);
+	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
 
 	// Debug
 	nw.setFeedback(true);
@@ -66,11 +66,18 @@ int main(int argc, char * argv[]) {
 	nw.doAlign();
 
 	// Print the score
-	cout << "Score:" << seqs.getScore() << endl;
+	cout << "Score:" << seqs->getScore() << endl;
 
 	// Print the alignment to stdout
-	musical::AlignmentVisualizer av(&seqs);
+	musical::AlignmentVisualizer av(seqs);
 	av.basicStdoutReport();
+
+	// free memory
+	delete seq1;
+	delete seq2;
+	delete seqs;
+	delete gr;
+	delete sr;
 
 	return 0;
 }

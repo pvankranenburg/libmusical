@@ -24,26 +24,26 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include <iomanip>
 using namespace std;
 
-#include "OptiJSONReader.h"
-#include "OptiSymbol.h"
-#include "OptiSequence.h"
+#include "NLBJSONReader.h"
+#include "NLBSymbol.h"
+#include "NLBSequence.h"
 #include "libjson.h"
 
 
 namespace musical {
 
-OptiJSONReader::OptiJSONReader() {
+NLBJSONReader::NLBJSONReader() {
 	// TODO Auto-generated constructor stub
 
 }
 
-OptiJSONReader::~OptiJSONReader() {
+NLBJSONReader::~NLBJSONReader() {
 	// TODO Auto-generated destructor stub
 }
 
-Sequence* OptiJSONReader::generateSequence() const {
+Sequence* NLBJSONReader::generateSequence() const {
 	//create a new sequence
-	OptiSequence * nwseq = new OptiSequence; //NB OptiSequence contains a pitch histogram
+	NLBSequence * nwseq = new NLBSequence; //NB NLBSequence contains a pitch histogram
 	string json_string = source->getJSONString();
 	//nwseq->json_string = json_string;
 	//cout << json_string << endl;
@@ -56,7 +56,7 @@ Sequence* OptiJSONReader::generateSequence() const {
 	int size = i1->size();
 	//cout << "Size: " << size << endl;
 	for( int ix=0; ix<size; ix++) {
-		OptiSymbol* s = new OptiSymbol();
+		NLBSymbol* s = new NLBSymbol();
 		s->pitch40 = i1->at(ix).at("pitch40").as_int();
 		s->phrasepos = i1->at(ix).at("phrasepos").as_float();
 		s->IMA = i1->at(ix).at("ima").as_float();
@@ -98,7 +98,7 @@ Sequence* OptiJSONReader::generateSequence() const {
 			// count pitches
 			int count = 0;
 			for (unsigned int ix=0; ix<nwseq->size(); ix++) {
-				int indx = static_cast<OptiSymbol*>(nwseq->getSymbolAt(ix))->pitch40;
+				int indx = static_cast<NLBSymbol*>(nwseq->getSymbolAt(ix))->pitch40;
 				//cout << "index: " << indx << endl;
 				if ( indx >= 40 && indx < 240) { nwseq->pitchHistogram[indx - 40] += 1.0; count++; }
 			}

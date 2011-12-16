@@ -19,8 +19,8 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#ifndef OPTIJSONREADER_H_
-#define OPTIJSONREADER_H_
+#ifndef NLBJSONREADER_H_
+#define NLBJSONREADER_H_
 
 #include "JSONReader.h"
 #include "Sequence.h"
@@ -28,25 +28,25 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 namespace musical {
 
 /**
- * Generates a sequence of OptiSymbol symbols from a JSON string
+ * Generates a sequence of NLBSymbol symbols from a JSON string
  */
-class OptiJSONReader: public musical::JSONReader {
+class NLBJSONReader: public musical::JSONReader {
 public:
 	/**
 	 * Constructor
 	 */
-	OptiJSONReader();
+	NLBJSONReader();
 
 	/**
 	 * Constructor
 	 * s : pointer to the source of the json string
 	 */
-	OptiJSONReader(JSONSource * s) : JSONReader(s) {};
+	NLBJSONReader(JSONSource * s) : JSONReader(s) {};
 
 	/**
 	 * Destructor
 	 */
-	virtual ~OptiJSONReader();
+	virtual ~NLBJSONReader();
 
 	/**
 	 * Generate the sequence.
@@ -56,4 +56,4 @@ public:
 
 }
 
-#endif /* OPTIJSONREADER_H_ */
+#endif /* NLBJSONREADER_H_ */

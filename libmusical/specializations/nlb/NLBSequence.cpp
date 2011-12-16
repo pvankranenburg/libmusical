@@ -19,15 +19,15 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#include "OptiSequence.h"
+#include "NLBSequence.h"
 
 namespace musical {
 
-OptiSequence::OptiSequence() {
+NLBSequence::NLBSequence() {
 	//sparsePitchHistogram[0] = 0.2;
 }
 
-OptiSequence::~OptiSequence() {
+NLBSequence::~NLBSequence() {
 	// TODO Auto-generated destructor stub
 }
 

@@ -19,8 +19,8 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#ifndef EXACTPITCH40SIMILARITYRATER_H_
-#define EXACTPITCH40SIMILARITYRATER_H_
+#ifndef NLBEXACTPITCH40SIMILARITYRATER_H_
+#define NLBEXACTPITCH40SIMILARITYRATER_H_
 
 #include "SimilarityRater.h"
 
@@ -30,17 +30,17 @@ namespace musical {
  * Similarity rater that compares pitch in base40 representation
  * Expected symbol: OptiSymbol
  */
-class ExactPitch40SimilarityRater: public musical::SimilarityRater {
+class NLBExactPitch40SimilarityRater: public musical::SimilarityRater {
 public:
 	/**
 	 * Constructor
 	 */
-	ExactPitch40SimilarityRater();
+	NLBExactPitch40SimilarityRater();
 
 	/**
 	 * Destructor
 	 */
-	virtual ~ExactPitch40SimilarityRater();
+	virtual ~NLBExactPitch40SimilarityRater();
 
 	/**
 	 * Returns the score of aligning Symbols x2 with y2, where x2 and y2 are indices in seq1 and seq2.
@@ -54,4 +54,4 @@ public:
 
 }
 
-#endif /* EXACTPITCH40SIMILARITYRATER_H_ */
+#endif /* NLBEXACTPITCH40SIMILARITYRATER_H_ */
