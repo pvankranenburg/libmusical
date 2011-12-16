@@ -24,20 +24,20 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include <sstream>
 using namespace std;
 
-#include "OptiSymbol.h"
+#include "NLBSymbol.h"
 
 namespace musical {
 
-OptiSymbol::OptiSymbol() {
+NLBSymbol::NLBSymbol() {
 	// TODO Auto-generated constructor stub
 
 }
 
-OptiSymbol::~OptiSymbol() {
+NLBSymbol::~NLBSymbol() {
 	// TODO Auto-generated destructor stub
 }
 
-string OptiSymbol::toString() const {
+string NLBSymbol::toString() const {
 	stringstream ss;
 	ss << pitch40;
 	return ss.str();

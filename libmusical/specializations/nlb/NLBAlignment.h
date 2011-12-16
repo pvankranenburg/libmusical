@@ -24,15 +24,15 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef NLBALIGNMENT_H_
 #define NLBALIGNMENT_H_
 
-#include "OptiJSONReader.h"
+#include "NLBJSONReader.h"
 
 //Sequences
-#include "OptiSequence.h"
-#include "OptiSequences.h"
+#include "NLBSequence.h"
+#include "NLBSequences.h"
 
 //SimilarityRaters
-#include "OptiSimilarityRater.h"
-#include "ExactPitch40SimilarityRater.h"
+#include "NLBOptiSimilarityRater.h"
+#include "NLBExactPitch40SimilarityRater.h"
 
 
 #endif /* NLBALIGNMENT_H_ */

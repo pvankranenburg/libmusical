@@ -19,38 +19,39 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#ifndef OPTISIMILARITYRATER_H_
-#define OPTISIMILARITYRATER_H_
+#ifndef NLBSYMBOL_H_
+#define NLBSYMBOL_H_
 
-#include "SimilarityRater.h"
-#include "OptiSymbol.h"
+#include "Symbol.h"
 
 namespace musical {
 
 /**
- * Computes the substitution score for OptiSymbols.
+ * Represents an "NLBSymbol"
+ * has: pitch40, IMA and phrasepos.
  */
-class OptiSimilarityRater: public musical::SimilarityRater {
+class NLBSymbol: public musical::Symbol {
 public:
 	/**
 	 * Constructor
 	 */
-	OptiSimilarityRater();
+	NLBSymbol();
 
 	/**
 	 * Destructor
 	 */
-	virtual ~OptiSimilarityRater();
+	virtual ~NLBSymbol();
 
 	/**
-	 * Computes the similarity of seq1[x1] and seq2[y2].
-	 * x1 and y1 are ignored for now.
+	 * Returns a string representation of the symbol
 	 */
-	virtual double getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
+	std::string toString() const ;
 
-
+	int pitch40;
+	float phrasepos;
+	float IMA;
 };
 
 }
 
-#endif /* OPTISIMILARITYRATER_H_ */
+#endif /* NLBSYMBOL_H_ */
