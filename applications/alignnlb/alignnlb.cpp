@@ -68,6 +68,7 @@ int main(int argc, char * argv[]) {
 	// Print the alignment to stdout
 	musical::AlignmentVisualizer av(seqs);
 	av.basicStdoutReport();
+	av.toGnuPlot("alignment");
 
 	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
 	clog << "           Score: " << seqs->getScore() << endl;

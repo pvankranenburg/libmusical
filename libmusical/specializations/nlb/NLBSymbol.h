@@ -43,6 +43,11 @@ public:
 	virtual ~NLBSymbol();
 
 	/**
+	 * Returns a float representation of the symbol
+	 */
+	virtual float toFloat() const { return (float)pitch40; }
+
+	/**
 	 * Returns a string representation of the symbol
 	 */
 	std::string toString() const ;

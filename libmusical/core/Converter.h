@@ -26,7 +26,7 @@ namespace musical {
 
 /**
  * Abstract converter.
- * Intended for conversion between two sequences of symbols in json representation.
+ * Intended for conversion between two sequences of symbols.
  */
 class Converter {
 public:
