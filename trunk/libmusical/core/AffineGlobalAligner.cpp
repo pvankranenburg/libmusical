@@ -137,7 +137,7 @@ void AffineGlobalAligner::doAlign() const {
 		s[k*mm+0].ix2 = 0;
 		s[k*mm+0].state = NWGTrace::S;
 		s[k*mm+0].accumulatedscore = gapr->getInitializationScore(seqs,-1,-1,k-1,-1);
-		s[k*mm+0].thisscore = 0.0;
+		s[k*mm+0].thisscore = s[k*mm+0].accumulatedscore - s[(k-1)*mm+0].accumulatedscore;
 
 		g1[k*mm+0].ix1 = Trace::NOWHERE;
 		g1[k*mm+0].ix2 = Trace::NOWHERE;
@@ -162,7 +162,7 @@ void AffineGlobalAligner::doAlign() const {
 		s[0*mm+l].ix2 = l-1;
 		s[0*mm+l].state = NWGTrace::S;
 		s[0*mm+l].accumulatedscore = gapr->getInitializationScore(seqs,-1,-1,-1,l-1);
-		s[0*mm+l].thisscore = 0.0;
+		s[0*mm+l].thisscore = s[0*mm+l].accumulatedscore - s[0*mm+(l-1)].accumulatedscore;
 
 		g1[0*mm+l].ix1 = Trace::NOWHERE;
 		g1[0*mm+l].ix2 = Trace::NOWHERE;

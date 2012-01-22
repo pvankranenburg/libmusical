@@ -1,3 +1,7 @@
+Release 1.0.x - ??
+* Improvements in gnuplot code
+* thisscore in initial gaps in AffineGlobalAligner now set.
+
 Release 1.0.0 - 16 december 2011
 * Moved the resulting alignment from the AlignmentAlgorithm to the Sequences object.
 * Refactoring
