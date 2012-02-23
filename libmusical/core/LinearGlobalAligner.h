@@ -23,8 +23,6 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #define NEEDLEMANWUNSCH_H_
 
 #include <deque>
-using namespace std;
-
 #include "AlignmentAlgorithm.h"
 #include "NWTrace.h"
 #include "Sequences.h"

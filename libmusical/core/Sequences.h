@@ -25,7 +25,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 #include <deque>
 #include <iostream>
-using namespace std;
+#include <limits>
 
 #include "Sequence.h"
 #include "Trace.h"
@@ -121,7 +121,7 @@ public: //for Alignment algorithm to reach directly
 	/**
 	 * Contains the scores for the alignments
 	 */
-	vector<double> scores;
+	std::vector<double> scores;
 
 protected:
 	Sequence * seq1;
