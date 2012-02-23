@@ -21,16 +21,18 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef LOCALAFFINEALIGNER_H_
 #define LOCALAFFINEALIGNER_H_
 
-#include <AlignmentAlgorithm.h>
+#include "AlignmentAlgorithm.h"
+#include "AffineGapRater.h"
+#include "NWGTrace.h"
 
 namespace musical {
 
-class LocalAffineAligner: public musical::AlignmentAlgorithm {
+class AffineLocalAligner: public musical::AlignmentAlgorithm {
 public:
 	/**
 	 * Constructor
 	 */
-	LocalAffineAligner();
+	AffineLocalAligner();
 
 	/**
 	 * Constructor
@@ -38,12 +40,12 @@ public:
 	 * simr : pointer to similarity rater
 	 * gapr : pointer to affine gap rater
 	 */
-	LocalAffineAligner(Sequences * sqs, SimilarityRater * sr, AffineGapRater * afg) : AlignmentAlgorithm(sqs,sr,afg), maxAlignments(1), allowOverlappingMatches(false) { };
+	AffineLocalAligner(Sequences * sqs, SimilarityRater * sr, AffineGapRater * afg) : AlignmentAlgorithm(sqs,sr,afg), maxAlignments(1), allowOverlappingMatches(false), threshold(0.0) { };
 
 	/**
 	 * Destructor
 	 */
-	virtual ~LocalAffineAligner();
+	virtual ~AffineLocalAligner();
 
 	/**
 	 * Do the alignment
@@ -54,6 +56,11 @@ public:
 	 * set max number of alignments
 	 */
 	void setMaxAlignments(const int m) { maxAlignments = m; }
+
+	/**
+	 * set local alignment threshold
+	 */
+	void setThreshold(double th) { threshold = th; }
 
 	/**
 	 * Allow for overlapping matches
@@ -85,6 +92,8 @@ private:
 
 	int maxAlignments; //number of local alignments that is returned. -1 is all. default is 1.
 	bool allowOverlappingMatches; // if true: symbols can occur in more than one local alignment. Default: false
+
+	double threshold; //alignment ends if accumulated score is below this threshold. default is 0.
 
 };
 

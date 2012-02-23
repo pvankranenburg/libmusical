@@ -26,6 +26,7 @@ set(libmusical_lib_src
 	core/Sequences.cpp
 	core/SimilarityRater.cpp
 	core/LinearLocalAligner.cpp
+	core/AffineLocalAligner.cpp
 	core/Symbol.cpp
 	core/SymbolRegistry.cpp
 	core/Trace.cpp
@@ -47,6 +48,7 @@ set(libmusical_lib_src
 	specializations/midi/MidiFileReader.cpp
 	specializations/midi/MidiSymbol.cpp
 	specializations/nlb/NLBExactPitch40SimilarityRater.cpp
+	specializations/nlb/NLBMidiIntervalSimilarityRater.cpp
 	specializations/nlb/NLBJSONReader.cpp
 	specializations/nlb/NLBSequence.cpp
 	specializations/nlb/NLBSequences.cpp
@@ -54,7 +56,7 @@ set(libmusical_lib_src
 	specializations/nlb/NLBSymbol.cpp
 )
 
-include_directories(core libjson IMACPP CSUUMidiReader)
+include_directories(core libjson IMACPP CSUUMidiReader specializations/midi)
 
 add_definitions(-DNDEBUG)
 
@@ -94,6 +96,7 @@ install(
 		core/Sequences.h
 		core/SimilarityRater.h
 		core/LinearLocalAligner.h
+		core/AffineLocalAligner.h
 		core/Symbol.h
 		core/SymbolRegistry.h
 		core/Trace.h
@@ -103,6 +106,7 @@ install(
 		specializations/midi/MidiJSONReader.h
 		specializations/midi/MidiSymbol.h
 		specializations/nlb/NLBExactPitch40SimilarityRater.h
+		specializations/nlb/NLBMidiIntervalSimilarityRater.h
 		specializations/nlb/NLBAlignment.h
 		specializations/nlb/NLBJSONReader.h
 		specializations/nlb/NLBSequence.h

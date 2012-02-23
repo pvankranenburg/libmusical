@@ -7,6 +7,7 @@
 
 #include "libmusical.h"
 #include "TestAlignment.h"
+using namespace std;
 
 int main(int argc, char * argv[]) {
 
@@ -29,6 +30,8 @@ int main(int argc, char * argv[]) {
 	 * LINEARLOCAL
 	 */
 
+	cout << endl << "===== Linear Local ====" << endl << endl;
+
 	//Construct alignmentalgorithm
 	musical::LinearLocalAligner lla(seqs, sr, gr);
 
@@ -36,6 +39,7 @@ int main(int argc, char * argv[]) {
 	lla.setFeedback(false);
 	//lla.doAllowOverlappingMatches();
 	lla.disallowOverlappingMatches();
+	//lla.setFeedback(true);
 	lla.doAlign();
 
 	int no = seqs->getNoOfAlignments();
@@ -53,11 +57,13 @@ int main(int argc, char * argv[]) {
 	 * LINEARGLOBAL
 	 */
 
+	cout << endl << "===== Linear Global ====" << endl << endl;
+
 	seqs->clearResults();
 
 	//Construct alignmentalgorithm
 	musical::LinearGlobalAligner lga(seqs, sr, gr);
-	lga.setFeedback(false);
+	//lga.setFeedback(true);
 	lga.doAlign();
 
 	no = seqs->getNoOfAlignments();
@@ -74,12 +80,15 @@ int main(int argc, char * argv[]) {
 	 * AFFINEGLOBAL
 	 */
 
+	cout << endl << "===== Affine Global ====" << endl << endl;
+
 	seqs->clearResults();
 
 	// Create an affine gap rater
 	musical::ConstantAffineGapRater * agr = new musical::ConstantAffineGapRater(-0.5,-0.1);
 
 	musical::AffineGlobalAligner aga(seqs, sr, agr);
+	//aga.setFeedback(true);
 	aga.doAlign();
 
 	no = seqs->getNoOfAlignments();
@@ -88,6 +97,29 @@ int main(int argc, char * argv[]) {
 	musical::AlignmentVisualizer av3(seqs);
 	for (int i=0; i<no; i++) {
 		cout << endl << "Affine global alignment " << i << " : " << endl;
+		av3.basicStdoutReport(i);
+	}
+
+	/*
+	 * AFFINELOCAL
+	 */
+
+	cout << endl << "===== Affine Local ====" << endl << endl;
+
+	seqs->clearResults();
+
+	// Create an affine gap rater
+
+	musical::AffineLocalAligner ala(seqs, sr, agr);
+	ala.setFeedback(true);
+	ala.doAlign();
+
+	no = seqs->getNoOfAlignments();
+
+	cout << endl << "Found: " << no << " affine local alignments."<< endl;
+	musical::AlignmentVisualizer av4(seqs);
+	for (int i=0; i<no; i++) {
+		cout << endl << "Affine local alignment " << i << " : " << endl;
 		av3.basicStdoutReport(i);
 	}
 

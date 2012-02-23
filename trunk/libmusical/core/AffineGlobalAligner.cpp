@@ -336,9 +336,6 @@ void AffineGlobalAligner::doAlign() const {
 
 
 	//find score and do the trace back:
-	//add one alignment to alignments
-	seqs->alignments.push_back(std::deque<Trace *>());
-	seqs->alignments.back().clear();
 
 	//find out whether to start with s, g1 or g2
 	int i = mn - 1; //point to final cell
@@ -352,6 +349,11 @@ void AffineGlobalAligner::doAlign() const {
 	//NB order of this matters
 	//if e.g. max score in s equals max score in g1, last one is chosen
 	double score = -std::numeric_limits<double>::infinity();
+
+	//add one alignment to alignments
+	seqs->alignments.push_back(std::deque<Trace *>());
+	seqs->alignments.back().clear();
+
 	//start with s?
 	if ( s[(n*mm)+mm-1].accumulatedscore >= g1[(n*mm)+mm-1].accumulatedscore && s[(n*mm)+mm-1].accumulatedscore >= g2[(n*mm)+mm-1].accumulatedscore  ) {
 		if (feedback) cout << "in S (" << i << "," << j << "), to : ";
@@ -432,6 +434,7 @@ void AffineGlobalAligner::doAlign() const {
 		}
 		if (feedback) cout << i << " , " << j << " , " << state << endl;
 	} while ( i != 0 || j != 0 ); //endpoint of trace SHOUD be (0,0), but (0,0) should not be in the alignment
+
 
 	free(s);
 	free(g1);

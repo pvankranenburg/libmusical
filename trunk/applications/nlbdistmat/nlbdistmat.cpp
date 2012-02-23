@@ -104,8 +104,10 @@ int main(int argc, char * argv[]) {
 			if ( j%1000 == 0 ) cout << "." << flush;
 			musical::NLBSequences * seqs = new musical::NLBSequences(seqs1[i],seqs2[j]);
 			musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
-			musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.8, -0.2);
-			musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
+			//musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.8, -0.2);
+			//musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
+			musical::ConstantLinearGapRater * gr = new musical::ConstantLinearGapRater(-0.6);
+			musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr , gr);
 			nw.doAlign();
 			double normalizedscore = seqs->getScore() / min(seqs1[i]->size(),seqs2[j]->size());
 			if (distmat) thedistmat[i*size2+j] = 1.0 - normalizedscore;

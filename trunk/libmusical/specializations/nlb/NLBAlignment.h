@@ -33,6 +33,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 //SimilarityRaters
 #include "NLBOptiSimilarityRater.h"
 #include "NLBExactPitch40SimilarityRater.h"
+#include "NLBMidiIntervalSimilarityRater.h"
 
 
 #endif /* NLBALIGNMENT_H_ */
