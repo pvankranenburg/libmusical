@@ -29,7 +29,7 @@ using namespace std;
 
 namespace musical {
 
-LinearLocalAligner::LinearLocalAligner() : AlignmentAlgorithm(), maxAlignments(1), allowOverlappingMatches(true) {
+LinearLocalAligner::LinearLocalAligner() : AlignmentAlgorithm(), maxAlignments(1), allowOverlappingMatches(true), threshold(0.0) {
 	// TODO Auto-generated constructor stub
 }
 

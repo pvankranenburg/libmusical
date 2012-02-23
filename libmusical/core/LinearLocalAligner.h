@@ -47,7 +47,7 @@ public:
 	 * sr : pointer to similarity rater
 	 * gr : pointer to gap rater
 	 */
-	LinearLocalAligner(Sequences * sqs, SimilarityRater * sr, GapRater * gr) : AlignmentAlgorithm(sqs,sr,gr), maxAlignments(1), allowOverlappingMatches(false) { };
+	LinearLocalAligner(Sequences * sqs, SimilarityRater * sr, GapRater * gr) : AlignmentAlgorithm(sqs,sr,gr), maxAlignments(1), allowOverlappingMatches(false), threshold(0.0) { };
 
 	/**
 	 * Destructor
@@ -63,6 +63,11 @@ public:
 	 * set max number of alignments
 	 */
 	void setMaxAlignments(const int m) { maxAlignments = m; }
+
+	/**
+	 * set local alignment threshold
+	 */
+	void setThreshold(double th) { threshold = th; }
 
 	/**
 	 * Allow for overlapping matches
@@ -93,6 +98,8 @@ public:
 private:
 	int maxAlignments; //number of local alignments that is returned. -1 is all. default is 1.
 	bool allowOverlappingMatches; // if true: symbols can occur in more than one local alignment. Default: false
+
+	double threshold; //alignment ends if accumulated score is below this threshold. default is 0.
 
 };
 

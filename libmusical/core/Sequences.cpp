@@ -33,6 +33,23 @@ Sequences::~Sequences() {
 	clearResults();
 }
 
+/*
+double Sequences::getNormalizedScore(const int c=0, SimilarityRater * sr) const {
+	if ( c >= (int)scores.size()) {
+		std::cerr << c << "th score not available" << std::endl;
+		return -std::numeric_limits<double>::infinity();
+	}
+	double score = scores[c];
+
+	//compute score of alignment of seq1 with itself
+	double score1 = 0.0;
+	for ( int i=0; i<seq1->symbols.size(); i++) {
+		score1 =
+	}
+
+};
+*/
+
 void Sequences::clearResults() {
 	for (unsigned int i=0; i<alignments.size(); i++) {
 		for (unsigned int j=0; j<alignments[i].size(); j++) {

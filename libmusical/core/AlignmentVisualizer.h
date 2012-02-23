@@ -76,7 +76,7 @@ public:
 	/**
 	 * Same as toGnuPlot, draws lines between symbols not divided by gaps.
 	 */
-	void toGnuPlotLineSegments(const string filebasename, const float minyvalue1, const float maxyvalue1, const float minyvalue2, const float maxyvalue2, const int c) const;
+	void toGnuPlotLineSegments(const std::string filebasename, const float minyvalue1, const float maxyvalue1, const float minyvalue2, const float maxyvalue2, const int c) const;
 
 private:
 
