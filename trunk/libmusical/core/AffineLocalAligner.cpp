@@ -390,7 +390,7 @@ void AffineLocalAligner::doAlign() const {
 				}
 			}
 		}
-		if ( max_k == -1 || max_l == -1 ) { break; } //apparently there are no local aligments => break out loop
+		if ( max_k == -1 || max_l == -1 ) { break; } //apparently there are no local alignments => break out loop
 
 		if (feedback) cout << "maximum found: " << maxscore << " at " << max_k << " , " << max_l << "For state " << state << endl;
 

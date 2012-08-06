@@ -34,14 +34,14 @@ int main(int argc, char * argv[]) {
 		exit(1);
 	}
 
-	clog << "Reading from" << argv[1] << " and " << argv[2] << endl;
+	clog << "Reading from: " << argv[1] << " " << argv[2] << endl;
 
 	musical::MidiFileReader mfr1 = musical::MidiFileReader(argv[1]);
 	musical::MidiFileReader mfr2 = musical::MidiFileReader(argv[2]);
 
-	musical::Sequence * seq1 = mfr1.generateSequence();
-	musical::Sequence * seq2 = mfr2.generateSequence();
-	musical::Sequences * seqs = new musical::Sequences(seq1,seq2);
+	musical::MidiSequence * seq1 = static_cast<musical::MidiSequence*>(mfr1.generateSequence());
+	musical::MidiSequence * seq2 = static_cast<musical::MidiSequence*>(mfr2.generateSequence());
+	musical::MidiSequences * seqs = new musical::MidiSequences(seq1,seq2);
 
 	//seq1->dump_stdout();
 	//seq2->dump_stdout();
@@ -51,12 +51,14 @@ int main(int argc, char * argv[]) {
 
 	clog << "Creating similarity rater" << endl;
 	musical::MidiExactPitchIntervalSimilarityRater * sr = new musical::MidiExactPitchIntervalSimilarityRater();
+	musical::MidiPitchDurationSimilarityRater * r2 = new musical::MidiPitchDurationSimilarityRater();
 
 	clog << "Creating gap rater" << endl;
-	musical::ConstantLinearGapRater * gr =  new musical::ConstantLinearGapRater(-0.8);
+	musical::ConstantLinearGapRater * gr =  new musical::ConstantLinearGapRater(-0.);
 
 	clog << "Creating aligner" << endl;
-	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr, gr);
+	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, r2, gr);
+	//nw.setFeedback(true);
 
 	clog << "Doing the alignment" << endl;
 	nw.doAlign();
@@ -65,9 +67,9 @@ int main(int argc, char * argv[]) {
 	av.basicStdoutReport();
 
 	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
-	clog << "           Score: " << seqs->getScore() << endl;
-	clog << "Normalized score: " << normalizedscore << endl;
-	clog << "        Distance: " << 1.0 - normalizedscore << endl;
+	cout << "           Score: " << seqs->getScore() << endl;
+	cout << "Normalized score: " << normalizedscore << endl;
+	cout << "        Distance: " << 1.0 - normalizedscore << endl;
 
 	delete seq1;
 	delete seq2;

@@ -121,6 +121,8 @@ void LinearGlobalAligner::doAlign() const {
 	for(int k=1; k<mn; k++) {
 		for(int l=1; l<mm; l++) {
 
+			if (feedback) clog << "Filling " << k << " , " << l << endl;
+
 			substsc    = simr->getScore(seqs, k-2,l-2,k-1,l-1);
 			gapS1Score = gapr->getGapScore(seqs, k-1,l-2,k-1,l-1);
 			gapS2Score = gapr->getGapScore(seqs, k-2,l-1,k-1,l-1);

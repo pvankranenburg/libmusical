@@ -18,39 +18,33 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef MIDIEPITCHDURATIONSIMILARITYRATER_H_
+#define MIDIEPITCHDURATIONSIMILARITYRATER_H_
 
-#include "MidiSymbol.h"
-
-#include <sstream>
-using namespace std;
+#include <SimilarityRater.h>
 
 namespace musical {
 
-MidiSymbol::MidiSymbol() {
-	// TODO Auto-generated constructor stub
+class MidiPitchDurationSimilarityRater: public musical::SimilarityRater {
+public:
+	/**
+	 * Constructor
+	 */
+	MidiPitchDurationSimilarityRater();
+
+	/**
+	 * Destructor
+	 */
+	virtual ~MidiPitchDurationSimilarityRater();
+
+	/**
+	 * Computes the similarity of seq1[x1] and seq2[y2].
+	 * x1 and y1 are ignored for now.
+	 */
+	virtual double getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
+
+};
 
 }
 
-MidiSymbol::~MidiSymbol() {
-	// TODO Auto-generated destructor stub
-}
-
-std::string MidiSymbol::toString() const {
-	stringstream ss;
-	ss << "pitch12: " << pitch12
-	   << " onset: " << onset
-	   << " duration: " << duration
-	   << " interonset: " << getInterOnset()
-	   << " ima: " << ima;
-	return ss.str();
-}
-
-int MidiSymbol::getInterOnset() const {
-	if ( next != NULL ) {
-		return ((MidiSymbol*)next)->onset - this->onset;
-	}
-	else
-		return duration;
-}
-
-}
+#endif /* MIDIEPITCHDURATIONSIMILARITYRATER_H_ */

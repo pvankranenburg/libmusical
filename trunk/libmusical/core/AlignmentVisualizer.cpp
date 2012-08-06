@@ -177,7 +177,7 @@ void AlignmentVisualizer::toGnuPlot(const string filebasename, const float minyv
 	string name2 = seqs->getSeq2()->getName();
 
 	gnuplotfile << "set terminal postscript landscape enhanced mono dashed lw 1 \"Helvetica\" 10;" << endl;
-	gnuplotfile << "set output \"alignment.ps\";" << endl;
+	gnuplotfile << "set output \""+filebasename+".ps\";" << endl;
 	gnuplotfile << "set datafile separator \",\"" << endl;
 	gnuplotfile << "set grid;" << endl;
 	gnuplotfile << "set lmargin 5;" << endl; //hopefully this is enough
@@ -187,21 +187,21 @@ void AlignmentVisualizer::toGnuPlot(const string filebasename, const float minyv
 	gnuplotfile << "set xrange [0:" << seqs->getAlignmentSize() << "];" << endl;
 	gnuplotfile << "set yrange [" << ymin1 << ":" << ymax1 <<  "];" << endl;
 	gnuplotfile << "set title \"" << name1 << "\" noenhanced;" << endl;
-	gnuplotfile << "plot \"alignment.data\" using 3:4 notitle;" << endl;
+	gnuplotfile << "plot \""+filebasename+".data\" using 3:4 notitle;" << endl;
 
 	gnuplotfile << "set size 1,0.2;" << endl;
 	gnuplotfile << "set origin 0.0,0.4" << endl;
 	gnuplotfile << "set xrange [0:" << seqs->getAlignmentSize() << "];" << endl;
 	gnuplotfile << "set yrange [-1.1:1.1];" << endl;
 	gnuplotfile << "set title \"Scores\"" << endl;
-	gnuplotfile << "plot \"alignment.data\" using 1:2 notitle with lines;" << endl;
+	gnuplotfile << "plot \""+filebasename+".data\" using 1:2 notitle with lines;" << endl;
 
 	gnuplotfile << "set size 1,0.4;" << endl;
 	gnuplotfile << "set origin 0.0,0.0;" << endl;
 	gnuplotfile << "set title \"" << name2 << "\" noenhanced;" << endl;
 	gnuplotfile << "set xrange [0:" << seqs->getAlignmentSize() << "];" << endl;
 	gnuplotfile << "set yrange [" << ymin2 << ":" << ymax2 <<  "];" << endl;
-	gnuplotfile << "plot \"alignment.data\" using 5:6 notitle;" << endl;
+	gnuplotfile << "plot \""+filebasename+".data\" using 5:6 notitle;" << endl;
 	gnuplotfile << "unset multiplot" << endl;
 
 	gnuplotfile.close();
@@ -351,7 +351,7 @@ void AlignmentVisualizer::toGnuPlotLineSegments(const string filebasename, const
 	string name2 = seqs->getSeq2()->getName();
 
 	gnuplotfile << "set terminal postscript landscape enhanced mono dashed lw 1 \"Helvetica\" 10;" << endl;
-	gnuplotfile << "set output \"alignment.ps\";" << endl;
+	gnuplotfile << "set output \""+filebasename+".ps\";" << endl;
 	gnuplotfile << "set datafile separator \",\"" << endl;
 	gnuplotfile << "set grid;" << endl;
 	gnuplotfile << "set lmargin 5;" << endl; //hopefully this is enough
@@ -361,13 +361,13 @@ void AlignmentVisualizer::toGnuPlotLineSegments(const string filebasename, const
 	gnuplotfile << "set xrange [0:" << seqs->getAlignmentSize() << "];" << endl;
 	gnuplotfile << "set yrange [" << ymin1 << ":" << ymax1 <<  "];" << endl;
 	gnuplotfile << "set title \"" << name1 << "\" noenhanced;" << endl;
-	gnuplotfile << "plot \"alignment.data\" using 3:4 notitle with linespoints lt 1 pt 7 ps .6";
+	gnuplotfile << "plot \""+filebasename+".data\" using 3:4 notitle with linespoints lt 1 pt 7 ps .6";
 	int iix = 3;
 	int ival = 4;
 	for (int j=1; j<current1+1; j++) {
 		iix = iix+2;
 		ival = ival+2;
-		gnuplotfile << ", \"alignment.data\" using " << iix << ":" << ival << " notitle with linespoints lt 1 pt 7 ps .6";
+		gnuplotfile << ", \""+filebasename+".data\" using " << iix << ":" << ival << " notitle with linespoints lt 1 pt 7 ps .6";
 	}
 	gnuplotfile << ";" << endl;
 
@@ -376,7 +376,7 @@ void AlignmentVisualizer::toGnuPlotLineSegments(const string filebasename, const
 	gnuplotfile << "set xrange [0:" << seqs->getAlignmentSize() << "];" << endl;
 	gnuplotfile << "set yrange [-1.1:1.1];" << endl;
 	gnuplotfile << "set title \"Scores\"" << endl;
-	gnuplotfile << "plot \"alignment.data\" using 1:2 notitle with linespoints lt 1 pt 7 ps .6;" << endl;
+	gnuplotfile << "plot \""+filebasename+".data\" using 1:2 notitle with linespoints lt 1 pt 7 ps .6;" << endl;
 
 	gnuplotfile << "set size 1,0.4;" << endl;
 	gnuplotfile << "set origin 0.0,0.0;" << endl;
@@ -385,11 +385,11 @@ void AlignmentVisualizer::toGnuPlotLineSegments(const string filebasename, const
 	gnuplotfile << "set yrange [" << ymin2 << ":" << ymax2 <<  "];" << endl;
 	iix = iix + 2;
 	ival = ival + 2;
-	gnuplotfile << "plot \"alignment.data\" using " << iix << ":" << ival << " notitle with linespoints lt 1 pt 7 ps .6";
+	gnuplotfile << "plot \""+filebasename+".data\" using " << iix << ":" << ival << " notitle with linespoints lt 1 pt 7 ps .6";
 	for (int j=1; j<current2+1; j++) {
 		iix = iix+2;
 		ival = ival+2;
-		gnuplotfile << ", \"alignment.data\" using " << iix << ":" << ival << " notitle with linespoints lt 1 pt 7 ps .6";
+		gnuplotfile << ", \""+filebasename+".data\" using " << iix << ":" << ival << " notitle with linespoints lt 1 pt 7 ps .6";
 	}
 	gnuplotfile << ";" << endl;
 	gnuplotfile << "unset multiplot" << endl;

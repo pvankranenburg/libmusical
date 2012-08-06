@@ -25,7 +25,11 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include "MidiFileReader.h"
 
 #include "MidiSymbol.h"
+#include "MidiSequence.h"
+#include "MidiSequences.h"
 
 #include "MidiExactPitchIntervalSimilarityRater.h"
+#include "MidiPitchDurationSimilarityRater.h"
+#include "MidiPitchBandSimilarityRater.h"
 
 #endif /* MIDIALIGNMENT_H_ */
