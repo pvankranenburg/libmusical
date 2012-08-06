@@ -70,18 +70,18 @@ public:
 	 * Same as toGnuPlot, but allows to set the extent of the y-axis of the resulting
 	 * Plot.
 	 */
-	void toGnuPlot(const std::string filebasename, const float minyvalue1, const float maxyvalue1, const float minyvalue2, const float maxyvalue2, const int c) const;
+	void toGnuPlot(const std::string filebasename, const float minyvalue1, const float maxyvalue1, const float minyvalue2, const float maxyvalue2, const int c=0) const;
 
 
 	/**
 	 * Same as toGnuPlot, draws lines between symbols not divided by gaps.
 	 */
-	void toGnuPlotLineSegments(const std::string filebasename, const float minyvalue1, const float maxyvalue1, const float minyvalue2, const float maxyvalue2, const int c) const;
+	void toGnuPlotLineSegments(const std::string filebasename, const float minyvalue1, const float maxyvalue1, const float minyvalue2, const float maxyvalue2, const int c=0) const;
 
-private:
+protected:
 
 	/**
-	 * Pointer to the alignment algorithm, containing the aligned sequences.
+	 * Pointer to the (aligned) sequences.
 	 */
 	Sequences * seqs;
 

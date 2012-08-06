@@ -60,17 +60,23 @@ int main(int argc, char * argv[]) {
 	listfile2.open(argv[2]);
 	vector<musical::NLBSequence *> seqs1;
 	vector<musical::NLBSequence *> seqs2;
+	cout << "Reading sequences 1";
 	while (getline(listfile1, seq1name)) {
 		musical::NLBJSONReader mr1(new musical::JSONFileSource(seq1name));
 		seqs1.push_back(static_cast<musical::NLBSequence*>(mr1.generateSequence()));
-		if ( seqs1.size() % 1000 == 0 ) cout << seq1name << endl;
+		//if ( seqs1.size() % 1000 == 0 ) cout << seq1name << endl;
+		if ( seqs1.size() % 1000 == 0 ) cout << "." << flush;
 	}
+	cout << endl;
 
+	cout << "Reading seqeunces 2";
 	while (getline(listfile2, seq2name)) {
 		musical::NLBJSONReader mr2(new musical::JSONFileSource(seq2name));
 		seqs2.push_back(static_cast<musical::NLBSequence*>(mr2.generateSequence()));
-		if ( seqs2.size()%1000 == 0 ) cout << seq2name << endl;
+		//if ( seqs2.size()%1000 == 0 ) cout << seq2name << endl;
+		if ( seqs2.size() % 1000 == 0 ) cout << "." << flush;
 	}
+	cout << endl;
 	listfile1.close();
 	listfile2.close();
 

@@ -19,38 +19,16 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#include "MidiSymbol.h"
-
-#include <sstream>
-using namespace std;
+#include "MidiSequence.h"
 
 namespace musical {
 
-MidiSymbol::MidiSymbol() {
-	// TODO Auto-generated constructor stub
-
+MidiSequence::MidiSequence() {
+	//sparsePitchHistogram[0] = 0.2;
 }
 
-MidiSymbol::~MidiSymbol() {
+MidiSequence::~MidiSequence() {
 	// TODO Auto-generated destructor stub
-}
-
-std::string MidiSymbol::toString() const {
-	stringstream ss;
-	ss << "pitch12: " << pitch12
-	   << " onset: " << onset
-	   << " duration: " << duration
-	   << " interonset: " << getInterOnset()
-	   << " ima: " << ima;
-	return ss.str();
-}
-
-int MidiSymbol::getInterOnset() const {
-	if ( next != NULL ) {
-		return ((MidiSymbol*)next)->onset - this->onset;
-	}
-	else
-		return duration;
 }
 
 }

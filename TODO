@@ -4,3 +4,4 @@
 * Add AffineLocalAligner
 * Add more tests
 * Look into memory management (references instead of pointers?)
+* Rewrite the whole thing using templates instead of inheritance

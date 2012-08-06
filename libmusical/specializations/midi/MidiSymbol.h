@@ -45,9 +45,13 @@ public:
 	int onset;
 	int duration;
 
+	double ima;
+
 	//resolution? ticks per quarter / ms?
 
 	std::string toString() const;
+
+	int getInterOnset() const;
 
 };
 

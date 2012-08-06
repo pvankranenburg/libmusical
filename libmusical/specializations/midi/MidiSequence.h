@@ -19,38 +19,39 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#include "MidiSymbol.h"
+#ifndef MIDISEQUENCE_H_
+#define MIDISEQUENCE_H_
 
-#include <sstream>
-using namespace std;
+#include "Sequence.h"
+#include <map>
+#include <iostream>
 
 namespace musical {
 
-MidiSymbol::MidiSymbol() {
-	// TODO Auto-generated constructor stub
+/**
+ * A sequence of MidiSymbols.
+ */
+class MidiSequence: public musical::Sequence {
+public:
+	/**
+	 * Constructor
+	 */
+	MidiSequence();
+
+	/**
+	 * Destructor
+	 */
+	virtual ~MidiSequence();
+
+public:
+	//(normalized) histogram for pitches in base-12 encoding.
+	//pitchHistogram[0] is frequency of pitch 0
+	//lowest pitch: ... (0)
+	//highest pitch: ... (120)
+	double pitchHistogram[120];
+
+};
 
 }
 
-MidiSymbol::~MidiSymbol() {
-	// TODO Auto-generated destructor stub
-}
-
-std::string MidiSymbol::toString() const {
-	stringstream ss;
-	ss << "pitch12: " << pitch12
-	   << " onset: " << onset
-	   << " duration: " << duration
-	   << " interonset: " << getInterOnset()
-	   << " ima: " << ima;
-	return ss.str();
-}
-
-int MidiSymbol::getInterOnset() const {
-	if ( next != NULL ) {
-		return ((MidiSymbol*)next)->onset - this->onset;
-	}
-	else
-		return duration;
-}
-
-}
+#endif /* MidiSEQUENCE_H_ */
