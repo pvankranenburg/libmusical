@@ -31,6 +31,7 @@ int main(int argc, char * argv[]) {
 
 	if ( argc != 3 ) {
 		cerr << "Usage: alignmidi <file1.mid> <file2.mid>" << endl;
+		cout << endl;
 		exit(1);
 	}
 
@@ -52,24 +53,28 @@ int main(int argc, char * argv[]) {
 	clog << "Creating similarity rater" << endl;
 	musical::MidiExactPitchIntervalSimilarityRater * sr = new musical::MidiExactPitchIntervalSimilarityRater();
 	musical::MidiPitchDurationSimilarityRater * r2 = new musical::MidiPitchDurationSimilarityRater();
+	musical::MidiIORSimilarityRater * ior = new musical::MidiIORSimilarityRater();
+	//musical::MidiExactPitchSimilarityRater *ep = new musical::MidiExactPitchSimilarityRater();
 
 	clog << "Creating gap rater" << endl;
-	musical::ConstantLinearGapRater * gr =  new musical::ConstantLinearGapRater(-0.);
+	musical::ConstantLinearGapRater * gr =  new musical::ConstantLinearGapRater(-0.5);
 
 	clog << "Creating aligner" << endl;
-	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, r2, gr);
+	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, ior, gr);
 	//nw.setFeedback(true);
 
 	clog << "Doing the alignment" << endl;
 	nw.doAlign();
 
 	musical::AlignmentVisualizer av(seqs);
-	av.basicStdoutReport();
+	//av.basicStdoutReport();
 
 	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
-	cout << "           Score: " << seqs->getScore() << endl;
-	cout << "Normalized score: " << normalizedscore << endl;
-	cout << "        Distance: " << 1.0 - normalizedscore << endl;
+	//cout << "           Score: " << seqs->getScore() << endl;
+	//cout << "Normalized score: " << normalizedscore << endl;
+	//cout << "        Distance: " << 1.0 - normalizedscore << endl;
+
+	cout << seq1->getName() << "\t" << seq2->getName() << "\t" << normalizedscore << endl;
 
 	delete seq1;
 	delete seq2;

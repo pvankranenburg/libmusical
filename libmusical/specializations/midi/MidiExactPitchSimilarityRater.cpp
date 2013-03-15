@@ -18,48 +18,39 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
+#include "MidiExactPitchSimilarityRater.h"
 #include "MidiSymbol.h"
+#include "MidiSequences.h"
 
-#include <sstream>
-using namespace std;
+#include <cmath>
 
 namespace musical {
 
-MidiSymbol::MidiSymbol() {
+MidiExactPitchSimilarityRater::MidiExactPitchSimilarityRater() {
 	// TODO Auto-generated constructor stub
 
 }
 
-MidiSymbol::~MidiSymbol() {
+MidiExactPitchSimilarityRater::~MidiExactPitchSimilarityRater() {
 	// TODO Auto-generated destructor stub
 }
 
-std::string MidiSymbol::toString() const {
-	stringstream ss;
-	ss << "pitch12: " << pitch12
-	   << " onset: " << onset
-	   << " duration: " << duration
-	   << " interonset: " << getInterOnset()
-	   << " interonset ratio: " << getInterOnsetRatio()
-	   << " ima: " << ima;
-	return ss.str();
-}
+double MidiExactPitchSimilarityRater::getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const {
+	//for now ignore x1 and y1. Only return the similarity of the symbols associated with the destination cell
 
-int MidiSymbol::getInterOnset() const {
-	if ( next != NULL ) {
-		return ((MidiSymbol*)next)->onset - this->onset;
-	}
-	else
-		return duration;
-}
+	MidiSymbol * s1 = static_cast<MidiSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
+	MidiSymbol * s2 = static_cast<MidiSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
 
-double MidiSymbol::getInterOnsetRatio() const {
-	if ( previous == NULL ) {
-		return 1.0;
-	} else {
-		return double(this->getInterOnset()) / double(((MidiSymbol*)previous)->getInterOnset());
-	}
+	double res = 0.0;
+
+	int pitch1 = s1->pitch12;
+	int pitch2 = s2->pitch12;
+
+	if ( pitch1 != 0 ) pitch2 += (static_cast<MidiSequences *>(seqs))->getPitch12Shift();
+
+	if ( pitch1 == pitch2 ) res = 1.0; else res = -1.0;
+
+	return res;
 }
 
 }

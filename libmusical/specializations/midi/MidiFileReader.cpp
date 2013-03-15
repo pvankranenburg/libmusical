@@ -67,6 +67,7 @@ Sequence * MidiFileReader::generateSequence() const {
 	//compute ima weights
 	//first make vector of onsets:
 	//clog << "Computing IMA weights" << endl;
+	/*
 	vector<int> onsets;
 	onsets.clear();
 	for ( int i=0; i<nwseq->size(); i++) {
@@ -74,6 +75,7 @@ Sequence * MidiFileReader::generateSequence() const {
 	}
 	MetroWeights_Mazzola mw(2,2,0,1);
 	WeightSet weights = mw.getWeights(onsets);
+	*/
 
 	/*
 	cout << "maximal local meters: " << endl;
@@ -88,6 +90,7 @@ Sequence * MidiFileReader::generateSequence() const {
 	cout << endl;
 	*/
 
+	/*
 	int maxw = 0;
 	for(int i=0; i<weights.weights.size(); i++)
 		if ( weights.weights[i] > maxw ) maxw = weights.weights[i];
@@ -97,6 +100,7 @@ Sequence * MidiFileReader::generateSequence() const {
 		//clog << "(double)weights.weights[i]: " << (double)weights.weights[i] << endl;
 		(static_cast<MidiSymbol *>(nwseq->getSymbolAt(i)))->ima = (double)weights.weights[i] / (double)maxw;
 	}
+	*/
 
 	//build pitch histogram
 	//clog << "Building pitch histogram" << endl;
