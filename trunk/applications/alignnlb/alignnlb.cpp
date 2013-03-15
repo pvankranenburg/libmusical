@@ -60,7 +60,7 @@ int main(int argc, char * argv[]) {
 	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
 
 	// Debug
-	nw.setFeedback(false);
+	nw.setFeedback(true);
 
 	// Do the alignment
 	nw.doAlign();

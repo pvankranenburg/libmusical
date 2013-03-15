@@ -44,6 +44,8 @@ set(libmusical_lib_src
 	libjson/Source/JSONWriter.cpp
 	libjson/Source/libjson.cpp
 	specializations/midi/MidiExactPitchIntervalSimilarityRater.cpp
+	specializations/midi/MidiExactPitchSimilarityRater.cpp
+	specializations/midi/MidiIORSimilarityRater.cpp
 	specializations/midi/MidiPitchDurationSimilarityRater.cpp
 	specializations/midi/MidiPitchBandSimilarityRater.cpp
 	specializations/midi/MidiJSONReader.cpp
@@ -106,6 +108,8 @@ install(
 		core/Trace.h
 		specializations/midi/MidiAlignment.h
 		specializations/midi/MidiExactPitchIntervalSimilarityRater.h
+		specializations/midi/MidiExactPitchSimilarityRater.h
+		specializations/midi/MidiIORSimilarityRater.h
 		specializations/midi/MidiPitchDurationSimilarityRater.h
 		specializations/midi/MidiPitchBandSimilarityRater.h
 		specializations/midi/MidiFileReader.h

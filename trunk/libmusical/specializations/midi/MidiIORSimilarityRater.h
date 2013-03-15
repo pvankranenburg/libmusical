@@ -18,43 +18,33 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef MIDIIORSIMILARITYRATER_H_
+#define MIDIIORSIMILARITYRATER_H_
 
-#ifndef MIDISYMBOL_H_
-#define MIDISYMBOL_H_
-
-#include "Symbol.h"
+#include <SimilarityRater.h>
 
 namespace musical {
 
-/**
- * Symbol representing a MIDI note event.
- */
-class MidiSymbol: public musical::Symbol {
+class MidiIORSimilarityRater: public musical::SimilarityRater {
 public:
 	/**
 	 * Constructor
 	 */
-	MidiSymbol();
+	MidiIORSimilarityRater();
 
 	/**
 	 * Destructor
 	 */
-	virtual ~MidiSymbol();
+	virtual ~MidiIORSimilarityRater();
 
-	int pitch12;
-	int onset;
-	int duration;
-	double ima;
-
-	//resolution? ticks per quarter / ms?
-
-	std::string toString() const;
-
-	int getInterOnset() const;
-	double getInterOnsetRatio() const;
+	/**
+	 * Computes the similarity of seq1[x1] and seq2[y2].
+	 * x1 and y1 are ignored for now.
+	 */
+	virtual double getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
 
 };
 
 }
 
-#endif /* MIDISYMBOL_H_ */
+#endif /* MIDIIORSIMILARITYRATER_H_ */
