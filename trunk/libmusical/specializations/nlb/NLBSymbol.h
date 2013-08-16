@@ -55,6 +55,9 @@ public:
 	int pitch40;
 	float phrasepos;
 	float IMA;
+	long onset;
+	int phrase;
+	float songpos;
 };
 
 }

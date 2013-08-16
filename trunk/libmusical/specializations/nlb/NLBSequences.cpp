@@ -20,6 +20,8 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #include<iostream>
+#include<utility>
+#include <algorithm>
 using namespace std;
 
 #include "NLBSequences.h"
@@ -27,13 +29,17 @@ using namespace std;
 
 namespace musical {
 
-NLBSequences::NLBSequences() {
+NLBSequences::NLBSequences() : pitch40HistogramShift(0) {
 	// TODO Auto-generated constructor stub
 
 }
 
 NLBSequences::~NLBSequences() {
 	// TODO Auto-generated destructor stub
+}
+
+bool compIntersections( const pair<int,double> a, const pair<int,double> b ) {
+	return a.second < b.second;
 }
 
 void NLBSequences::computePitch40HistogramShift() {
@@ -63,12 +69,12 @@ void NLBSequences::computePitch40HistogramShift() {
 	while ( hist1[highest1] == 0 ) { highest1--; }
 	while ( hist2[highest2] == 0 ) { highest2--; }
 
-	double maxIntersection = 0.0;
+	//double maxIntersection = 0.0;
 	double intersection = 0.0;
 
 	pitch40HistogramShift = 0;
 
-	//cout << "-------------------------" << endl;
+	cout << "-------------------------" << endl;
 
 	int minshift = lowest1 - highest2;
 	int maxshift = highest1 - lowest2;
@@ -81,13 +87,26 @@ void NLBSequences::computePitch40HistogramShift() {
 			intersection += min(hist1[i], hist2[j]);
 		}
 		//cout << sh << "\t" << intersection;
-		if ( intersection > maxIntersection ) {
-			maxIntersection = intersection;
-			//cout << " new max";
-			pitch40HistogramShift = sh;
-		}
+
+		///OLD:
+		//if ( intersection > maxIntersection ) {
+		//	maxIntersection = intersection;
+		//	//cout << " new max";
+		//	pitch40HistogramShift = sh;
+		//}
+
 		//cout << endl;
+		intersections.push_back(pair<int,double>(sh, intersection));
 	}
+
+	sort(intersections.begin(), intersections.end(), compIntersections);
+	if ( intersections.size() > 0) pitch40HistogramShift = intersections.back().first;
+
+	vector<pair<int,double> >::iterator it;
+	//for(it=intersections.begin(); it != intersections.end(); ++it) {
+	//	cout << (*it).first << "\t" << (*it).second << endl;
+	//}
+
 	//cout << "-------------------------" << endl;
 
 }

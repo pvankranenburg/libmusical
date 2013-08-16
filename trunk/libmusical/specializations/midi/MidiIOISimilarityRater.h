@@ -18,30 +18,33 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef MIDIIOISIMILARITYRATER_H_
+#define MIDIIOISIMILARITYRATER_H_
 
-#include <iostream>
-using namespace std;
-
-#include "Sequence.h"
+#include <SimilarityRater.h>
 
 namespace musical {
 
-Sequence::Sequence() : name("noname") {
-	// TODO Auto-generated constructor stub
+class MidiIOISimilarityRater: public musical::SimilarityRater {
+public:
+	/**
+	 * Constructor
+	 */
+	MidiIOISimilarityRater();
+
+	/**
+	 * Destructor
+	 */
+	virtual ~MidiIOISimilarityRater();
+
+	/**
+	 * Computes the similarity of seq1[x1] and seq2[y2].
+	 * x1 and y1 are ignored for now.
+	 */
+	virtual double getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
+
+};
 
 }
 
-Sequence::~Sequence() {
-	// TODO Auto-generated destructor stub
-	for( unsigned int i=0; i<symbols.size(); i++) {
-		delete symbols[i];
-	}
-}
-
-void Sequence::dump_stdout() {
-	for( unsigned int i=0; i<symbols.size(); i++) {
-		cout << "(" << i << ") " << symbols[i]->toString() << endl;
-	}
-}
-
-}
+#endif /* MIDIIOISIMILARITYRATER_H_ */

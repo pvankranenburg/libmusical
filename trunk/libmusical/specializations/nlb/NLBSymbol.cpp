@@ -39,7 +39,7 @@ NLBSymbol::~NLBSymbol() {
 
 string NLBSymbol::toString() const {
 	stringstream ss;
-	ss << "pitch40: " << pitch40;
+	ss << "pitch40: " << pitch40 << "\tsongpos: " << songpos;
 	return ss.str();
 }
 

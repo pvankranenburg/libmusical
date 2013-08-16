@@ -23,7 +23,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace musical {
 
-Symbol::Symbol() {
+Symbol::Symbol() : previous(NULL), next(NULL) {
 	// TODO Auto-generated constructor stub
 
 }

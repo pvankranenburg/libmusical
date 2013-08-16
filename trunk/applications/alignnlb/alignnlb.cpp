@@ -47,8 +47,11 @@ int main(int argc, char * argv[]) {
 	musical::NLBSequence * seq2 =
 		static_cast<musical::NLBSequence*>(mr2.generateSequence());
 
+	seq1->dump_stdout();
+
 	// Encapsulate the two sequences in a Sequences object
 	musical::NLBSequences * seqs = new musical::NLBSequences(seq1,seq2);
+	//seqs->setPitch40Shift(seqs->getNthComputedPitch40Shift(0));
 
 	// Create a similarity rater
 	musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
@@ -60,7 +63,7 @@ int main(int argc, char * argv[]) {
 	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
 
 	// Debug
-	nw.setFeedback(true);
+	nw.setFeedback(false);
 
 	// Do the alignment
 	nw.doAlign();
@@ -71,6 +74,7 @@ int main(int argc, char * argv[]) {
 	av.toGnuPlot("alignment");
 
 	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
+	clog << "   Pitch40 Shift: " << seqs->getPitch40Shift() << endl;
 	clog << "           Score: " << seqs->getScore() << endl;
 	clog << "Normalized score: " << normalizedscore << endl;
 	clog << "        Distance: " << 1.0 - normalizedscore << endl;

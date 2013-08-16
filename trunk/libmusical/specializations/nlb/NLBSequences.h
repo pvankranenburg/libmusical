@@ -25,6 +25,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include "NLBSequence.h"
 #include "Sequences.h"
 #include <map>
+#include <utility>
 
 namespace musical {
 
@@ -57,10 +58,35 @@ public:
 	 * This is computed by finding the shift of the normalized pitch histograms of seq1 and seq2 that results
 	 * in highest histogram intersection.
 	 */
-	double getPitch40Shift() const { return pitch40HistogramShift; };
+	int getPitch40Shift() const { return pitch40HistogramShift; };
+
+	/**
+	 * Get the n^th pitchshift
+	 * n = 0 : pitch shift with highest pitch histogram intersection
+	 * n = 1 : pitch shift with second highest pitch histogram intersecion
+	 * etc
+	 * if n > number of found intersections: return 0
+	 */
+	int getNthComputedPitch40Shift(unsigned int n) const {
+		if (n >= intersections.size() ) return 0;
+		return intersections[intersections.size()-1-n].first;
+	}
+
+	/**
+	 * Provide a pitch shift
+	 */
+	void setPitch40Shift(int s) { pitch40HistogramShift = s; }
 
 private:
+	/**
+	 * The interval that has to be added to the pitches of seq2 to correspond with seq1
+	 */
 	int pitch40HistogramShift;
+
+	/**
+	 * All intervals to to be added to the pitches of seq2 to correspond with seq1, ordered in ascending order of histogram intersection
+	 */
+	std::vector<std::pair<int,double> > intersections; // (shift, intersection) pairs in descending order of intersection
 
 	/**
 	 * Computes the interval that has to be added to the pitches of seq2 to correspond with seq1

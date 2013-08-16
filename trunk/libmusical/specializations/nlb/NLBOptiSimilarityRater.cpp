@@ -27,15 +27,6 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace musical {
 
-NLBOptiSimilarityRater::NLBOptiSimilarityRater() {
-	// TODO Auto-generated constructor stub
-
-}
-
-NLBOptiSimilarityRater::~NLBOptiSimilarityRater() {
-	// TODO Auto-generated destructor stub
-}
-
 double NLBOptiSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, int y2) const {
 
 	NLBSymbol * s1;
