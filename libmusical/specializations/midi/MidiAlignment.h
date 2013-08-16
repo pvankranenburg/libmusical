@@ -29,8 +29,10 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include "MidiSequences.h"
 
 #include "MidiExactPitchIntervalSimilarityRater.h"
+#include "MidiExactPitchSimilarityRater.h"
 #include "MidiPitchDurationSimilarityRater.h"
 #include "MidiPitchBandSimilarityRater.h"
 #include "MidiIORSimilarityRater.h"
+#include "MidiIOISimilarityRater.h"
 
 #endif /* MIDIALIGNMENT_H_ */

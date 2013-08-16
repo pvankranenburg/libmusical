@@ -47,19 +47,36 @@ Sequence* NLBJSONReader::generateSequence() const {
 	string json_string = source->getJSONString();
 	//nwseq->json_string = json_string;
 	//cout << json_string << endl;
-	JSONNode seq = libjson::parse(json_string);
+	JSONNode seq;
+	try {
+		seq = libjson::parse(json_string);
+	} catch (invalid_argument&) {
+		clog << "Error: Not proper json" << endl;
+		exit(-1);
+	}
 	//the name should be at 'top-level'
 	JSONNode::const_iterator i1 = seq.begin();
 	nwseq->setName(i1->name());
 	//cout << nwseq->name << endl;
 	i1 = seq.begin()->find("symbols");
+	if ( i1 == (seq.begin())->end() ) { clog << "Error: No symbols in json " << nwseq->getName() << endl; exit(-1); }
 	int size = i1->size();
 	//cout << "Size: " << size << endl;
 	for( int ix=0; ix<size; ix++) {
 		NLBSymbol* s = new NLBSymbol();
-		s->pitch40 = i1->at(ix).at("pitch40").as_int();
-		s->phrasepos = i1->at(ix).at("phrasepos").as_float();
-		s->IMA = i1->at(ix).at("ima").as_float();
+		try
+		{
+			s->pitch40 = i1->at(ix).at("pitch40").as_int();
+			s->onset = i1->at(ix).at("onset").as_int();
+			//s->phrase = i1->at(ix).at("phrase").as_int();
+			s->IMA = i1->at(ix).at("ima").as_float();
+			s->phrasepos = i1->at(ix).at("phrasepos").as_float();
+		}
+		catch (out_of_range&)
+		{
+			clog << "Error: symbols in " << nwseq->getName() << " should contain: pitch40, onset, phrase, ima, and phrasepos" << endl;
+			exit(-1);
+		}
 		//check whether id is present. If not take index as id
 		//string id = i1->at(ix).at("id").as_string();
 		//s->strings["id"] = id;
@@ -82,6 +99,17 @@ Sequence* NLBJSONReader::generateSequence() const {
 	} else if (size == 1) {
 		nwseq->getSymbolAt(0)->setNext(NULL);
 		nwseq->getSymbolAt(0)->setPrevious(NULL);
+	}
+
+	if ( size > 0 ) {
+		//set songposition as fraction of onset of last note
+		int minonset = static_cast<NLBSymbol*>(nwseq->getSymbolAt(0))->onset;
+		int maxonset = static_cast<NLBSymbol*>(nwseq->getSymbolAt(nwseq->size()-1))->onset;
+		int length = maxonset - minonset;
+		for (unsigned int ix=0; ix<nwseq->size(); ix++) {
+			NLBSymbol * sym = static_cast<NLBSymbol*>(nwseq->getSymbolAt(ix));
+			sym->songpos = float((sym->onset)-minonset) / float(length);
+		}
 	}
 
 	if ( size > 0) {

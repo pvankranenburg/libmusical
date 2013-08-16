@@ -23,6 +23,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #define SIMILARITYRATER_H_
 
 #include "Sequences.h"
+#include <string>
 
 namespace musical {
 
@@ -40,6 +41,13 @@ public:
 	 * Destructor
 	 */
 	virtual ~SimilarityRater();
+
+	/**
+	 * Give it a name
+	 */
+	std::string name;
+	std::string getName() const { return name; };
+	void setName(std::string n) { name = n; };
 
 	/**
 	 * This computes the similarity score for {x1, x1+1, ... , x2} from seq1 with {y1, y1+1, ... , y2 } from seq2

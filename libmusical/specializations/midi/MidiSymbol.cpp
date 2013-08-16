@@ -22,6 +22,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include "MidiSymbol.h"
 
 #include <sstream>
+#include <iostream>
 using namespace std;
 
 namespace musical {
@@ -37,12 +38,11 @@ MidiSymbol::~MidiSymbol() {
 
 std::string MidiSymbol::toString() const {
 	stringstream ss;
-	ss << "pitch12: " << pitch12
-	   << " onset: " << onset
-	   << " duration: " << duration
-	   << " interonset: " << getInterOnset()
-	   << " interonset ratio: " << getInterOnsetRatio()
-	   << " ima: " << ima;
+	ss << "pitch12: " << pitch12 << flush
+	   << " onset: " << onset << flush
+	   << " duration: " << duration << flush
+	   << " interonset: " << getInterOnset() << flush
+	   << " interonset ratio: " << getInterOnsetRatio();
 	return ss.str();
 }
 
@@ -55,7 +55,7 @@ int MidiSymbol::getInterOnset() const {
 }
 
 double MidiSymbol::getInterOnsetRatio() const {
-	if ( previous == NULL ) {
+	if ( this->getPrevious() == NULL ) {
 		return 1.0;
 	} else {
 		return double(this->getInterOnset()) / double(((MidiSymbol*)previous)->getInterOnset());

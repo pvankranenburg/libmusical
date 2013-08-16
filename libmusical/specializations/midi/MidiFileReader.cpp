@@ -51,17 +51,19 @@ Sequence * MidiFileReader::generateSequence() const {
 
 	//set next and previous
 	if ( nwseq->size() >= 1 ) {
-		if ( nwseq->size() ==1 )
+		if ( nwseq->size() ==1 ) {
 			nwseq->getSymbolAt(0)->setNext(NULL);
-		else
+			nwseq->getSymbolAt(0)->setPrevious(NULL);
+		} else {
 			nwseq->getSymbolAt(0)->setNext(nwseq->getSymbolAt(1));
-		nwseq->getSymbolAt(0)->setPrevious(NULL);
-		for( unsigned int i = 1; i<nwseq->size()-1; i++) {
-			nwseq->getSymbolAt(i)->setPrevious(nwseq->getSymbolAt(i-1));
-			nwseq->getSymbolAt(i)->setNext(nwseq->getSymbolAt(i+1));
+			nwseq->getSymbolAt(0)->setPrevious(NULL);
+			for( unsigned int i = 1; i<nwseq->size()-1; i++) {
+				nwseq->getSymbolAt(i)->setPrevious(nwseq->getSymbolAt(i-1));
+				nwseq->getSymbolAt(i)->setNext(nwseq->getSymbolAt(i+1));
+			}
+			nwseq->getSymbolAt(nwseq->size()-1)->setPrevious( nwseq->getSymbolAt(nwseq->size()-2) );
+			nwseq->getSymbolAt(nwseq->size()-1)->setNext(NULL);
 		}
-		nwseq->getSymbolAt(nwseq->size()-1)->setPrevious( nwseq->getSymbolAt(nwseq->size()-2) );
-		nwseq->getSymbolAt(nwseq->size()-1)->setNext(NULL);
 	}
 
 	//compute ima weights

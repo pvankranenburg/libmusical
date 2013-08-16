@@ -45,9 +45,10 @@ void AlignmentVisualizer::basicStdoutReport(const int c) const {
 	}
 
 	for ( int i = 0; i < seqs->getAlignmentSize(c); i++ ) {
-		std::string symbol1 = "s1";
-		std::string symbol2 = "s2";
+		std::string symbol1 = "";
+		std::string symbol2 = "";
 
+		/*
 		if ( seqs->getTraceElement(i,c)->getIx1() == -1 )
 			symbol1 = "x";
 		else symbol1 = seqs->getSeq1()->getSymbolAt(seqs->getTraceElement(i,c)->getIx1())->toString();
@@ -57,6 +58,9 @@ void AlignmentVisualizer::basicStdoutReport(const int c) const {
 		else symbol2 = seqs->getSeq2()->getSymbolAt(seqs->getTraceElement(i,c)->getIx2())->toString();
 
 		cout << "(" << seqs->getTraceElement(i,c)->getIx1() << ")[" << symbol1 << "] - (" << seqs->getTraceElement(i,c)->getIx2() <<  ")[" << symbol2 << "]" << " With score: " << seqs->getTraceElement(i,c)->thisscore << " Accumulated: " << seqs->getTraceElement(i,c)->accumulatedscore << endl;
+		*/
+
+		cout << "(" << seqs->getTraceElement(i,c)->getIx1() << ") - (" << seqs->getTraceElement(i,c)->getIx2() <<  ")  With score: " << seqs->getTraceElement(i,c)->thisscore << " Accumulated: " << seqs->getTraceElement(i,c)->accumulatedscore << endl;
 	}
 
 }

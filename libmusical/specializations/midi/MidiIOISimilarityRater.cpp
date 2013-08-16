@@ -18,30 +18,40 @@ You should have received a copy of the GNU General Public License
 along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "MidiIOISimilarityRater.h"
+#include "MidiSymbol.h"
+#include "MidiSequences.h"
 
-#include <iostream>
-using namespace std;
-
-#include "Sequence.h"
+#include <cmath>
 
 namespace musical {
 
-Sequence::Sequence() : name("noname") {
+MidiIOISimilarityRater::MidiIOISimilarityRater() {
 	// TODO Auto-generated constructor stub
 
 }
 
-Sequence::~Sequence() {
+MidiIOISimilarityRater::~MidiIOISimilarityRater() {
 	// TODO Auto-generated destructor stub
-	for( unsigned int i=0; i<symbols.size(); i++) {
-		delete symbols[i];
-	}
 }
 
-void Sequence::dump_stdout() {
-	for( unsigned int i=0; i<symbols.size(); i++) {
-		cout << "(" << i << ") " << symbols[i]->toString() << endl;
-	}
+double MidiIOISimilarityRater::getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const {
+	//for now ignore x1 and y1. Only return the similarity of the symbols associated with the destination cell
+
+	MidiSymbol * s1 = static_cast<MidiSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
+	MidiSymbol * s2 = static_cast<MidiSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
+
+	double res = 0.0;
+
+	int ioi1 = s1->getInterOnset();
+	int ioi2 = s2->getInterOnset();
+
+	if (ioi1 > ioi2)
+		return double(ioi2) / double(ioi1);
+	else
+		return double(ioi1) / double(ioi2);
+
+	return res;
 }
 
 }

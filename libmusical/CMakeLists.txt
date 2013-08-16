@@ -46,6 +46,7 @@ set(libmusical_lib_src
 	specializations/midi/MidiExactPitchIntervalSimilarityRater.cpp
 	specializations/midi/MidiExactPitchSimilarityRater.cpp
 	specializations/midi/MidiIORSimilarityRater.cpp
+	specializations/midi/MidiIOISimilarityRater.cpp
 	specializations/midi/MidiPitchDurationSimilarityRater.cpp
 	specializations/midi/MidiPitchBandSimilarityRater.cpp
 	specializations/midi/MidiJSONReader.cpp
@@ -110,6 +111,7 @@ install(
 		specializations/midi/MidiExactPitchIntervalSimilarityRater.h
 		specializations/midi/MidiExactPitchSimilarityRater.h
 		specializations/midi/MidiIORSimilarityRater.h
+		specializations/midi/MidiIOISimilarityRater.h
 		specializations/midi/MidiPitchDurationSimilarityRater.h
 		specializations/midi/MidiPitchBandSimilarityRater.h
 		specializations/midi/MidiFileReader.h

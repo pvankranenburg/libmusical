@@ -127,7 +127,7 @@ void LinearGlobalAligner::doAlign() const {
 			gapS1Score = gapr->getGapScore(seqs, k-1,l-2,k-1,l-1);
 			gapS2Score = gapr->getGapScore(seqs, k-2,l-1,k-1,l-1);
 
-			//if ( feedback ) cout << "score: " << substsc << endl;
+			if ( feedback ) cout << "score: " << substsc << endl;
 
 			current_ix = k*mm+l;
 

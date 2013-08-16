@@ -36,7 +36,7 @@ AffineLocalAligner::~AffineLocalAligner() {
 
 void AffineLocalAligner::doAlign() const {
 
-	cerr << "Warning: LocalAffineAligner not fully implemented!" << endl;
+	cerr << "Warning: AffineLocalAligner not fully implemented!" << endl;
 
 	if (feedback) cout << "start alignment" << endl;
 

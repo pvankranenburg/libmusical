@@ -20,6 +20,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "MidiPitchDurationSimilarityRater.h"
 #include "MidiSymbol.h"
+#include "MidiSequences.h"
 
 namespace musical {
 
@@ -40,10 +41,14 @@ double MidiPitchDurationSimilarityRater::getScore(Sequences * const seqs, const 
 
 	double res = 0.0;
 
+	int pitch1 = s1->pitch12;
+	int pitch2 = s2->pitch12;
+	if ( pitch1 != 0 ) pitch2 += (static_cast<MidiSequences *>(seqs))->getPitch12Shift();
+
 	double duration1 = s1->getInterOnset(); // = s1->duration
 	double duration2 = s2->getInterOnset(); // = s2->duration
 
-	if ( s1->pitch12 == s2->pitch12 ) {
+	if ( pitch1 == pitch2 ) {
 		if ( duration1 > duration2 )
 			res = ( (double)duration2 / (double)duration1 );
 		else
