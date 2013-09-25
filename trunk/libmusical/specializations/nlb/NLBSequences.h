@@ -68,7 +68,10 @@ public:
 	 * if n > number of found intersections: return 0
 	 */
 	int getNthComputedPitch40Shift(unsigned int n) const {
-		if (n >= intersections.size() ) return 0;
+		if (n >= intersections.size() ) {
+			std::cerr << "Warning: Number of computed pitchhistogram intersection is smaller than " << n << "." << std::endl;
+			return 0;
+		}
 		return intersections[intersections.size()-1-n].first;
 	}
 

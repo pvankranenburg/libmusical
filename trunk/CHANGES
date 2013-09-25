@@ -1,4 +1,4 @@
-Release 1.0.x - ??
+Release 1.0.1 - 25 september 2013
 * Improvements in gnuplot code
 * thisscore in initial gaps in AffineGlobalAligner now set.
 * Added similarityrater for Midi and NLB symbols (NLBMidiIntervalSimilarityRater). Uses only pitch. 
@@ -6,7 +6,6 @@ Release 1.0.x - ??
 * All possible pitch shifts and corresponding histogram intersections are kept in the NLBSequences object.
 * Added attributes onset, phrase and songpos to NLBSymbol
 * made NLBJSONReader::generateSequence() more robust
-*
 
 Release 1.0.0 - 16 december 2011
 * Moved the resulting alignment from the AlignmentAlgorithm to the Sequences object.
