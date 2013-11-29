@@ -108,18 +108,22 @@ int main(int argc, char * argv[]) {
 		#pragma omp parallel for
 		for(int j=0; j<size2; j++) {
 			if ( j%1000 == 0 ) cout << "." << flush;
-			musical::NLBSequences * seqs = new musical::NLBSequences(seqs1[i],seqs2[j]);
-			musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
-			//musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.8, -0.2);
-			//musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
-			musical::ConstantLinearGapRater * gr = new musical::ConstantLinearGapRater(-0.6);
-			musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr , gr);
-			nw.doAlign();
-			double normalizedscore = seqs->getScore() / min(seqs1[i]->size(),seqs2[j]->size());
-			if (distmat) thedistmat[i*size2+j] = 1.0 - normalizedscore;
-			delete seqs;
-			delete gr;
-			delete sr;
+			if ( seqs1[i]->size() == 0 || seqs2[i]->size() == 0 ) {
+				if (distmat) thedistmat[i*size2+j] = 100.0;
+			} else {
+				musical::NLBSequences * seqs = new musical::NLBSequences(seqs1[i],seqs2[j]);
+				musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
+				musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.8, -0.2);
+				musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
+				//musical::ConstantLinearGapRater * gr = new musical::ConstantLinearGapRater(-0.6);
+				//musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr , gr);
+				nw.doAlign();
+				double normalizedscore = seqs->getScore() / min(seqs1[i]->size(),seqs2[j]->size());
+				if (distmat) thedistmat[i*size2+j] = 1.0 - normalizedscore;
+				delete seqs;
+				delete gr;
+				delete sr;
+			}
 		}
 		cout << endl;
 	}

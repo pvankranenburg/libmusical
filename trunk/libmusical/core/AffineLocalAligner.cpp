@@ -169,6 +169,8 @@ void AffineLocalAligner::doAlign() const {
 
 	int current_ix = 0;
 
+	double epsilon = 0.00001; // for floating point comparisons
+
 	//For all local alignments:
 	int useMaxAlignments = maxAlignments;
 	if (maxAlignments == -1) useMaxAlignments = m*n;	// m*n is more than enough
@@ -230,19 +232,19 @@ void AffineLocalAligner::doAlign() const {
 					//fill trace
 
 					//substitution
-					if (s[current_ix].accumulatedscore == S_S && S_S > 0.0 ) {
+					if ( fabs(s[current_ix].accumulatedscore - S_S) < epsilon && S_S > epsilon ) {
 						s[current_ix].ix1 = k-1;
 						s[current_ix].ix2 = l-1;
 						s[current_ix].state = NWGTrace::S;
 						s[current_ix].thisscore = substsc;
 					}
-					else if (s[current_ix].accumulatedscore == G1_S && G1_S > 0.0 ) {
+					else if ( fabs(s[current_ix].accumulatedscore - G1_S) < epsilon && G1_S > epsilon ) {
 						s[current_ix].ix1 = k-1;
 						s[current_ix].ix2 = l-1;
 						s[current_ix].state = NWGTrace::G1;
 						s[current_ix].thisscore = substsc;
 					}
-					else if (s[current_ix].accumulatedscore == G2_S && G2_S > 0.0 ) {
+					else if ( fabs(s[current_ix].accumulatedscore - G2_S) < epsilon && G2_S > epsilon ) {
 						s[current_ix].ix1 = k-1;
 						s[current_ix].ix2 = l-1;
 						s[current_ix].state = NWGTrace::G2;
@@ -261,19 +263,19 @@ void AffineLocalAligner::doAlign() const {
 
 
 					//gap with seq1
-					if (g1[current_ix].accumulatedscore == G1_G1 && G1_G1 > 0.0 ) {
+					if ( fabs(g1[current_ix].accumulatedscore - G1_G1) < epsilon && G1_G1 > epsilon ) {
 						g1[current_ix].ix1 = k-1;
 						g1[current_ix].ix2 = l;
 						g1[current_ix].state = NWGTrace::G1;
 						g1[current_ix].thisscore = g1extensionscore;
 					}
-					else if (g1[current_ix].accumulatedscore == G2_G1 && G1_G1 > 0.0 ) {
+					else if (fabs(g1[current_ix].accumulatedscore - G2_G1) < epsilon && G1_G1 > epsilon ) {
 						g1[current_ix].ix1 = k-1;
 						g1[current_ix].ix2 = l;
 						g1[current_ix].state = NWGTrace::G2;
 						g1[current_ix].thisscore = g1openingscore;
 					}
-					else if (g1[current_ix].accumulatedscore == S_G1 && S_G1 > 0.0 ) {
+					else if ( fabs(g1[current_ix].accumulatedscore - S_G1) < epsilon && S_G1 > epsilon ) {
 						g1[current_ix].ix1 = k-1;
 						g1[current_ix].ix2 = l;
 						g1[current_ix].state = NWGTrace::S;
@@ -287,19 +289,19 @@ void AffineLocalAligner::doAlign() const {
 					}
 
 					//gap with seq2
-					if (g2[current_ix].accumulatedscore == G1_G2 && G1_G2 > 0.0 ) {
+					if ( fabs(g2[current_ix].accumulatedscore - G1_G2) < epsilon && G1_G2 > epsilon ) {
 						g2[current_ix].ix1 = k;
 						g2[current_ix].ix2 = l-1;
 						g2[current_ix].state = NWGTrace::G1;
 						g2[current_ix].thisscore = g2openingscore;
 					}
-					else if (g2[current_ix].accumulatedscore == G2_G2 && G2_G2 > 0.0 ) {
+					else if ( fabs(g2[current_ix].accumulatedscore - G2_G2) < epsilon && G2_G2 > epsilon ) {
 						g2[current_ix].ix1 = k;
 						g2[current_ix].ix2 = l-1;
 						g2[current_ix].state = NWGTrace::G2;
 						g2[current_ix].thisscore = g2extensionscore;
 					}
-					else if (g2[current_ix].accumulatedscore == S_G2 && S_G2 > 0.0 ) {
+					else if ( fabs(g2[current_ix].accumulatedscore - S_G2) < epsilon && S_G2 > epsilon ) {
 						g2[current_ix].ix1 = k;
 						g2[current_ix].ix2 = l-1;
 						g2[current_ix].state = NWGTrace::S;
