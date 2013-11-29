@@ -1,4 +1,8 @@
-project(libmusical CXX)
+project(libmusical C CXX)
+
+#C only enabled for openmp test.
+#Not needed if cmake version > 2.8.8
+
 set (libmusical_VERSION_MAJOR 1)
 set (libmusical_VERSION_MINOR 0)
 set (libmusical_VERSION_PATCH 2)
