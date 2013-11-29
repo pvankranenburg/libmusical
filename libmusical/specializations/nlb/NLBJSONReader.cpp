@@ -22,6 +22,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include <string>
 #include <iostream>
 #include <iomanip>
+#include <stdexcept>
 using namespace std;
 
 #include "NLBJSONReader.h"
@@ -51,15 +52,26 @@ Sequence* NLBJSONReader::generateSequence() const {
 	try {
 		seq = libjson::parse(json_string);
 	} catch (invalid_argument&) {
-		clog << "Error: Not proper json" << endl;
-		exit(-1);
+		std::string errormessage = "Error: Not proper json";
+		clog << errormessage << endl;
+		throw std::runtime_error(errormessage);
+	}
+	if ( seq.empty() ) {
+		std::string errormessage = "Error: Top node has no children";
+		clog << errormessage << endl;
+		throw std::runtime_error(errormessage);
 	}
 	//the name should be at 'top-level'
 	JSONNode::const_iterator i1 = seq.begin();
+	cout << i1->size() << endl;
 	nwseq->setName(i1->name());
 	//cout << nwseq->name << endl;
 	i1 = seq.begin()->find("symbols");
-	if ( i1 == (seq.begin())->end() ) { clog << "Error: No symbols in json " << nwseq->getName() << endl; exit(-1); }
+	if ( i1 == (seq.begin())->end() ) {
+		std::string errormessage = "Error: No symbols in json " + nwseq->getName();
+		clog << errormessage << endl;
+		throw std::runtime_error(errormessage);
+	}
 	int size = i1->size();
 	//cout << "Size: " << size << endl;
 	for( int ix=0; ix<size; ix++) {
@@ -74,8 +86,9 @@ Sequence* NLBJSONReader::generateSequence() const {
 		}
 		catch (out_of_range&)
 		{
-			clog << "Error: symbols in " << nwseq->getName() << " should contain: pitch40, onset, phrase, ima, and phrasepos" << endl;
-			exit(-1);
+			std::string errormessage = "Error: symbols in " + nwseq->getName() + " should contain: pitch40, onset, phrase, ima, and phrasepos";
+			clog << errormessage << endl;
+			throw std::runtime_error(errormessage);
 		}
 		//check whether id is present. If not take index as id
 		//string id = i1->at(ix).at("id").as_string();

@@ -1,3 +1,7 @@
+Release 1.0.2 - 29 november 2013
+* NLBJSONReader now throws runtime_errors
+* Comparison of floats is now safe in Aligners
+
 Release 1.0.1 - 25 september 2013
 * Improvements in gnuplot code
 * thisscore in initial gaps in AffineGlobalAligner now set.

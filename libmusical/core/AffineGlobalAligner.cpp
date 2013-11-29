@@ -21,6 +21,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
 #include <iomanip>
+#include <cmath>
 using namespace std;
 
 #include "AffineGlobalAligner.h"
@@ -189,6 +190,8 @@ void AffineGlobalAligner::doAlign() const {
 
 	int current_ix = 0;
 
+	double epsilon = 0.00001;
+
 	//now fill matrix
 	for(int k=1; k<mn; k++) {
 		for(int l=1; l<mm; l++) {
@@ -231,25 +234,25 @@ void AffineGlobalAligner::doAlign() const {
 			//fill trace
 
 			//substitution
-			if (s[current_ix].accumulatedscore == S_S) {
+			if ( fabs(s[current_ix].accumulatedscore - S_S) < epsilon ) {
 				s[current_ix].ix1 = k-1;
 				s[current_ix].ix2 = l-1;
 				s[current_ix].state = NWGTrace::S;
 				s[current_ix].thisscore = substsc;
 			}
-			else if (s[current_ix].accumulatedscore == G1_S) {
+			else if ( fabs(s[current_ix].accumulatedscore - G1_S) < epsilon ) {
 				s[current_ix].ix1 = k-1;
 				s[current_ix].ix2 = l-1;
 				s[current_ix].state = NWGTrace::G1;
 				s[current_ix].thisscore = substsc;
 			}
-			else if (s[current_ix].accumulatedscore == G2_S) {
+			else if ( fabs(s[current_ix].accumulatedscore - G2_S) < epsilon ) {
 				s[current_ix].ix1 = k-1;
 				s[current_ix].ix2 = l-1;
 				s[current_ix].state = NWGTrace::G2;
 				s[current_ix].thisscore = substsc;
 			}
-			else { cerr << "No max score" << endl; }
+			else { cerr << "No max Substituion score" << endl; }
 
 			//if ( k==1 && l==1 ) cout << s[current_ix].ix1 << endl;
 			//if ( k==1 && l==1 ) cout << s[current_ix].ix2 << endl;
@@ -257,46 +260,46 @@ void AffineGlobalAligner::doAlign() const {
 
 
 			//gap with seq1
-			if (g1[current_ix].accumulatedscore == G1_G1 ) {
+			if ( fabs(g1[current_ix].accumulatedscore - G1_G1) < epsilon ) {
 				g1[current_ix].ix1 = k-1;
 				g1[current_ix].ix2 = l;
 				g1[current_ix].state = NWGTrace::G1;
 				g1[current_ix].thisscore = g1extensionscore;
 			}
-			else if (g1[current_ix].accumulatedscore == G2_G1 ) {
+			else if ( fabs(g1[current_ix].accumulatedscore - G2_G1) < epsilon ) {
 				g1[current_ix].ix1 = k-1;
 				g1[current_ix].ix2 = l;
 				g1[current_ix].state = NWGTrace::G2;
 				g1[current_ix].thisscore = g1openingscore;
 			}
-			else if (g1[current_ix].accumulatedscore == S_G1 ) {
+			else if ( fabs(g1[current_ix].accumulatedscore - S_G1) < epsilon ) {
 				g1[current_ix].ix1 = k-1;
 				g1[current_ix].ix2 = l;
 				g1[current_ix].state = NWGTrace::S;
 				g1[current_ix].thisscore = g1openingscore;
 			}
-			else { cerr << "No max score" << endl; }
+			else { cerr << "No max G1 score" << endl; }
 
 			//gap with seq2
-			if (g2[current_ix].accumulatedscore == G1_G2 ) {
+			if ( fabs(g2[current_ix].accumulatedscore - G1_G2) < epsilon ) {
 				g2[current_ix].ix1 = k;
 				g2[current_ix].ix2 = l-1;
 				g2[current_ix].state = NWGTrace::G1;
 				g2[current_ix].thisscore = g2openingscore;
 			}
-			else if (g2[current_ix].accumulatedscore == G2_G2 ) {
+			else if ( fabs(g2[current_ix].accumulatedscore - G2_G2) < epsilon ) {
 				g2[current_ix].ix1 = k;
 				g2[current_ix].ix2 = l-1;
 				g2[current_ix].state = NWGTrace::G2;
 				g2[current_ix].thisscore = g2extensionscore;
 			}
-			else if (g2[current_ix].accumulatedscore == S_G2 ) {
+			else if ( fabs(g2[current_ix].accumulatedscore - S_G2) < epsilon ) {
 				g2[current_ix].ix1 = k;
 				g2[current_ix].ix2 = l-1;
 				g2[current_ix].state = NWGTrace::S;
 				g2[current_ix].thisscore = g2openingscore;
 			}
-			else { cerr << "No max score" << endl; }
+			else { cerr << "No max G2 score" << endl; }
 
 		}
 	}

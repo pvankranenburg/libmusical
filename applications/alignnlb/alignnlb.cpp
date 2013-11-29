@@ -57,7 +57,7 @@ int main(int argc, char * argv[]) {
 	musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
 
 	// Create a gap rater
-	musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6,-0.2);
+	musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater((double)60*-0.01,(double)20*-0.01);
 
 	// Create an alignment algorithm
 	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
