@@ -24,6 +24,9 @@ along with CSUUMidiReader.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>
 #include <stdexcept>
 
+// PVK: To compile with clang
+#include <string>
+
 namespace CsuuUtil {
 
     struct OpenError: public std::runtime_error {

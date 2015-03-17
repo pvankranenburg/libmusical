@@ -80,6 +80,11 @@ public:
 	 */
 	void setPitch40Shift(int s) { pitch40HistogramShift = s; }
 
+	/**
+	 * Get the pitchshift in base-12 representation
+	 */
+	int getPitch12Shift() const;
+
 private:
 	/**
 	 * The interval that has to be added to the pitches of seq2 to correspond with seq1
