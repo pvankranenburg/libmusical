@@ -22,6 +22,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include <iomanip>
 #include <fstream>
 #include <vector>
+#include <string>
 using namespace std;
 
 #include "libmusical.h"
@@ -29,17 +30,42 @@ using namespace std;
 
 int main(int argc, char * argv[]) {
 
-	if ( argc != 3 ) {
-		cerr << "Usage: alignmidi <file1.mid> <file2.mid>" << endl;
+	int pitchshift = 0;
+	std::string file1, file2;
+	bool pitchshiftprovided = false;
+
+	if ( argc != 3 && argc != 4 ) {
+		cerr << "Usage: alignmidi [-p=<pitchshift>] <file1.mid> <file2.mid>" << endl;
 		cout << endl;
 		exit(1);
 	}
+	if ( argc == 3 ) {
+		file1 = string(argv[1]);
+		file2 = string(argv[2]);
+	}
+	if ( argc == 4 ) {
+		pitchshiftprovided = true;
+		string sp(argv[1]);
+		if ( sp[0] == '-' && sp[1] == 'p') {
+			sp = sp.substr(3);
+			pitchshift = musical::convertToInt(sp);
+		} else {
+			cerr << "Usage: alignmidi [-p=<pitchshift>] <file1.mid> <file2.mid>" << endl;
+			cout << endl;
+			exit(1);
+		}
+		file1 = string(argv[2]);
+		file2 = string(argv[3]);
+	}
 
-	clog << "Reading from: " << argv[1] << " " << argv[2] << endl;
+	if( pitchshiftprovided )
+		clog << "Reading from: " << file1 << " " << file2 << ", provided pitchshift is " << pitchshift << endl;
+	else
+		clog << "Reading from: " << file1 << " " << file2 << endl;
 
 
-	musical::MidiFileReader mfr1 = musical::MidiFileReader(argv[1]);
-	musical::MidiFileReader mfr2 = musical::MidiFileReader(argv[2]);
+	musical::MidiFileReader mfr1 = musical::MidiFileReader(file1);
+	musical::MidiFileReader mfr2 = musical::MidiFileReader(file2);
 
 	musical::MidiSequence * seq1 = static_cast<musical::MidiSequence*>(mfr1.generateSequence());
 	musical::MidiSequence * seq2 = static_cast<musical::MidiSequence*>(mfr2.generateSequence());
@@ -57,7 +83,7 @@ int main(int argc, char * argv[]) {
 	//clog << argv[2] << " : " << seq2->size() << " symbols" << endl;
 
 	clog << "Creating similarity rater" << endl;
-	musical::MidiExactPitchSimilarityRater *ep = new musical::MidiExactPitchSimilarityRater();
+	musical::MidiExactPitchSimilarityRater * ep = new musical::MidiExactPitchSimilarityRater();
 	musical::MidiExactPitchIntervalSimilarityRater * sr = new musical::MidiExactPitchIntervalSimilarityRater();
 	musical::MidiIOISimilarityRater * ioi = new musical::MidiIOISimilarityRater();
 	musical::MidiIORSimilarityRater * ior = new musical::MidiIORSimilarityRater();
@@ -67,12 +93,17 @@ int main(int argc, char * argv[]) {
 	musical::ConstantLinearGapRater * gr =  new musical::ConstantLinearGapRater(-0.5);
 
 	clog << "Creating aligner" << endl;
-	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, r2, gr);
+	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, ep, gr);
 	//nw.setFeedback(true);
+
+	//pitchshift
+	if ( pitchshiftprovided ) {
+		seqs->setPitch12Shift(pitchshift);
+	}
 
 	cout << endl;
 	cout << "Aligner: Needleman-Wunsch" << endl;
-	cout << "Similarity Rater: " << "MidiPitchDurationSimilarityRater" << endl;
+	cout << "Similarity Rater: " << "MidiExactPitchSimilarityRater" << endl;
 	cout << "Gap score: -0.5" << endl;
 	cout << "Pitch shift of second sequence: " << seqs->getPitch12Shift() << endl;
 

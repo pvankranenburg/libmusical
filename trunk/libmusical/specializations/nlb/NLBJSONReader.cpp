@@ -63,7 +63,7 @@ Sequence* NLBJSONReader::generateSequence() const {
 	}
 	//the name should be at 'top-level'
 	JSONNode::const_iterator i1 = seq.begin();
-	cout << i1->size() << endl;
+	//cout << i1->size() << endl;
 	nwseq->setName(i1->name());
 	//cout << nwseq->name << endl;
 	i1 = seq.begin()->find("symbols");

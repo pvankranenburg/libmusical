@@ -105,13 +105,14 @@ int main(int argc, char * argv[]) {
 
 	for(int i = 0; i<size1; i++) {
 		cout << i << ": " << seqs1[i]->getName() << endl;
-		#pragma omp parallel for
+		//#pragma omp parallel for
 		for(int j=0; j<size2; j++) {
 			if ( j%1000 == 0 ) cout << "." << flush;
-			if ( seqs1[i]->size() == 0 || seqs2[i]->size() == 0 ) {
+			if ( seqs1[i]->size() == 0 || seqs2[j]->size() == 0 ) {
 				if (distmat) thedistmat[i*size2+j] = 100.0;
 			} else {
 				musical::NLBSequences * seqs = new musical::NLBSequences(seqs1[i],seqs2[j]);
+				//cout << "PitchShift: " << seqs1[i]->getName() << " " << seqs2[j]->getName() << " " << seqs->getPitch12Shift() << endl;
 				musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
 				musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.8, -0.2);
 				musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);

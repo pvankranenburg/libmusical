@@ -19,6 +19,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 #include "libmusical.h"
@@ -75,6 +76,7 @@ int main(int argc, char * argv[]) {
 
 	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
 	clog << "   Pitch40 Shift: " << seqs->getPitch40Shift() << endl;
+	clog << "   Pitch12 Shift: " << seqs->getPitch12Shift() << endl;
 	clog << "           Score: " << seqs->getScore() << endl;
 	clog << "Normalized score: " << normalizedscore << endl;
 	clog << "        Distance: " << 1.0 - normalizedscore << endl;

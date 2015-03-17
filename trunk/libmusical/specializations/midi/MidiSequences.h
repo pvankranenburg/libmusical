@@ -57,11 +57,16 @@ public:
 	virtual ~MidiSequences();
 
 	/**
-	 * Computes how much the base40 pitch of seq2 has to be shifted in order to correspond to the pitch of seq1.
+	 * Computes how much the base12 pitch of seq2 has to be shifted in order to correspond to the pitch of seq1.
 	 * This is computed by finding the shift of the normalized pitch histograms of seq1 and seq2 that results
 	 * in highest histogram intersection.
 	 */
 	double getPitch12Shift() const { return pitch12HistogramShift; };
+
+	/**
+	 * Provide a pitch shift manually.
+	 */
+	void setPitch12Shift(int value) { pitch12HistogramShift = value; };
 
 private:
 	int pitch12HistogramShift;

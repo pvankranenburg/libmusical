@@ -74,7 +74,7 @@ void NLBSequences::computePitch40HistogramShift() {
 
 	pitch40HistogramShift = 0;
 
-	cout << "-------------------------" << endl;
+	//cout << "-------------------------" << endl;
 
 	int minshift = lowest1 - highest2;
 	int maxshift = highest1 - lowest2;
@@ -111,5 +111,53 @@ void NLBSequences::computePitch40HistogramShift() {
 
 }
 
+int NLBSequences::getPitch12Shift() const {
+	//compute octave
+	int octave = pitch40HistogramShift / 40;
+	int degree = pitch40HistogramShift % 40;
+	int pitch12 = 0;
+	if ( abs(degree) == 1 ) pitch12 = 1;
+	//if ( degree == 2 ) pitch12 = ;
+	//if ( degree == 3 ) pitch12 = ;
+	if ( abs(degree) == 4 ) pitch12 = 0;
+	if ( abs(degree) == 5 ) pitch12 = 1;
+	if ( abs(degree) == 6 ) pitch12 = 2;
+	if ( abs(degree) == 7) pitch12 = 3;
+	//if ( degree == 8 ) pitch12 = ;
+	//if ( degree == 9 ) pitch12 = ;
+	if ( abs(degree) == 10 ) pitch12 = 2;
+	if ( abs(degree) == 11 ) pitch12 = 3;
+	if ( abs(degree) == 12 ) pitch12 = 4;
+	if ( abs(degree) == 13 ) pitch12 = 5;
+	//if ( degree == 14 ) pitch12 = 3;
+	//if ( degree == 15 ) pitch12 = 4;
+	if ( abs(degree) == 16 ) pitch12 = 4;
+	if ( abs(degree) == 17 ) pitch12 = 5;
+	if ( abs(degree) == 18 ) pitch12 = 6;
+	//if ( degree == 19 ) pitch12 = 4;
+	//if ( degree == 20 ) pitch12 = 5;
+	//if ( degree == 21 ) pitch12 = 6;
+	if ( abs(degree) == 22 ) pitch12 = 6;
+	if ( abs(degree) == 23 ) pitch12 = 7;
+	if ( abs(degree) == 24 ) pitch12 = 8;
+	//if ( degree == 25 ) pitch12 = 6;
+	//if ( degree == 26 ) pitch12 = 7;
+	if ( abs(degree) == 27 ) pitch12 = 7;
+	if ( abs(degree) == 28 ) pitch12 = 8;
+	if ( abs(degree) == 29 ) pitch12 = 9;
+	if ( abs(degree) == 30 ) pitch12 = 10;
+	//if ( degree == 31 ) pitch12 = 8;
+	//if ( degree == 32 ) pitch12 = 9;
+	if ( abs(degree) == 33 ) pitch12 = 9;
+	if ( abs(degree) == 34 ) pitch12 = 10;
+	if ( abs(degree) == 35 ) pitch12 = 11;
+	if ( abs(degree) == 36 ) pitch12 = 12;
+	//if ( degree == 37 ) pitch12 = 10;
+	//if ( degree == 38 ) pitch12 = 11;
+	if ( abs(degree) == 39 ) pitch12 = 11;
+	if ( degree < 0 ) { pitch12 = -pitch12; }
+
+	return 12*octave + pitch12;
+}
 
 }

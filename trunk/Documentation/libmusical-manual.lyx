@@ -1,5 +1,5 @@
-#LyX 2.0 created this file. For more info see http://www.lyx.org/
-\lyxformat 413
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
 \begin_document
 \begin_header
 \textclass article
@@ -12,13 +12,13 @@
 \font_roman ae
 \font_sans default
 \font_typewriter courier
+\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
-
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -29,15 +29,24 @@
 \use_hyperref false
 \papersize default
 \use_geometry false
-\use_amsmath 1
-\use_esint 1
-\use_mhchem 1
-\use_mathdots 1
-\cite_engine natbib_authoryear
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
+\justification true
 \use_refstyle 1
 \index Index
 \shortcut idx
@@ -270,8 +279,8 @@ In constructing an alignment of
 
  or with a gap.
  Each alignment of two sequences gets a score, which is the sum of the scores
- of the alignments of the individual sybols.
- Alignment algorithms find the (or one of the) alignemnt with the highest
+ of the alignments of the individual symbols.
+ Alignment algorithms find the (or one of the) alignment with the highest
  score.
  Since the solution space is quite large, a dynamic programming approach
  is taken to find the optimal alignment efficiently.
@@ -640,7 +649,7 @@ Objects of the class
 AlignmentVisualizer
 \family default
  are able to produce textual or graphical representations of the resulting
- alignemnt.
+ alignment.
  Currently, one method is provided that outputs a textual description of
  the alignment to the standard output stream.
 \end_layout
@@ -800,7 +809,7 @@ The following gap raters are currently available:
 ConstantLinearGapRater
 \family default
 .
- This returns a fixed score for a gap of lenght 1.
+ This returns a fixed score for a gap of length 1.
  To be used with 
 \family typewriter
 NeedlemanWunsch
@@ -863,7 +872,7 @@ key "Kranenburg:2010fk"
 
 .
  Each symbol consists of three attributes: pitch in base-40 representation,
- prhase position and metric weight.
+ phrase position and metric weight.
  These attributes are used by the similarity measure (
 \family typewriter
 NLBOptiSimilarityRater
@@ -881,7 +890,7 @@ The following classes have been added for this specialization:
 
 \begin_layout Description
 NLBSymbol Symbol with three data members: pitch in base-40 representation,
- prhase position and metric weight.
+ phrase position and metric weight.
 \end_layout
 
 \begin_layout Description
@@ -1510,8 +1519,8 @@ Symbol
 \family typewriter
 XXSymbol
 \family default
- is supposed to have data memebers that correspond to the attributes of
- the symbol.
+ is supposed to have data members that correspond to the attributes of the
+ symbol.
 \end_layout
 
 \begin_layout Enumerate
@@ -1528,7 +1537,7 @@ XXSequence
 Sequence
 \family default
 .
- Only do this if you want to add data memebers or functions to the sequence.
+ Only do this if you want to add data members or functions to the sequence.
 \end_layout
 
 \begin_layout Enumerate
@@ -1545,8 +1554,8 @@ XXSequences
 Sequences
 \family default
 .
- Only do this if you want to add data memebers or functions to the pair
- of sequences.
+ Only do this if you want to add data members or functions to the pair of
+ sequences.
 \end_layout
 
 \begin_layout Enumerate
@@ -1592,7 +1601,7 @@ getScore(\SpecialChar \ldots{}
 \end_inset
 
 .
- For the current alogirhtms only the scores for alignment of one symbol
+ For the current algorithms only the scores for alignment of one symbol
  from 
 \begin_inset Formula $\mathbf{x}$
 \end_inset
@@ -1777,7 +1786,7 @@ key "Levenshtein:1966kx"
 
  can be obtained by using the Linear Global Alignment algorithm with fixed
  gap score of -1 and a similarityrater that returns 0 for a perfect match
- and -1 otherwhise.
+ and -1 otherwise.
  The score of the algorithm is the negation of the edit distance because
  it counts the edits (substitutions and insertions/deletions).
  Since the 
