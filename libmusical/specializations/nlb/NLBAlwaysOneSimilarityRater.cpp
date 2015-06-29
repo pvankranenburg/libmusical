@@ -19,28 +19,18 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#include <string>
-#include <iostream>
-#include <sstream>
-using namespace std;
+#include <cmath>
 
+#include "NLBAlwaysOneSimilarityRater.h"
 #include "NLBSymbol.h"
+#include "NLBSequences.h"
 
 namespace musical {
 
-NLBSymbol::NLBSymbol() {
-	// TODO Auto-generated constructor stub
+double NLBAlwaysOneSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, int y2) const {
 
-}
+	return 1.0;
 
-NLBSymbol::~NLBSymbol() {
-	// TODO Auto-generated destructor stub
-}
-
-string NLBSymbol::toString() const {
-	stringstream ss;
-	ss << "pitch40: " << pitch40 << "\tima: " << IMA;
-	return ss.str();
 }
 
 }

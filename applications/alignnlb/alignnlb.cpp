@@ -49,13 +49,16 @@ int main(int argc, char * argv[]) {
 		static_cast<musical::NLBSequence*>(mr2.generateSequence());
 
 	seq1->dump_stdout();
+	seq2->dump_stdout();
 
 	// Encapsulate the two sequences in a Sequences object
 	musical::NLBSequences * seqs = new musical::NLBSequences(seq1,seq2);
 	//seqs->setPitch40Shift(seqs->getNthComputedPitch40Shift(0));
 
 	// Create a similarity rater
-	musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
+	//musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
+	//musical::NLBPitchbandIMASimilarityRater * sr = new musical::NLBPitchbandIMASimilarityRater();
+	musical::NLBAlwaysOneSimilarityRater * sr = new musical::NLBAlwaysOneSimilarityRater();
 
 	// Create a gap rater
 	musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater((double)60*-0.01,(double)20*-0.01);
@@ -64,7 +67,7 @@ int main(int argc, char * argv[]) {
 	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
 
 	// Debug
-	nw.setFeedback(false);
+	nw.setFeedback(true);
 
 	// Do the alignment
 	nw.doAlign();
@@ -72,7 +75,7 @@ int main(int argc, char * argv[]) {
 	// Print the alignment to stdout
 	musical::AlignmentVisualizer av(seqs);
 	av.basicStdoutReport();
-	av.toGnuPlot("alignment");
+	av.toGnuPlot("alignment-"+seq1->getName()+"-"+seq2->getName());
 
 	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
 	clog << "   Pitch40 Shift: " << seqs->getPitch40Shift() << endl;

@@ -1,3 +1,9 @@
+Release 1.0.3 - 30 June 2015
+* Added pitch12 shift for midi
+* Added NLBAlwaysOneSimilarityRater
+* Added NLBPitchbandIMASimilarityRater
+* Added NLBPitchbandSimilarityRater
+
 Release 1.0.2 - 29 november 2013
 * NLBJSONReader now throws runtime_errors
 * Comparison of floats is now safe in Aligners

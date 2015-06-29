@@ -84,8 +84,12 @@ int main(int argc, char * argv[]) {
 	//cout << "sequence: " << endl;
 	//seq->dump_stdout();
 
+	string distmatfile = "distmat.txt";
+	if (argc == 4) {
+		distmatfile = argv[3];
+	}
 	if (distmat) {
-		outfile.open("distmat.txt");
+		outfile.open(distmatfile);
 		outfile << "recnr";
 
 		for ( unsigned int i = 0; i < seqs2.size(); i++ ) {
@@ -112,12 +116,9 @@ int main(int argc, char * argv[]) {
 				if (distmat) thedistmat[i*size2+j] = 100.0;
 			} else {
 				musical::NLBSequences * seqs = new musical::NLBSequences(seqs1[i],seqs2[j]);
-				//cout << "PitchShift: " << seqs1[i]->getName() << " " << seqs2[j]->getName() << " " << seqs->getPitch12Shift() << endl;
 				musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
-				musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.8, -0.2);
+				musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6, -0.2);
 				musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
-				//musical::ConstantLinearGapRater * gr = new musical::ConstantLinearGapRater(-0.6);
-				//musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr , gr);
 				nw.doAlign();
 				double normalizedscore = seqs->getScore() / min(seqs1[i]->size(),seqs2[j]->size());
 				if (distmat) thedistmat[i*size2+j] = 1.0 - normalizedscore;
@@ -135,11 +136,12 @@ int main(int argc, char * argv[]) {
 	cout << "time per query: " << (end - begin)/(float)seqs1.size() << endl;
 
 	if (distmat) {
-		cout << "Writing distmat.txt" << endl;
+		cout << "Writing " << distmatfile << endl;
 		for ( int i = 0; i < size1; i++ ) {
 			outfile << seqs1[i]->getName();
 			for ( int j = 0; j < size2; j++ ) {
-				outfile << "\t" << thedistmat[i*size2+j];
+				double dist = thedistmat[i*size2+j];
+				outfile << "\t" << dist;
 			}
 			outfile << endl;
 		}
