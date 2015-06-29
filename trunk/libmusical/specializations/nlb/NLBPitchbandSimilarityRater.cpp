@@ -21,13 +21,13 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <cmath>
 
-#include "NLBOptiSimilarityRater.h"
+#include "NLBPitchbandSimilarityRater.h"
 #include "NLBSymbol.h"
 #include "NLBSequences.h"
 
 namespace musical {
 
-double NLBOptiSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, int y2) const {
+double NLBPitchbandSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2, int y2) const {
 
 	NLBSymbol * s1;
 	NLBSymbol * s2;
@@ -52,12 +52,7 @@ double NLBOptiSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2
 	diff = im1 % 40;
 	if ( diff > 23 ) result = -1.0; else result = 1.0 - ( (double)diff * 1.0/23.0 );
 
-	result = ( result + 1.0 ) / 2.0;
-
-	result = result * (1.0 - fabs(s2->phrasepos-s1->phrasepos)) * (1.0 - fabs(s2->IMA-s1->IMA));
-	//result = result * (1.0 - fabs(s2->phrasepos-s1->phrasepos));
-
-	return -1.0 + 2.0*result;
+	return result;
 
 }
 

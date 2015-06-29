@@ -19,28 +19,37 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#include <string>
-#include <iostream>
-#include <sstream>
-using namespace std;
+#ifndef NLBALWAYSONESIMILARITYRATER_H_
+#define NLBALWAYSONESIMILARITYRATER_H_
 
+#include "SimilarityRater.h"
 #include "NLBSymbol.h"
 
 namespace musical {
 
-NLBSymbol::NLBSymbol() {
-	// TODO Auto-generated constructor stub
+/**
+ * Always return 1.0 as substitution score.
+ */
+class NLBAlwaysOneSimilarityRater: public musical::SimilarityRater {
+public:
+	/**
+	 * Constructor
+	 */
+	NLBAlwaysOneSimilarityRater() { };
+
+	/**
+	 * Destructor
+	 */
+	virtual ~NLBAlwaysOneSimilarityRater() { };
+
+	/**
+	 * Computes the similarity of seq1[x1] and seq2[y2].
+	 * x1 and y1 are ignored for now.
+	 */
+	virtual double getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
+
+};
 
 }
 
-NLBSymbol::~NLBSymbol() {
-	// TODO Auto-generated destructor stub
-}
-
-string NLBSymbol::toString() const {
-	stringstream ss;
-	ss << "pitch40: " << pitch40 << "\tima: " << IMA;
-	return ss.str();
-}
-
-}
+#endif /* NLBALWAYSONESIMILARITYRATER_H_ */

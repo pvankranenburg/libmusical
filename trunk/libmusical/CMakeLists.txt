@@ -56,10 +56,13 @@ set(libmusical_lib_src
 	specializations/midi/MidiSequences.cpp
 	specializations/nlb/NLBExactPitch40SimilarityRater.cpp
 	specializations/nlb/NLBMidiIntervalSimilarityRater.cpp
+	specializations/nlb/NLBAlwaysOneSimilarityRater.cpp
 	specializations/nlb/NLBJSONReader.cpp
 	specializations/nlb/NLBSequence.cpp
 	specializations/nlb/NLBSequences.cpp
 	specializations/nlb/NLBOptiSimilarityRater.cpp
+	specializations/nlb/NLBPitchbandIMASimilarityRater.cpp
+	specializations/nlb/NLBPitchbandSimilarityRater.cpp
 	specializations/nlb/NLBSymbol.cpp
 )
 
@@ -121,11 +124,14 @@ install(
 		specializations/midi/MidiSequences.h
 		specializations/nlb/NLBExactPitch40SimilarityRater.h
 		specializations/nlb/NLBMidiIntervalSimilarityRater.h
+		specializations/nlb/NLBAlwaysOneSimilarityRater.h
 		specializations/nlb/NLBAlignment.h
 		specializations/nlb/NLBJSONReader.h
 		specializations/nlb/NLBSequence.h
 		specializations/nlb/NLBSequences.h
 		specializations/nlb/NLBOptiSimilarityRater.h
+		specializations/nlb/NLBPitchbandIMASimilarityRater.h
+		specializations/nlb/NLBPitchbandSimilarityRater.h
 		specializations/nlb/NLBSymbol.h
 	DESTINATION include/libmusical)
 
