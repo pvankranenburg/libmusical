@@ -43,6 +43,8 @@ public:
 	 */
 	virtual double getScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
 
+	virtual std::string getName() { return "MidiIORSimilarityRater"; };
+
 };
 
 }

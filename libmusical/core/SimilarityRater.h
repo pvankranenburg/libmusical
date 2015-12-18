@@ -45,9 +45,7 @@ public:
 	/**
 	 * Give it a name
 	 */
-	std::string name;
-	std::string getName() const { return name; };
-	void setName(std::string n) { name = n; };
+	virtual std::string getName() = 0;
 
 	/**
 	 * This computes the similarity score for {x1, x1+1, ... , x2} from seq1 with {y1, y1+1, ... , y2 } from seq2

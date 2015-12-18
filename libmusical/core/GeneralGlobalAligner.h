@@ -16,6 +16,9 @@ class GeneralGlobalAligner: public musical::AlignmentAlgorithm {
 public:
 	GeneralGlobalAligner();
 	virtual ~GeneralGlobalAligner();
+
+	virtual std::string getName() { return "GeneralGlobalAligner"; }
+
 };
 
 }

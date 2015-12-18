@@ -47,6 +47,8 @@ public:
 	 *
 	 */
 	bool use_ima;
+
+	virtual std::string getName() { return "MidiPitchBandSimilarityRater"; };
 };
 
 }

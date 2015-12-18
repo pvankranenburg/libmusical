@@ -30,7 +30,11 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include "Sequence.h"
 #include "Trace.h"
 
+
 namespace musical {
+
+//forward declaration
+class SimilarityRater;
 
 /**
  * Abstract container of a pair of sequences.
@@ -122,6 +126,13 @@ public: //for Alignment algorithm to reach directly
 	 * Contains the scores for the alignments
 	 */
 	std::vector<double> scores;
+
+	/**
+	 * Returns the similarity scores for all pairs of symbols
+	 * ( order not important; self-similarities excluded)
+	 */
+	std::vector<double> getSimilarityScores(SimilarityRater * sr);
+
 
 protected:
 	Sequence * seq1;

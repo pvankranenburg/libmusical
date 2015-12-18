@@ -84,7 +84,7 @@ int main(int argc, char * argv[]) {
 
 	clog << "Creating similarity rater" << endl;
 	musical::MidiExactPitchSimilarityRater * ep = new musical::MidiExactPitchSimilarityRater();
-	musical::MidiExactPitchIntervalSimilarityRater * sr = new musical::MidiExactPitchIntervalSimilarityRater();
+	musical::MidiExactPitchIntervalSimilarityRater * e_int = new musical::MidiExactPitchIntervalSimilarityRater();
 	musical::MidiIOISimilarityRater * ioi = new musical::MidiIOISimilarityRater();
 	musical::MidiIORSimilarityRater * ior = new musical::MidiIORSimilarityRater();
 	musical::MidiPitchDurationSimilarityRater * r2 = new musical::MidiPitchDurationSimilarityRater();
@@ -93,8 +93,17 @@ int main(int argc, char * argv[]) {
 	musical::ConstantLinearGapRater * gr =  new musical::ConstantLinearGapRater(-0.5);
 
 	clog << "Creating aligner" << endl;
-	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, ep, gr);
+	//choosing similarity rater:
+	musical::SimilarityRater * sr = ep;
+	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr, gr);
 	//nw.setFeedback(true);
+
+	/*
+	std::vector<double> subst_scores = seqs->getSimilarityScores(sr);
+	for (unsigned int i=0; i<subst_scores.size(); i++) {
+		cout << "scr:" << subst_scores[i] << endl;
+	}
+	*/
 
 	//pitchshift
 	if ( pitchshiftprovided ) {
@@ -102,9 +111,9 @@ int main(int argc, char * argv[]) {
 	}
 
 	cout << endl;
-	cout << "Aligner: Needleman-Wunsch" << endl;
-	cout << "Similarity Rater: " << "MidiExactPitchSimilarityRater" << endl;
-	cout << "Gap score: -0.5" << endl;
+	cout << "Aligner: " << nw.getName() << endl;
+	cout << "Similarity Rater: " << sr->getName() << endl;
+	cout << "Gap score: " << gr->getGapScore() <<  endl;
 	cout << "Pitch shift of second sequence: " << seqs->getPitch12Shift() << endl;
 
 	clog << "Doing the alignment" << endl;
@@ -114,7 +123,8 @@ int main(int argc, char * argv[]) {
 	cout << endl;
 	av.basicStdoutReport();
 
-	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
+	//double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
+	double normalizedscore = seqs->getScore() / seqs->getAlignmentSize();
 	cout << "           Score: " << seqs->getScore() << endl;
 	cout << "Normalized score: " << normalizedscore << endl;
 	cout << "        Distance: " << 1.0 - normalizedscore << endl;

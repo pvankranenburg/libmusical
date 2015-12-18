@@ -107,6 +107,9 @@ public:
 	 */
 	void setInitialGapExtensionScore(const double ies) { initialGapExtensionScore = ies; };
 
+	virtual std::string getName() { return "ConstantAffineGapRater"; }
+
+
 private:
 	/**
 	 * Score for opening a gap
