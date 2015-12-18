@@ -23,7 +23,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace musical {
 
-SimilarityRater::SimilarityRater() : name("NoName") {
+SimilarityRater::SimilarityRater() {
 	// TODO Auto-generated constructor stub
 
 }

@@ -47,11 +47,12 @@ double MidiIORSimilarityRater::getScore(Sequences * const seqs, const int x1, co
 	double ior2 = s2->getInterOnsetRatio();
 
 	if (ior1 > ior2)
-		return ior2 / ior1;
+		res = ior2 / ior1;
 	else
-		return ior1 / ior2;
+		res = ior1 / ior2;
 
-	return res;
+	//return res;
+	return -1.0 + 2.0 * res;
 }
 
 }

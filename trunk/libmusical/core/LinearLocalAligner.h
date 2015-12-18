@@ -95,6 +95,8 @@ public:
 	 */
 	void resetParameters() { maxAlignments = 1; allowOverlappingMatches = false; } ;
 
+	virtual std::string getName() { return "LinearLocalAligner"; }
+
 private:
 	int maxAlignments; //number of local alignments that is returned. -1 is all. default is 1.
 	bool allowOverlappingMatches; // if true: symbols can occur in more than one local alignment. Default: false

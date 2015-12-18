@@ -65,6 +65,8 @@ public:
 	 */
 	void resetParameters() { };
 
+	virtual std::string getName() { return "AffineGlobalAligner"; }
+
 };
 
 }

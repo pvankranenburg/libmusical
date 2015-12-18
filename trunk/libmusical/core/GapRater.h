@@ -23,6 +23,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #define GAPRATER_H_
 
 #include "Sequences.h"
+#include <iostream>
 
 namespace musical {
 
@@ -54,6 +55,12 @@ public:
 	 * Conditions: either x1 == x2 or y1 == y2
 	 */
 	virtual double getGapScore(Sequences *const  seqs, const int x1, const int y1,const  int x2, const int y2) const = 0;
+
+	/**
+	 * Returns the name of the rater
+	 */
+	virtual std::string getName() = 0;
+
 };
 
 }

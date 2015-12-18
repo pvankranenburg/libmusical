@@ -97,6 +97,10 @@ public:
 	 */
 	virtual void resetParameters() = 0 ;
 
+	/**
+	 * Returns the name of the aligner
+	 */
+	virtual std::string getName() = 0;
 
 protected:
 	/**

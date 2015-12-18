@@ -116,7 +116,8 @@ int main(int argc, char * argv[]) {
 				if (distmat) thedistmat[i*size2+j] = 100.0;
 			} else {
 				musical::NLBSequences * seqs = new musical::NLBSequences(seqs1[i],seqs2[j]);
-				musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
+				//musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
+				musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
 				musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6, -0.2);
 				musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
 				nw.doAlign();

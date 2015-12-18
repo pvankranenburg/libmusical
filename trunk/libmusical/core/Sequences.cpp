@@ -20,10 +20,11 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #include "Sequences.h"
+#include "SimilarityRater.h"
 
 namespace musical {
 
-Sequences::Sequences() {
+Sequences::Sequences() : seq1(NULL), seq2(NULL) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -63,6 +64,16 @@ void Sequences::clearResults() {
 
 	//for derived algorithms:
 	this->specificClear();
+}
+
+std::vector<double> Sequences::getSimilarityScores(SimilarityRater * sr) {
+	std::vector<double> res;
+	for (unsigned int i=0; i<seq1->size(); i++) {
+		for (unsigned int j=0; j<seq2->size(); j++) {
+			res.push_back(sr->getScore(this, i, j, i, j));
+		}
+	}
+	return res;
 }
 
 

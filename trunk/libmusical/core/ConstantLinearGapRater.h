@@ -61,10 +61,17 @@ public:
 	 */
 	virtual double getGapScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
 
+	// In this particular case, we can overload the getGapScore without any parameter.
+	// since the gapscore is constant
+	double getGapScore() { return gapScore; }
+
 	/**
 	 * Sets the (fixed) score for inserting one gap.
 	 */
 	void setGapScore(const double gs) { gapScore = gs; };
+
+	virtual std::string getName() { return "ConstantLinearGapRater"; }
+
 
 private:
 	double gapScore;
