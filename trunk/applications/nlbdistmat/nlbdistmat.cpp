@@ -89,7 +89,7 @@ int main(int argc, char * argv[]) {
 		distmatfile = argv[3];
 	}
 	if (distmat) {
-		outfile.open(distmatfile);
+		outfile.open(distmatfile.c_str());
 		outfile << "recnr";
 
 		for ( unsigned int i = 0; i < seqs2.size(); i++ ) {
