@@ -2,9 +2,9 @@ libmusical is supposed to provide classes and functions to align sequences of sy
 
 To develop in Eclipse:
 
-Suppose the SVN rep is in ${SVNROOT}/libmusical
+Suppose the rep is in ${GITROOT}/libmusical
 
 1. Create an empty directory _outside_ the libmusical tree.
-2. In that directory invoke: cmake -G"Eclipse CDT4 - Unix Makefiles" ${SVNROOT}/libmusical/trunk/
+2. In that directory invoke: cmake -G"Eclipse CDT4 - Unix Makefiles" ${GITROOT}/libmusical/trunk/
 3. Open Eclipse and create a new project using the generated files.
 
