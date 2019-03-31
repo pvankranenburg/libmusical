@@ -5,6 +5,6 @@ To develop in Eclipse:
 Suppose the rep is in ${GITROOT}/libmusical
 
 1. Create an empty directory _outside_ the libmusical tree.
-2. In that directory invoke: cmake -G"Eclipse CDT4 - Unix Makefiles" ${GITROOT}/libmusical/trunk/
+2. In that directory invoke: cmake -G"Eclipse CDT4 - Unix Makefiles" ${GITROOT}/libmusical
 3. Open Eclipse and create a new project using the generated files.
 
