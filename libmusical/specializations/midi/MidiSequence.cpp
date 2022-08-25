@@ -24,7 +24,9 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 namespace musical {
 
 MidiSequence::MidiSequence() {
-	//sparsePitchHistogram[0] = 0.2;
+	for (int i=0; i<120; i++) {
+		pitchHistogram[i] = 0.0;
+	}
 }
 
 MidiSequence::~MidiSequence() {

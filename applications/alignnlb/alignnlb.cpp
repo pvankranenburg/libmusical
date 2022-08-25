@@ -56,19 +56,20 @@ int main(int argc, char * argv[]) {
 	//seqs->setPitch40Shift(seqs->getNthComputedPitch40Shift(0));
 
 	// Create a similarity rater
-	musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
+	//musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
 	//musical::NLBPitchbandIMASimilarityRater * sr = new musical::NLBPitchbandIMASimilarityRater();
 	//musical::NLBAlwaysOneSimilarityRater * sr = new musical::NLBAlwaysOneSimilarityRater();
+	musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
 
 	// Create a gap rater
-	musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater((double)80*-0.01,(double)20*-0.01);
+	musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6,-0.2);
 
 	// Create an alignment algorithm
-	//musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
-	musical::LinearLocalAligner nw = musical::LinearLocalAligner(seqs, sr, gr);
+	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
+	//musical::LinearLocalAligner nw = musical::LinearLocalAligner(seqs, sr, gr);
 
 	// Debug
-	nw.setFeedback(true);
+	nw.setFeedback(false);
 
 	// Do the alignment
 	nw.doAlign();

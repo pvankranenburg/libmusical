@@ -62,23 +62,29 @@ int main(int argc, char * argv[]) {
 	vector<musical::MidiSequence *> seqs2;
 	cout << "Reading sequences 1" << endl;
 	while (getline(listfile1, seq1name)) {
+		cout << seqs1.size() << " " << seq1name << flush;
 		musical::MidiFileReader mr1(seq1name);
 		seqs1.push_back(static_cast<musical::MidiSequence*>(mr1.generateSequence()));
-		cout << seqs1.size() << " " << seq1name << endl;
 		//if ( seqs1.size() % 1000 == 0 ) cout << seq1name << endl;
 		//if ( seqs1.size() % 1000 == 0 ) cout << "." << flush;
+		cout << " done" << endl;
 	}
 	cout << endl;
+	cout << "Finished Reading sequences 1." << endl;
+
 
 	cout << "Reading seqeunces 2" << endl;
 	while (getline(listfile2, seq2name)) {
+		cout << seqs2.size() << " " << seq2name << flush;
 		musical::MidiFileReader mr2(seq2name);
 		seqs2.push_back(static_cast<musical::MidiSequence*>(mr2.generateSequence()));
-		cout << seqs2.size() << " " << seq2name << endl;
 		//if ( seqs2.size()%1000 == 0 ) cout << seq2name << endl;
 		//if ( seqs2.size() % 1000 == 0 ) cout << "." << flush;
+		cout << " done" << endl;
 	}
 	cout << endl;
+	cout << "Finished Reading sequences 2." << endl;
+
 	listfile1.close();
 	listfile2.close();
 
@@ -109,7 +115,8 @@ int main(int argc, char * argv[]) {
 		cout << i << ": " << seqs1[i]->getName() << endl;
 		#pragma omp parallel for
 		for(int j=0; j<size2; j++) {
-			if ( j%1000 == 0 ) cout << "." << flush;
+			//if ( j%1000 == 0 ) cout << "." << flush;
+			//cout << i << "aligning with: " << seqs2[j]->getName() << flush;
 			musical::MidiSequences * seqs = new musical::MidiSequences(seqs1[i],seqs2[j]);
 			//musical::MidiExactPitchIntervalSimilarityRater * sr = new musical::MidiExactPitchIntervalSimilarityRater();
 			musical::MidiPitchBandSimilarityRater * sr = new musical::MidiPitchBandSimilarityRater();
@@ -117,7 +124,9 @@ int main(int argc, char * argv[]) {
 			musical::ConstantLinearGapRater * gr = new musical::ConstantLinearGapRater(-0.6);
 			musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr , gr);
 			nw.doAlign();
-			double normalizedscore = seqs->getScore() / min(seqs1[i]->size(),seqs2[j]->size());
+			double score = seqs->getScore();
+			double normalizedscore = score / min(seqs1[i]->size(),seqs2[j]->size());
+			//cout << "... " << score << " .... " << 1.0 - normalizedscore << endl;
 			if (distmat) thedistmat[i*size2+j] = 1.0 - normalizedscore;
 			delete seqs;
 			delete gr;

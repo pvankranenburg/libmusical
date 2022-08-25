@@ -106,6 +106,9 @@ Sequence * MidiFileReader::generateSequence() const {
 
 	//build pitch histogram
 	//clog << "Building pitch histogram" << endl;
+	for (int i=0; i<120; i++) {
+		nwseq->pitchHistogram[i] = 0.0;
+	}
 	int countpitches = 0;
 	for ( int i=0; i<nwseq->size(); i++) {
 		nwseq->pitchHistogram[(static_cast<MidiSymbol *>(nwseq->getSymbolAt(i)))->pitch12] += 1.0;
@@ -116,11 +119,11 @@ Sequence * MidiFileReader::generateSequence() const {
 		nwseq->pitchHistogram[i] = nwseq->pitchHistogram[i] / (double)countpitches;
 	}
 	//print pitchhistogram
-	/*
-	for ( int i=0; i<120; i++) {
-		clog << setw(3) << i << " : " << nwseq->pitchHistogram[i] << endl;
-	}
-	*/
+	//clog << "Pitchhistogram: " << endl;
+	//for ( int i=0; i<120; i++) {
+	//	clog << setw(3) << i << " : " << nwseq->pitchHistogram[i] << endl;
+	//}
+
 
 	return nwseq;
 }

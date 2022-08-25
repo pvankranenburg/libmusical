@@ -88,13 +88,15 @@ int main(int argc, char * argv[]) {
 	musical::MidiIOISimilarityRater * ioi = new musical::MidiIOISimilarityRater();
 	musical::MidiIORSimilarityRater * ior = new musical::MidiIORSimilarityRater();
 	musical::MidiPitchDurationSimilarityRater * r2 = new musical::MidiPitchDurationSimilarityRater();
+	musical::MidiPitchBandSimilarityRater * pb = new musical::MidiPitchBandSimilarityRater();
 
 	clog << "Creating gap rater" << endl;
-	musical::ConstantLinearGapRater * gr =  new musical::ConstantLinearGapRater(-0.5);
+	//musical::ConstantLinearGapRater * gr = new musical::ConstantLinearGapRater(-0.5);
+	musical::ConstantLinearGapRater * gr = new musical::ConstantLinearGapRater(-0.6);
 
 	clog << "Creating aligner" << endl;
 	//choosing similarity rater:
-	musical::SimilarityRater * sr = ep;
+	musical::SimilarityRater * sr = pb;
 	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr, gr);
 	//nw.setFeedback(true);
 

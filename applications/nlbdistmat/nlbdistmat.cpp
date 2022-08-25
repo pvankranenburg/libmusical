@@ -60,8 +60,9 @@ int main(int argc, char * argv[]) {
 	listfile2.open(argv[2]);
 	vector<musical::NLBSequence *> seqs1;
 	vector<musical::NLBSequence *> seqs2;
-	cout << "Reading sequences 1";
+	cout << "Reading sequences 1" << flush;
 	while (getline(listfile1, seq1name)) {
+		//cout << "Reading " << seq1name << endl << flush;
 		musical::NLBJSONReader mr1(new musical::JSONFileSource(seq1name));
 		seqs1.push_back(static_cast<musical::NLBSequence*>(mr1.generateSequence()));
 		//if ( seqs1.size() % 1000 == 0 ) cout << seq1name << endl;
@@ -69,7 +70,7 @@ int main(int argc, char * argv[]) {
 	}
 	cout << endl;
 
-	cout << "Reading seqeunces 2";
+	cout << "Reading seqeunces 2" << flush;
 	while (getline(listfile2, seq2name)) {
 		musical::NLBJSONReader mr2(new musical::JSONFileSource(seq2name));
 		seqs2.push_back(static_cast<musical::NLBSequence*>(mr2.generateSequence()));
@@ -109,7 +110,7 @@ int main(int argc, char * argv[]) {
 
 	for(int i = 0; i<size1; i++) {
 		cout << i << ": " << seqs1[i]->getName() << endl;
-		//#pragma omp parallel for
+		#pragma omp parallel for
 		for(int j=0; j<size2; j++) {
 			if ( j%1000 == 0 ) cout << "." << flush;
 			if ( seqs1[i]->size() == 0 || seqs2[j]->size() == 0 ) {
@@ -129,25 +130,22 @@ int main(int argc, char * argv[]) {
 			}
 		}
 		cout << endl;
-	}
-
-	float end = datemicro();
-
-	cout << "   total time : " << end - begin << endl;
-	cout << "time per query: " << (end - begin)/(float)seqs1.size() << endl;
-
-	if (distmat) {
-		cout << "Writing " << distmatfile << endl;
-		for ( int i = 0; i < size1; i++ ) {
+		if (distmat) {
 			outfile << seqs1[i]->getName();
 			for ( int j = 0; j < size2; j++ ) {
 				double dist = thedistmat[i*size2+j];
 				outfile << "\t" << dist;
 			}
-			outfile << endl;
+			outfile << endl << flush;
 		}
-		free(thedistmat);
 	}
+
+	if (distmat) free(thedistmat);
+
+	float end = datemicro();
+
+	cout << "   total time : " << end - begin << endl;
+	cout << "time per query: " << (end - begin)/(float)seqs1.size() << endl;
 
 	//delete te sequences:
 	for (int i=0; i<size1; i++) delete seqs1[i];
