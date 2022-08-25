@@ -53,11 +53,24 @@ int main(int argc, char * argv[]) {
 	ofstream outfile;
 
 	ifstream seqfile1, seqfile2;
-	string seq1name,seq2name;
-	string seq1,seq2;
+	string seq1filename, seq2filename;
+	string seq1name, seq2name;
+	string seq1, seq2;
 
-	listfile1.open(argv[1]);
-	listfile2.open(argv[2]);
+	bool symmetric = false;
+	if( string(argv[1]) == "-sym" ) {
+		symmetric = true;
+		cout << "Distmat is symmetric. Only computing upper triangle." << endl;
+		seq1filename = string(argv[2]);
+		seq2filename = string(argv[3]);
+	} else {
+		seq1filename = string(argv[1]);
+		seq2filename = string(argv[2]);
+	}
+
+
+	listfile1.open(seq1filename);
+	listfile2.open(seq2filename);
 	vector<musical::NLBSequence *> seqs1;
 	vector<musical::NLBSequence *> seqs2;
 	cout << "Reading sequences 1" << flush;
@@ -86,9 +99,14 @@ int main(int argc, char * argv[]) {
 	//seq->dump_stdout();
 
 	string distmatfile = "distmat.txt";
-	if (argc == 4) {
+	if (!symmetric && argc == 4) {
 		distmatfile = argv[3];
 	}
+	if (symmetric && argc == 5) {
+		distmatfile = argv[4];
+	}
+	if (distmat) cout << "Writing to: " << distmatfile << endl;
+
 	if (distmat) {
 		outfile.open(distmatfile.c_str());
 		outfile << "recnr";
@@ -110,23 +128,29 @@ int main(int argc, char * argv[]) {
 
 	for(int i = 0; i<size1; i++) {
 		cout << i << ": " << seqs1[i]->getName() << endl;
-		#pragma omp parallel for
+		#pragma omp parallel for num_threads(6)
 		for(int j=0; j<size2; j++) {
 			if ( j%1000 == 0 ) cout << "." << flush;
-			if ( seqs1[i]->size() == 0 || seqs2[j]->size() == 0 ) {
-				if (distmat) thedistmat[i*size2+j] = 100.0;
+
+			if (symmetric && (j<i)) {
+				//cout << "reusing " << i << ", " << j << endl;
+				if (distmat) thedistmat[i*size2+j] = thedistmat[j*size2+i];
 			} else {
-				musical::NLBSequences * seqs = new musical::NLBSequences(seqs1[i],seqs2[j]);
-				//musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
-				musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
-				musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6, -0.2);
-				musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
-				nw.doAlign();
-				double normalizedscore = seqs->getScore() / min(seqs1[i]->size(),seqs2[j]->size());
-				if (distmat) thedistmat[i*size2+j] = 1.0 - normalizedscore;
-				delete seqs;
-				delete gr;
-				delete sr;
+				if ( seqs1[i]->size() == 0 || seqs2[j]->size() == 0 ) {
+					if (distmat) thedistmat[i*size2+j] = 100.0;
+				} else {
+					musical::NLBSequences * seqs = new musical::NLBSequences(seqs1[i],seqs2[j]);
+					//musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
+					musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
+					musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6, -0.2);
+					musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
+					nw.doAlign();
+					double normalizedscore = seqs->getScore() / min(seqs1[i]->size(),seqs2[j]->size());
+					if (distmat) thedistmat[i*size2+j] = 1.0 - normalizedscore;
+					delete seqs;
+					delete gr;
+					delete sr;
+				}
 			}
 		}
 		cout << endl;
