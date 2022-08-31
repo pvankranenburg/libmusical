@@ -81,6 +81,7 @@ int main(int argc, char * argv[]) {
 
 	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
 	clog << "         Aligner: " << nw.getName() << endl;
+	clog << "Similarity Rater: " << sr->getName() << endl;
 	clog << "       Gap Rater: " << gr->getName() << endl;
 	clog << "   Pitch40 Shift: " << seqs->getPitch40Shift() << endl;
 	clog << "   Pitch12 Shift: " << seqs->getPitch12Shift() << endl;

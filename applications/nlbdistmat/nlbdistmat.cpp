@@ -124,11 +124,14 @@ int main(int argc, char * argv[]) {
 	int size1 = seqs1.size();
 	int size2 = seqs2.size();
 
+
+
 	float begin = datemicro();
 
 	for(int i = 0; i<size1; i++) {
 		cout << i << ": " << seqs1[i]->getName() << endl;
-		#pragma omp parallel for num_threads(6)
+		//#pragma omp parallel for num_threads(2)
+		#pragma omp parallel for
 		for(int j=0; j<size2; j++) {
 			if ( j%1000 == 0 ) cout << "." << flush;
 
@@ -140,8 +143,10 @@ int main(int argc, char * argv[]) {
 					if (distmat) thedistmat[i*size2+j] = 100.0;
 				} else {
 					musical::NLBSequences * seqs = new musical::NLBSequences(seqs1[i],seqs2[j]);
-					//musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
-					musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
+					musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
+					//musical::NLBExactPitch40IMASimilarityRater * sr = new musical::NLBExactPitch40IMASimilarityRater();
+					//musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
+					//musical::NLBExactPitch40IMASimilarityRater * sr = new musical::NLBExactPitch40IMASimilarityRater();
 					musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6, -0.2);
 					musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
 					nw.doAlign();
