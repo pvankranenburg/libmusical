@@ -127,13 +127,19 @@ void LinearGlobalAligner::doAlign() const {
 			gapS1Score = gapr->getGapScore(seqs, k-1,l-2,k-1,l-1);
 			gapS2Score = gapr->getGapScore(seqs, k-2,l-1,k-1,l-1);
 
-			if ( feedback ) cout << "score: " << substsc << endl;
+			if ( feedback ) clog << "subst score: " << substsc << endl;
+			if ( feedback ) clog << "gapS1 score: " << gapS1Score << endl;
+			if ( feedback ) clog << "gapS2 score: " << gapS2Score << endl;
 
 			current_ix = k*mm+l;
 
 			S  = s[(k-1)*mm+(l-1)].accumulatedscore + substsc;
 			G1 = s[k*mm+(l-1)].accumulatedscore     + gapS1Score;
 			G2 = s[(k-1)*mm+l].accumulatedscore     + gapS2Score;
+
+			if ( feedback ) clog << "acc subst score: " << S << endl;
+			if ( feedback ) clog << "acc gapS1 score: " << G1 << endl;
+			if ( feedback ) clog << "acc gapS2 score: " << G2 << endl;
 
 			if ( S >= G2 && S >= G1 ) { //substitution
 				s[current_ix].ix1 = k-1;
@@ -171,7 +177,7 @@ void LinearGlobalAligner::doAlign() const {
 		for(int k=0; k<mn; k++) {
 			for(int l=0; l<mm; l++) {
 				//cout << setw(2)<<s[k*mm+l].ix1<<"-"<<setw(2) << s[k*mm+l].ix2 << "  ";
-				cout << setw(6)<< s[k*mm+l].accumulatedscore;
+				cout << setw(10)<< s[k*mm+l].accumulatedscore << " ";
 			}
 			cout << endl;
 		}

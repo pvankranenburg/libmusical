@@ -143,14 +143,20 @@ int main(int argc, char * argv[]) {
 					if (distmat) thedistmat[i*size2+j] = 100.0;
 				} else {
 					musical::NLBSequences * seqs = new musical::NLBSequences(seqs1[i],seqs2[j]);
-					musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
-					//musical::NLBExactPitch40IMASimilarityRater * sr = new musical::NLBExactPitch40IMASimilarityRater();
-					//musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
+					//musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
+					musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
 					//musical::NLBExactPitch40IMASimilarityRater * sr = new musical::NLBExactPitch40IMASimilarityRater();
 					musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6, -0.2);
+					//musical::NLBIMAAffineGapRater * gr = new musical::NLBIMAAffineGapRater(-0.2);
+					//musical::NLBIMAGapRater * gr = new musical::NLBIMAGapRater();
 					musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
+					//musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr, gr);
+
 					nw.doAlign();
-					double normalizedscore = seqs->getScore() / min(seqs1[i]->size(),seqs2[j]->size());
+					double normalization_factor = 1.0;
+					//normalization_factor = seqs->getAlignmentSize(0);
+					normalization_factor = min(seqs1[i]->size(),seqs2[j]->size());
+					double normalizedscore = seqs->getScore() / normalization_factor;
 					if (distmat) thedistmat[i*size2+j] = 1.0 - normalizedscore;
 					delete seqs;
 					delete gr;

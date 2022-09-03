@@ -48,9 +48,11 @@ double NLBOptiSimilarityRater::getScore(Sequences * seqs, int x1, int y1, int x2
 
 	result = 0.0;
 
-	int im1 = abs (s1->pitch40 - (s2->pitch40+pitchshift));
-	diff = im1 % 40;
-	if ( diff > 23 ) result = -1.0; else result = 1.0 - ( (double)diff * 1.0/23.0 );
+	if ( s1->pitch40 == s2->pitch40+pitchshift ) result = 1.0; else result = -1.0;
+
+	//int im1 = abs (s1->pitch40 - (s2->pitch40+pitchshift));
+	//diff = im1 % 40;
+	//if ( diff > 23 ) result = -1.0; else result = 1.0 - ( (double)diff * 1.0/23.0 );
 
 	result = ( result + 1.0 ) / 2.0;
 

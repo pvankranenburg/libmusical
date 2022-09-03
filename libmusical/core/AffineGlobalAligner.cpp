@@ -201,13 +201,13 @@ void AffineGlobalAligner::doAlign() const {
 			//substitution score
 			substsc = simr->getScore(seqs,k-2,l-2,k-1,l-1);
 
-			//scores for gap *with* seq1 -- index in seq1 (k) remains same
-			g1openingscore = static_cast<AffineGapRater *>(gapr)->getGapOpeningScore(seqs, k-1 , l-2 , k-1, l-1 );
-			g2openingscore = static_cast<AffineGapRater *>(gapr)->getGapOpeningScore(seqs, k-1 , l-2 , k-1, l-1 );
-
-			//scores for gap *with* seq2 -- index in seq2 (l) remains same
+			//scores for gap *with* seq1 -- index in seq2 (l) remains same
+			g1openingscore   = static_cast<AffineGapRater *>(gapr)->getGapOpeningScore(seqs, k-2 , l-1 , k-1, l-1 );
 			g1extensionscore = static_cast<AffineGapRater *>(gapr)->getGapExtensionScore(seqs, k-2 , l-1 , k-1, l-1 );
-			g2extensionscore = static_cast<AffineGapRater *>(gapr)->getGapExtensionScore(seqs, k-2 , l-1 , k-1, l-1 );
+
+			//scores for gap *with* seq2 -- index in seq1 (k) remains same
+			g2openingscore   = static_cast<AffineGapRater *>(gapr)->getGapOpeningScore(seqs, k-1 , l-2 , k-1, l-1 );
+			g2extensionscore = static_cast<AffineGapRater *>(gapr)->getGapExtensionScore(seqs, k-1 , l-2 , k-1, l-1 );
 
 			if (feedback) cout << "[" << k << "," << l << "]: " << substsc << " " << g1openingscore << " " << g1extensionscore << " " << g2openingscore << " " << g2extensionscore << endl;
 
@@ -305,6 +305,7 @@ void AffineGlobalAligner::doAlign() const {
 	}
 
 	if (feedback) {
+		std::streamsize ss = std::cout.precision();
 		//print s
 		cout << endl;
 		for(int k=0; k<mn; k++) {
@@ -335,6 +336,7 @@ void AffineGlobalAligner::doAlign() const {
 			}
 			cout << endl;
 		}
+		cout << setprecision(ss);
 	}
 
 

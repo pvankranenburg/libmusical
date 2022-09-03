@@ -60,16 +60,19 @@ int main(int argc, char * argv[]) {
 	//musical::NLBPitchbandIMASimilarityRater * sr = new musical::NLBPitchbandIMASimilarityRater();
 	//musical::NLBAlwaysOneSimilarityRater * sr = new musical::NLBAlwaysOneSimilarityRater();
 	musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
+	//musical::NLBExactPitch40IMASimilarityRater * sr = new musical::NLBExactPitch40IMASimilarityRater();
 
 	// Create a gap rater
-	musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6,-0.2);
+	//musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6,-0.2);
+	musical::NLBIMAAffineGapRater * gr = new musical::NLBIMAAffineGapRater(-0.2);
 
 	// Create an alignment algorithm
 	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
+	//musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr, gr);
 	//musical::LinearLocalAligner nw = musical::LinearLocalAligner(seqs, sr, gr);
 
 	// Debug
-	nw.setFeedback(false);
+	nw.setFeedback(true);
 
 	// Do the alignment
 	nw.doAlign();
@@ -80,6 +83,8 @@ int main(int argc, char * argv[]) {
 	av.toGnuPlot("alignment-"+seq1->getName()+"-"+seq2->getName());
 
 	double normalizedscore = seqs->getScore() / min(seq1->size(),seq2->size());
+	clog << "      Sequence 1: " << seq1->getName() << endl;
+	clog << "      Sequence 2: " << seq2->getName() << endl;
 	clog << "         Aligner: " << nw.getName() << endl;
 	clog << "Similarity Rater: " << sr->getName() << endl;
 	clog << "       Gap Rater: " << gr->getName() << endl;

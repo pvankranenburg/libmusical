@@ -38,5 +38,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include "NLBPitchbandIMASimilarityRater.h"
 #include "NLBPitchbandSimilarityRater.h"
 #include "NLBAlwaysOneSimilarityRater.h"
+#include "NLBIMAGapRater.h"
+#include "NLBIMAAffineGapRater.h"
 
 #endif /* NLBALIGNMENT_H_ */
