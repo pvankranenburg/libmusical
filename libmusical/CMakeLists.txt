@@ -63,7 +63,9 @@ set(libmusical_lib_src
 	specializations/nlb/NLBSequences.cpp
 	specializations/nlb/NLBOptiSimilarityRater.cpp
 	specializations/nlb/NLBPitchbandIMASimilarityRater.cpp
-	specializations/nlb/NLBPitchbandSimilarityRater.cpp
+    specializations/nlb/NLBPitchbandSimilarityRater.cpp
+    specializations/nlb/NLBIMAGapRater.cpp
+    specializations/nlb/NLBIMAAffineGapRater.cpp
 	specializations/nlb/NLBSymbol.cpp
 )
 
@@ -134,6 +136,8 @@ install(
 		specializations/nlb/NLBOptiSimilarityRater.h
 		specializations/nlb/NLBPitchbandIMASimilarityRater.h
 		specializations/nlb/NLBPitchbandSimilarityRater.h
+        specializations/nlb/NLBIMAGapRater.h
+        specializations/nlb/NLBIMAAffineGapRater.h
 		specializations/nlb/NLBSymbol.h
 	DESTINATION include/libmusical)
 
