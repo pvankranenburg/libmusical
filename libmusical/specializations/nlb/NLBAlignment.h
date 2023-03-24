@@ -34,6 +34,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 #include "NLBOptiSimilarityRater.h"
 #include "NLBExactPitch40SimilarityRater.h"
 #include "NLBExactPitch40IMASimilarityRater.h"
+#include "NLBExactPitch40MWSimilarityRater.h"
 #include "NLBMidiIntervalSimilarityRater.h"
 #include "NLBPitchbandIMASimilarityRater.h"
 #include "NLBPitchbandSimilarityRater.h"
