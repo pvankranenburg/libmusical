@@ -56,6 +56,7 @@ set(libmusical_lib_src
 	specializations/midi/MidiSequences.cpp
 	specializations/nlb/NLBExactPitch40SimilarityRater.cpp
 	specializations/nlb/NLBExactPitch40IMASimilarityRater.cpp
+	specializations/nlb/NLBExactPitch40MWSimilarityRater.cpp
 	specializations/nlb/NLBMidiIntervalSimilarityRater.cpp
 	specializations/nlb/NLBAlwaysOneSimilarityRater.cpp
 	specializations/nlb/NLBJSONReader.cpp
@@ -127,6 +128,7 @@ install(
 		specializations/midi/MidiSequences.h
 		specializations/nlb/NLBExactPitch40SimilarityRater.h
 		specializations/nlb/NLBExactPitch40IMASimilarityRater.h
+		specializations/nlb/NLBExactPitch40MWSimilarityRater.h
 		specializations/nlb/NLBMidiIntervalSimilarityRater.h
 		specializations/nlb/NLBAlwaysOneSimilarityRater.h
 		specializations/nlb/NLBAlignment.h
