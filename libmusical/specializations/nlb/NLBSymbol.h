@@ -58,6 +58,7 @@ public:
 	long onset;
 	int phrase;
 	float songpos;
+	float beatstrength;
 };
 
 }

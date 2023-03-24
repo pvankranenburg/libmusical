@@ -47,7 +47,7 @@ Sequence* NLBJSONReader::generateSequence() const {
 	NLBSequence * nwseq = new NLBSequence; //NB NLBSequence contains a pitch histogram
 	string json_string = source->getJSONString();
 	//nwseq->json_string = json_string;
-	//cout << json_string << endl;
+	//clog << json_string << endl;
 	JSONNode seq;
 	try {
 		seq = libjson::parse(json_string);
@@ -74,6 +74,7 @@ Sequence* NLBJSONReader::generateSequence() const {
 	}
 	int size = i1->size();
 	//cout << "Size: " << size << endl;
+	bool missingbeathstrengthmessageprinted = false;
 	for( int ix=0; ix<size; ix++) {
 		NLBSymbol* s = new NLBSymbol();
 		try
@@ -90,10 +91,23 @@ Sequence* NLBJSONReader::generateSequence() const {
 			clog << errormessage << endl;
 			throw std::runtime_error(errormessage);
 		}
+		try //do beatstrenght separately. Allowed to be missing.
+		{
+			s->beatstrength = i1->at(ix).at("beatstrength").as_float();
+		}
+		catch (out_of_range&)
+		{
+			//if beatstrength not present, set to 1.0
+			s->beatstrength = 1.0;
+			if( !missingbeathstrengthmessageprinted ) {
+				clog << nwseq->getName() + " - Warning: beatstrength feature not present." << endl;
+				missingbeathstrengthmessageprinted = true;
+			}
+		}
+		nwseq->addSymbol(s);
 		//check whether id is present. If not take index as id
 		//string id = i1->at(ix).at("id").as_string();
 		//s->strings["id"] = id;
-		nwseq->addSymbol(s);
 		//cout << "symbol: " << s->pitch40 << " - " << s->phrasepos << " - " << s->IMA << endl;
 	}
 
