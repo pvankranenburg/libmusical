@@ -68,6 +68,13 @@ set(libmusical_lib_src
     specializations/nlb/NLBIMAGapRater.cpp
     specializations/nlb/NLBIMAAffineGapRater.cpp
 	specializations/nlb/NLBSymbol.cpp
+	specializations/pitchcontext/PCTXTReader.cpp
+	specializations/pitchcontext/PCAlwaysOneSimilarityRater.cpp
+	specializations/pitchcontext/PCSSSimilarityRater.cpp
+	specializations/pitchcontext/PCCosSimilarityRater.cpp
+	specializations/pitchcontext/PCSequences.cpp
+	specializations/pitchcontext/PCSymbol.cpp
+	specializations/pitchcontext/PCSequence.cpp
 )
 
 include_directories(core libjson IMACPP CSUUMidiReader specializations/midi)
@@ -141,6 +148,14 @@ install(
         specializations/nlb/NLBIMAGapRater.h
         specializations/nlb/NLBIMAAffineGapRater.h
 		specializations/nlb/NLBSymbol.h
+		specializations/pitchcontext/PCTXTReader.h
+		specializations/pitchcontext/PCSequences.h
+		specializations/pitchcontext/PCAlwaysOneSimilarityRater.h
+		specializations/pitchcontext/PCSSSimilarityRater.h
+		specializations/pitchcontext/PCCosSimilarityRater.h
+		specializations/pitchcontext/PCAlignment.h
+		specializations/pitchcontext/PCSymbol.h
+		specializations/pitchcontext/PCSequence.h
 	DESTINATION include/libmusical)
 
 install(DIRECTORY libjson/ DESTINATION include/libmusical FILES_MATCHING PATTERN "*.h" PATTERN ".svn" EXCLUDE)
