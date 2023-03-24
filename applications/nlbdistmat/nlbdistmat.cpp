@@ -144,9 +144,10 @@ int main(int argc, char * argv[]) {
 				} else {
 					musical::NLBSequences * seqs = new musical::NLBSequences(seqs1[i],seqs2[j]);
 					//musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
-					musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
-					//musical::NLBExactPitch40IMASimilarityRater * sr = new musical::NLBExactPitch40IMASimilarityRater();
+					//musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
+					musical::NLBExactPitch40IMASimilarityRater * sr = new musical::NLBExactPitch40IMASimilarityRater();
 					musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6, -0.2);
+					//musical::ConstantLinearGapRater * gr = new musical::ConstantLinearGapRater(-0.5);
 					//musical::NLBIMAAffineGapRater * gr = new musical::NLBIMAAffineGapRater(-0.2);
 					//musical::NLBIMAGapRater * gr = new musical::NLBIMAGapRater();
 					musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
