@@ -46,18 +46,37 @@ double NLBExactPitch40MWSimilarityRater::getScore(Sequences * const seqs, const 
 
 	int pitchShift = static_cast<NLBSequences *>(seqs)->getPitch40Shift();
 
-	double result = 0.0;
+	// double result = 0.0;
+	double epsilon = 0.0001;
 
-	if ( s1->pitch40 == s2->pitch40+pitchShift )
-		result = 1.0;
-	else
-		result = -1.0;
+	// if ( s1->pitch40 == s2->pitch40+pitchShift )
+	// 	result = 1.0;
+	// else
+	// 	result = -1.0;
 
-	result = ( result + 1.0 ) / 2.0;
+	// // scale results into [0,1]
+	// result = ( result + 1.0 ) / 2.0;
 
-	result = result * (1.0 - fabs(s2->beatstrength - s1->beatstrength));
+	// // lower score if beatstrengths differ
+	// result = result * (1.0 - fabs(s2->beatstrength - s1->beatstrength));
 
-	return -1.0 + 2.0*result;
+	// // scale back
+	// return -1.0 + 2.0*result;
+
+	if ( s1->pitch40 == s2->pitch40+pitchShift ) {
+		return -1.0 + 2.0 * (1.0 - fabs(s2->beatstrength - s1->beatstrength));
+	} else {
+		return -1.0;
+	
+		////MW2:
+		//return -1.0 * fmax(s2->beatstrength, s1->beatstrength); //give some score to notes with low beatstrength.
+
+		//MW3:
+		// if (fmax(s2->beatstrength, s1->beatstrength) <= (0.25+epsilon) )
+		// 	return -0.5;
+		// else
+		// 	return -1.0;
+	}
 
 }
 
