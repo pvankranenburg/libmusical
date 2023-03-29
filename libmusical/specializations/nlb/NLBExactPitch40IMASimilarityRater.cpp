@@ -47,16 +47,26 @@ double NLBExactPitch40IMASimilarityRater::getScore(Sequences * const seqs, const
 	int pitchShift = static_cast<NLBSequences *>(seqs)->getPitch40Shift();
 
 	double result = 0.0;
+	// double epsilon = 0.0001;
 
+	// pitch match
 	if ( s1->pitch40 == s2->pitch40+pitchShift )
 		result = 1.0;
 	else
 		result = -1.0;
 
+	// scale to [0,1]
 	result = ( result + 1.0 ) / 2.0;
 
+	// score lower if weights differ
 	result = result * (1.0 - fabs(s2->IMA-s1->IMA));
 
+	// score higher if weights lower
+	// if( result < epsilon) {
+	// 	result = result + (1.0 - fmax(s2->IMA,s1->IMA));
+	// }
+
+	// scale back to [-1,1]
 	return -1.0 + 2.0*result;
 
 }
