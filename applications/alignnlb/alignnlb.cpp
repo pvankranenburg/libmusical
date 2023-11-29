@@ -32,7 +32,7 @@ int main(int argc, char * argv[]) {
 		exit(1);
 	}
 
-	clog << "Reading from" << argv[1] << " and " << argv[2] << endl;
+	clog << "Reading from " << argv[1] << " and " << argv[2] << endl;
 
 
 	// Get a JSON string for sequence 1 from a file
@@ -59,12 +59,12 @@ int main(int argc, char * argv[]) {
 	//musical::NLBOptiSimilarityRater * sr = new musical::NLBOptiSimilarityRater();
 	//musical::NLBPitchbandIMASimilarityRater * sr = new musical::NLBPitchbandIMASimilarityRater();
 	//musical::NLBAlwaysOneSimilarityRater * sr = new musical::NLBAlwaysOneSimilarityRater();
-	musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
-	//musical::NLBExactPitch40IMASimilarityRater * sr = new musical::NLBExactPitch40IMASimilarityRater();
+	//musical::NLBExactPitch40SimilarityRater * sr = new musical::NLBExactPitch40SimilarityRater();
+	musical::NLBExactPitch40IMASimilarityRater * sr = new musical::NLBExactPitch40IMASimilarityRater();
 
 	// Create a gap rater
-	//musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6,-0.2);
-	musical::NLBIMAAffineGapRater * gr = new musical::NLBIMAAffineGapRater(-0.2);
+	musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6,-0.2);
+	//musical::NLBIMAAffineGapRater * gr = new musical::NLBIMAAffineGapRater(-0.2);
 
 	// Create an alignment algorithm
 	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
@@ -72,7 +72,7 @@ int main(int argc, char * argv[]) {
 	//musical::LinearLocalAligner nw = musical::LinearLocalAligner(seqs, sr, gr);
 
 	// Debug
-	nw.setFeedback(true);
+	nw.setFeedback(false);
 
 	// Do the alignment
 	nw.doAlign();
