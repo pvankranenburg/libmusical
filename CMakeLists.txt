@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.0)
+
 project(libmusical CXX)
 
 #C only enabled for openmp test.
@@ -7,15 +9,13 @@ set (libmusical_VERSION_MAJOR 1)
 set (libmusical_VERSION_MINOR 0)
 set (libmusical_VERSION_PATCH 2)
 
-cmake_minimum_required(VERSION 3.0)
-
 ENABLE_TESTING()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "-O3 -Wall")
 endif()
 
-SET(CMAKE_CXX_FLAGS "-std=c++0x")
+SET(CMAKE_CXX_FLAGS "-std=c++11")
 
 add_subdirectory(libmusical)
 add_subdirectory(applications)
