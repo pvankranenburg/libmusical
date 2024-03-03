@@ -66,6 +66,8 @@ int main(int argc, char * argv[]) {
 	musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6,-0.2);
 	//musical::NLBIMAAffineGapRater * gr = new musical::NLBIMAAffineGapRater(-0.2);
 
+	gr->setZeroEndGapScore(); // To give end gaps score zero
+
 	// Create an alignment algorithm
 	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
 	//musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr, gr);
