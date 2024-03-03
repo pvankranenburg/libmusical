@@ -59,7 +59,7 @@ public:
 	 * The parameters are indices in seq1 and seq2. First symbol has index 0
 	 * Condition: x1=x2 or y1=y2
 	 */
-	virtual double getGapScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const;
+	virtual double getGapScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2, const bool endgap) const;
 
 	// In this particular case, we can overload the getGapScore without any parameter.
 	// since the gapscore is constant
