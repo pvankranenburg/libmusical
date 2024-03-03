@@ -71,6 +71,7 @@ public:
 private:
 	/**
 	 * Switch for setting endgap score to 0
+	 * default: false
 	*/
 	bool zeroEndGapScore;
 
