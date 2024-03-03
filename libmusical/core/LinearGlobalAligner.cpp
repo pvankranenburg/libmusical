@@ -124,8 +124,8 @@ void LinearGlobalAligner::doAlign() const {
 			if (feedback) clog << "Filling " << k << " , " << l << endl;
 
 			substsc    = simr->getScore(seqs, k-2,l-2,k-1,l-1);
-			gapS1Score = gapr->getGapScore(seqs, k-1,l-2,k-1,l-1);
-			gapS2Score = gapr->getGapScore(seqs, k-2,l-1,k-1,l-1);
+			gapS1Score = gapr->getGapScore(seqs, k-1, l-2, k-1, l-1, k-1 == mn-1);
+			gapS2Score = gapr->getGapScore(seqs, k-2, l-1, k-1, l-1, l-1 == mm-1);
 
 			if ( feedback ) clog << "subst score: " << substsc << endl;
 			if ( feedback ) clog << "gapS1 score: " << gapS1Score << endl;
