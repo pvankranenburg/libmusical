@@ -73,22 +73,26 @@ int main(int argc, char * argv[]) {
 	listfile2.open(seq2filename);
 	vector<musical::NLBSequence *> seqs1;
 	vector<musical::NLBSequence *> seqs2;
-	cout << "Reading sequences 1" << flush;
+	cout << "Reading sequences 1" << endl;
+	int file1count = 0;
 	while (getline(listfile1, seq1name)) {
 		//cout << "Reading " << seq1name << endl << flush;
 		musical::NLBJSONReader mr1(new musical::JSONFileSource(seq1name));
 		seqs1.push_back(static_cast<musical::NLBSequence*>(mr1.generateSequence()));
 		//if ( seqs1.size() % 1000 == 0 ) cout << seq1name << endl;
-		if ( seqs1.size() % 1000 == 0 ) cout << "." << flush;
+		if ( seqs1.size() % 1000 == 0 ) cout << "\r" << file1count << flush;
+		file1count += 1;
 	}
 	cout << endl;
 
-	cout << "Reading seqeunces 2" << flush;
+	cout << "Reading seqeunces 2" << endl;
+	int file2count = 0;
 	while (getline(listfile2, seq2name)) {
 		musical::NLBJSONReader mr2(new musical::JSONFileSource(seq2name));
 		seqs2.push_back(static_cast<musical::NLBSequence*>(mr2.generateSequence()));
 		//if ( seqs2.size()%1000 == 0 ) cout << seq2name << endl;
-		if ( seqs2.size() % 1000 == 0 ) cout << "." << flush;
+		if ( seqs2.size() % 1000 == 0 ) cout << "\r" << file2count << flush;
+		file2count += 1;
 	}
 	cout << endl;
 	listfile1.close();
@@ -124,14 +128,12 @@ int main(int argc, char * argv[]) {
 	int size1 = seqs1.size();
 	int size2 = seqs2.size();
 
-
-
 	float begin = datemicro();
 
 	for(int i = 0; i<size1; i++) {
 		cout << i << ": " << seqs1[i]->getName() << endl;
-		#pragma omp parallel for num_threads(2)
-		//#pragma omp parallel for
+		//#pragma omp parallel for num_threads(2)
+		#pragma omp parallel for
 		for(int j=0; j<size2; j++) {
 			if ( j%1000 == 0 ) cout << "." << flush;
 
