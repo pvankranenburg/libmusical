@@ -91,16 +91,13 @@ Sequence* NLBJSONReader::generateSequence() const {
 			clog << errormessage << endl;
 			throw std::runtime_error(errormessage);
 		}
-		try //do beatstrenght separately. Allowed to be missing.
-		{
+		JSONNode::const_iterator bsnode = i1->find("beatstrength");
+		if(bsnode != i1->end())
 			s->beatstrength = i1->at(ix).at("beatstrength").as_float();
-		}
-		catch (out_of_range&)
-		{
-			//if beatstrength not present, set to 1.0
+		else {
 			s->beatstrength = 1.0;
 			if( !missingbeathstrengthmessageprinted ) {
-				clog << nwseq->getName() + " - Warning: beatstrength feature not present." << endl;
+				//clog << nwseq->getName() + " - Warning: beatstrength feature not present." << endl;
 				missingbeathstrengthmessageprinted = true;
 			}
 		}
