@@ -23,7 +23,7 @@ along with libmusical.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace musical {
 
-GapRater::GapRater() {
+GapRater::GapRater() : zeroEndGapScore(false) {
 	// TODO Auto-generated constructor stub
 
 }

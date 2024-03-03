@@ -61,6 +61,18 @@ public:
 	 */
 	virtual std::string getName() = 0;
 
+	/**
+	 * To set end gap scores to zero
+	*/
+	void setZeroEndGapScore() { zeroEndGapScore = true; }
+
+private:
+	/**
+	 * Switch for setting endgap score to 0
+	*/
+	bool zeroEndGapScore;
+
+
 };
 
 }
