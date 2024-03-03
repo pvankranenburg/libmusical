@@ -66,7 +66,7 @@ public:
 	 * To set and get end gap scores to zero
 	*/
 	void setZeroEndGapScore() { zeroEndGapScore = true; }
-	bool getZeroEndGapScore() { return zeroEndGapScore; }
+	bool getZeroEndGapScore() const { return zeroEndGapScore; }
 
 private:
 	/**
