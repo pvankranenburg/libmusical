@@ -51,7 +51,7 @@ double ConstantLinearGapRater::getInitializationScore(Sequences * const seqs, co
 	return 0.0;
 }
 
-double ConstantLinearGapRater::getGapScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const {
+double ConstantLinearGapRater::getGapScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2, const bool endgap) const {
 	if ( x1 == x2 ) { // gap in x
 		return gapScore * (double)(y2-y1);
 	}

@@ -80,12 +80,12 @@ double NLBIMAAffineGapRater::getInitializationScore(Sequences * const seqs, int 
 	return 0.0;
 }
 
-double NLBIMAAffineGapRater::getGapScore(Sequences * const seqs, int x1, int y1, int x2, int y2) const {
+double NLBIMAAffineGapRater::getGapScore(Sequences * const seqs, int x1, int y1, int x2, int y2, bool endgap) const {
 	cerr << "Do not use NLBIMAAffineGapRater::getGapScore" << endl;
 	return 0.0;
 }
 
-double NLBIMAAffineGapRater::getGapOpeningScore(Sequences * const seqs, int x1, int y1, int x2, int y2) const {
+double NLBIMAAffineGapRater::getGapOpeningScore(Sequences * const seqs, int x1, int y1, int x2, int y2, bool endgap) const {
 	//we know y2 = y1 + 1, or x2 = x1 + 1
 
 	NLBSymbol * s1 = static_cast<NLBSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
@@ -101,7 +101,7 @@ double NLBIMAAffineGapRater::getGapOpeningScore(Sequences * const seqs, int x1, 
 
 }
 
-double NLBIMAAffineGapRater::getGapExtensionScore(Sequences * const seqs, int x1, int y1, int x2, int y2) const {
+double NLBIMAAffineGapRater::getGapExtensionScore(Sequences * const seqs, int x1, int y1, int x2, int y2, bool endgap) const {
 
 	return gapExtensionScore;
 }
