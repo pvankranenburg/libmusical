@@ -53,8 +53,9 @@ public:
 	 * Returns the score for gap of arbitrary length.
 	 * x1, x2, y1, and y2 are indices in the sequences. First symbol is at position 0.
 	 * Conditions: either x1 == x2 or y1 == y2
+	 * if endgap is true, it is the gap at the end of a sequence.
 	 */
-	virtual double getGapScore(Sequences *const  seqs, const int x1, const int y1,const  int x2, const int y2) const = 0;
+	virtual double getGapScore(Sequences *const  seqs, const int x1, const int y1,const  int x2, const int y2, bool endgap) const = 0;
 
 	/**
 	 * Returns the name of the rater
