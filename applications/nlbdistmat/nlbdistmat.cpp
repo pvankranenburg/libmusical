@@ -159,6 +159,8 @@ int main(int argc, char * argv[]) {
 					//musical::NLBIMAAffineGapRater * gr = new musical::NLBIMAAffineGapRater(-0.2);
 					//musical::NLBIMAGapRater * gr = new musical::NLBIMAGapRater();
 					
+					gr->setZeroEndGapScore(); // To give endgaps score zero
+
 					//algignment algorithm
 					musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
 					//musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr, gr);
