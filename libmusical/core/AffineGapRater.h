@@ -42,16 +42,18 @@ public:
 	 * The parameters are indices in seq1 and seq2. First symbol has index 0.
 	 * Condition: (x1==x2 && y1 = y2-1) || (x1==x2-1 && y1 == y2)
 	 * This function is unique for Affine gap cost raters.
+	 * if endgap is true, it is the gap at the end of a sequence.
 	 */
-	virtual double getGapOpeningScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const = 0;
+	virtual double getGapOpeningScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2, const bool endgap) const = 0;
 
 	/**
 	 * Returns gap extension score for going from (x1,y1) to (x2,y2).
 	 * The parameters are indices in seq1 and seq2. First symbol has index 0.
 	 * Condition: (x1==x2 && y1 = y2-1) || (x1==x2-1 && y1 == y2)
 	 * This function is unique for Affine gap cost raters.
+	 * if endgap is true, it is the gap at the end of a sequence.
 	 */
-	virtual double getGapExtensionScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2) const = 0;
+	virtual double getGapExtensionScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2, const bool endgap) const = 0;
 
 	virtual std::string getName() { return "AffineGapRater"; }
 };
