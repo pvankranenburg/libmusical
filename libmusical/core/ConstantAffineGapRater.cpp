@@ -86,7 +86,7 @@ double ConstantAffineGapRater::getGapOpeningScore(Sequences * const seqs, int x1
 	//just ignore the matrix coefficients
 	//For robustness it could be good to check whether (x1==x2 && y1==y2-1) || (x1==x2-1 && y1==y2)
 
-	if(getZeroEndGapScore()) return 0.0;
+	if(getZeroEndGapScore() && endgap) return 0.0;
 
 	return gapOpeningScore;
 }
@@ -96,7 +96,7 @@ double ConstantAffineGapRater::getGapExtensionScore(Sequences * const seqs, int 
 	//just ignore the matrix coefficients
 	//For robustness it could be good to check whether (x1==x2 && y1==y2-1) || (x1==x2-1 && y1==y2)
 
-	if(getZeroEndGapScore()) return 0.0;
+	if(getZeroEndGapScore() && endgap) return 0.0;
 
 	return gapExtensionScore;
 }
