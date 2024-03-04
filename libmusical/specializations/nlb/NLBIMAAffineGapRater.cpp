@@ -91,10 +91,14 @@ double NLBIMAAffineGapRater::getGapOpeningScore(Sequences * const seqs, int x1, 
 	NLBSymbol * s1 = static_cast<NLBSymbol *>(seqs->getSeq1()->getSymbolAt(x2));
 	NLBSymbol * s2 = static_cast<NLBSymbol *>(seqs->getSeq2()->getSymbolAt(y2));
 
-	if (x1 == x2) //gap opening in x
+	if (x1 == x2) { //gap opening in x
+		if(getZeroEndGapScore() && endgap) return 0.0;
 		return -s2->IMA;
-	if (y1 == y2) //gap opening in y
+	}
+	if (y1 == y2) { //gap opening in y
+		if(getZeroEndGapScore() && endgap) return 0.0;
 		return -s1->IMA;
+	}
 
 	cerr << "NLBIMAAffineGapRater::getGapOpeningScore() invoked for non-gap";
 	return 0.0;

@@ -54,6 +54,10 @@ double NLBIMAGapRater::getInitializationScore(Sequences * const seqs, const int 
 }
 
 double NLBIMAGapRater::getGapScore(Sequences * const seqs, const int x1, const int y1, const int x2, const int y2, const bool endgap) const {
+	
+	// first check endgap
+	if(getZeroEndGapScore() && endgap) return 0.0;
+
 	double result = 0.;
 
 	if ( x1 == x2 ) { // gap in x -> negative sum of IMA values for skipped symbols in y
