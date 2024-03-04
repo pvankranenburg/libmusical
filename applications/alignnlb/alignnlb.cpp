@@ -63,14 +63,15 @@ int main(int argc, char * argv[]) {
 	musical::NLBExactPitch40IMASimilarityRater * sr = new musical::NLBExactPitch40IMASimilarityRater();
 
 	// Create a gap rater
-	musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6,-0.2);
+	//musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6,-0.2);
 	//musical::NLBIMAAffineGapRater * gr = new musical::NLBIMAAffineGapRater(-0.2);
+	musical::ConstantLinearGapRater * gr = new musical::ConstantLinearGapRater(-0.6);
 
-	gr->setZeroEndGapScore(); // To give end gaps score zero
+	//gr->setZeroEndGapScore(); // To give end gaps score zero
 
 	// Create an alignment algorithm
-	musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
-	//musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr, gr);
+	//musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr, gr);
+	musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr, gr);
 	//musical::LinearLocalAligner nw = musical::LinearLocalAligner(seqs, sr, gr);
 
 	// Debug
