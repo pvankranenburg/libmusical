@@ -154,16 +154,16 @@ int main(int argc, char * argv[]) {
 					//musical::NLBExactPitch40MWSimilarityRater * sr = new musical::NLBExactPitch40MWSimilarityRater();
 					
 					//gap rater
-					musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6, -0.2);
-					//musical::ConstantLinearGapRater * gr = new musical::ConstantLinearGapRater(-0.5);
+					//musical::ConstantAffineGapRater * gr = new musical::ConstantAffineGapRater(-0.6, -0.2);
+					musical::ConstantLinearGapRater * gr = new musical::ConstantLinearGapRater(-0.6);
 					//musical::NLBIMAAffineGapRater * gr = new musical::NLBIMAAffineGapRater(-0.2);
 					//musical::NLBIMAGapRater * gr = new musical::NLBIMAGapRater();
 					
 					gr->setZeroEndGapScore(); // To give endgaps score zero
 
 					//algignment algorithm
-					musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
-					//musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr, gr);
+					//musical::AffineGlobalAligner nw = musical::AffineGlobalAligner(seqs, sr , gr);
+					musical::LinearGlobalAligner nw = musical::LinearGlobalAligner(seqs, sr, gr);
 
 					nw.doAlign();
 					double normalization_factor = 1.0;
